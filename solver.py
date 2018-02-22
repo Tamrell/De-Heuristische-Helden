@@ -30,8 +30,8 @@ def main():
 #                                 FILL
 # =============================================================================
 
-# fill sudictu with given information from file
 def fill():
+	"""Fills sudictu with given information from file"""
     with open(sys.argv[1]) as input_sudoku:
         x = 0
         y = 0
@@ -51,8 +51,8 @@ def fill():
 # =============================================================================
 
 
-# checks if the sudictu is filled with integers
 def solved():
+	"""Checks if the sudictu is filled with integers"""
     if all(isinstance(value, int) for value in sudictu.values()):
         print_sudoku()
         print("Solved!\nThe elapsed time is: ", time.time() - start_time)
@@ -64,8 +64,8 @@ def solved():
 # =============================================================================
 
 
-# minimizes the search space by eliminating possibilities
 def reduce_ss():
+	"""Minimizes the search space by eliminating possibilities"""
     for key in sudictu:
 
         # only act if 0 or set
@@ -80,8 +80,9 @@ def reduce_ss():
     return 1
 
 
-# finds all the possible numbers for coordinate
+
 def missing_nums(x, y):
+	"""Finds all the possible numbers for coordinate"""
 
     # take the remainder of all possible numbers minus the ones already present
     missing = numbers_set - (row(y) | column(x) | quadrant(x, y))
@@ -100,8 +101,8 @@ def missing_nums(x, y):
         abort_mission()
     return 1
 
-""" """
 def missing_check(key, size):
+	"""Checks if sudicto key has less than size options"""
 
     # check if singular possibility
     if missing_nums(*key) == 2:
@@ -140,8 +141,9 @@ def DFS():
     return 1
 
 
-# branch off for each possibility in missing and continue with one of them
 def branch(x, y, missing):
+	"""Branches off for each possibility in missing and continue with 
+	one of them"""
     copydictu = sudictu.copy()
     for i in range(len(missing) - 1):
         copydictu[(x, y)] = missing.pop()
@@ -150,8 +152,8 @@ def branch(x, y, missing):
     return 1
 
 
-# "discard" current sudoku and continue with the last valid one
 def abort_mission():
+	"""Discards current sudoku and continue with the last valid one"""
     sudictu.update(s.pop())
     return 1
 # =============================================================================
@@ -159,25 +161,25 @@ def abort_mission():
 # =============================================================================
 
 
-# returns a list of the y+1th row
 def row_list(y):
+	"""Returns a list of the y+1th row"""
     return [sudictu[(x, y)] for x in range(9)]
 
 
-# returns a set with all know numbers in the y+1th row
 def row(y):
+	"""Returns a set with all know numbers in the y+1th row"""
     return {sudictu[(x, y)] for x in range(9) if
             isinstance(sudictu[(x, y)], int)}
 
 
-# returns a set with all know numbers in row x + 1
 def column(x):
+	"""Returns a set with all know numbers in row x + 1"""
     return {sudictu[(x, y)] for y in range(9) if
             isinstance(sudictu[(x, y)], int)}
 
 
-# returns a set with all know numbers in
 def quadrant(x, y):
+	"""Returns a set with all known numbers in it"""
     row = (x // 3) * 3
     col = (y // 3) * 3
     quad = set()
@@ -191,8 +193,8 @@ def quadrant(x, y):
 # =============================================================================
 
 
-# prints the sudoku for a human friendly representation of the puzzle
 def print_sudoku():
+	"""prints the sudoku in a human friendly representation"""
     for y in range(9):
         if y in [0, 3, 6]:
             print("          -------------------------")
