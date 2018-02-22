@@ -18,7 +18,20 @@ numbers_set = {1, 2, 3, 4, 5, 6, 7, 8, 9}
 
 def main():
 
-    # fill sudictu with given information from file
+    fill()
+    print_sudoku()
+    for i in range(5):
+        reduce_ss()
+    while not solved():
+        DFS()
+    return 0
+
+# =============================================================================
+#                                 FILL
+# =============================================================================
+
+# fill sudictu with given information from file
+def fill():
     with open(sys.argv[1]) as input_sudoku:
         x = 0
         y = 0
@@ -33,14 +46,6 @@ def main():
                         x += 1
                 except ValueError:
                     pass
-
-    print_sudoku()
-    for i in range(5):
-        reduce_ss()
-    while not solved():
-        DFS()
-    return 0
-
 # =============================================================================
 #                                 Solved
 # =============================================================================
