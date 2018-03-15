@@ -10,7 +10,6 @@ class Grid:
 
     def __init__(self, file, dimensions=(50, 50)):
 
-
         self.grid_list = {}
         self.total_probability = 0
         self.houses = {}
@@ -47,6 +46,18 @@ class Grid:
         trace = go.Heatmap(z = [self.y_list(i) for i in range(self.x_dim)])
         data = [trace]
         plot(data, filename='labelled-heatmap.html')
+
+    def __str__(self):
+        string = ""
+        for y in range(self.y_dim):
+            for x in range(self.x_dim):
+                if (x, y) in self.houses:
+                    string += "H "
+                else:
+                    string += "_ "
+            string += "\n"
+        return string
+
 
 
 
