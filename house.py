@@ -2,9 +2,9 @@
 class House:
     ''' House class, initializes with tuple: coordinate and int: output'''
 
-    def __init__(self, (x, y), output):
-        self.cord = (x, y)
-        self.output = output
+    def __init__(self, info):
+        self.cord = (info[0], info[1])
+        self.output = info[2]
 
     def find_closest_battery(self, grid):
     ''' Returns the closest battery object or None
