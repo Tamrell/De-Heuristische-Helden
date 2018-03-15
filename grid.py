@@ -4,7 +4,7 @@ from plotly.offline import plot
 from numpy import subtract
 import csv
 from house import House
-
+import sys
 
 class Grid:
 
