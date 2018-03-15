@@ -4,12 +4,11 @@ from plotly.offline import plot
 from numpy import subtract
 import csv
 from house import House
-
+import sys
 
 class Grid:
 
     def __init__(self, file, dimensions=(50, 50)):
-
 
         self.grid_list = {}
         self.total_probability = 0
