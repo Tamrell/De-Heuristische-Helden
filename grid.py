@@ -1,27 +1,54 @@
 import plotly.plotly as py
 import plotly.graph_objs as go
 from plotly.offline import plot
+from numpy import subtract
+import csv
+import House
+
 
 class Grid:
 
-    def __init__(self, houses):
-        self.grid_list = []
+    def __init__(self, file, dimensions=(50, 50)):
+
+
+        self.grid_list = {}
         self.total_probability = 0
-        for y in range(50):
-            for x in range(50):
-                self.grid_list.append(Grid_Point(x, y, houses))
+        self.houses = {}
+        self.x_dim = dimensions[0]
+        self.y_dim = dimensions[1]
+
+        with open(file, newline='') as csvfile:
+            reader = csv.reader(csvfile, delimiter=',')
+            next(reader)
+            for row in reader:
+                self.houses[(int(row[0]), int(row[1]))] = House(row)
+
+        for y in range(self.y_dim):
+            for x in range(self.x_dim):
+                self.grid_list[x, y] = Grid_Point(x, y, self.houses)
         for point in self.grid_list:
-            self.total_probability += (1 / point.distance)
+            self.total_probability += (1 / self.grid_list[point].distance)
         for point in self.grid_list:
-            point.probability = (1 / point.distance) / self.total_probability
+            self.grid_list[point].probability = (1 / self.grid_list[point].distance) / self.total_probability
 
     def y_list(self, y):
-        start_index = (y - 1) * 50
-        end_index = start_index + 50
+        """
+        Helper function for print_heatmap. Returns the probabilities of row y
+        """
         dist_list = []
-        for i in range(start_index, end_index):
-            dist_list.append(self.grid_list[i].probability)
+
+        for i in range(self.x_dim):
+            dist_list.append(self.grid_list[(i, y)].probability)
+
         return dist_list
+
+    def print_heatmap(self):
+
+        trace = go.Heatmap(z = [self.y_list(i) for i in range(self.x_dim)])
+        data = [trace]
+        plot(data, filename='labelled-heatmap.html')
+
+
 
 class Grid_Point:
 
@@ -29,23 +56,6 @@ class Grid_Point:
         self.probability = 0
         self.distance = 0
         for house in houses:
-            self.distance += abs(house["x"] - x) + abs(house["y"] - y)
+            self.distance += abs(house[0] - x) + abs(house[1] - y)
         self.x = x
         self.y = y
-
-
-grid = Grid([{"x": 15, "y": 28}, {"x": 45, "y": 45}, {"x": 44, "y": 44}])
-
-trace = go.Heatmap(z = [grid.y_list(i) for i in range(1, 51)])
-
-data = [trace]
-
-plot(data, filename='labelled-heatmap.html')
-
-# sum = 0
-
-# for point in grid.grid_list:
-#     sum += point.probability
-#     print(point.probability)
-
-# print(sum)
