@@ -6,18 +6,14 @@ class Grid:
 
     def __init__(self, houses):
         self.grid_list = []
-        self.total_distance = 0
         self.total_probability = 0
         for y in range(50):
             for x in range(50):
                 self.grid_list.append(Grid_Point(x, y, houses))
-                for house in houses:
-                    self.total_distance += abs(house["x"] - x)
-                    + abs(house["y"] - y)
         for point in self.grid_list:
-            self.total_probability += (self.total_distance / point.distance)
+            self.total_probability += (1 / point.distance)
         for point in self.grid_list:
-            point.probability = (self.total_distance / point.distance) / self.total_probability
+            point.probability = (1 / point.distance) / self.total_probability
 
     def y_list(self, y):
         start_index = (y - 1) * 50
@@ -38,7 +34,7 @@ class Grid_Point:
         self.y = y
 
 
-grid = Grid([{"x": 28, "y": 28}, {"x": 45, "y": 45}, {"x": 44, "y": 44}])
+grid = Grid([{"x": 15, "y": 28}, {"x": 45, "y": 45}, {"x": 44, "y": 44}])
 
 trace = go.Heatmap(z = [grid.y_list(i) for i in range(1, 51)])
 
