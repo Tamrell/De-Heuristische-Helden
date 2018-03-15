@@ -13,3 +13,4 @@ if __name__ == "__main__":
 
     grid = Grid(file)
     grid.print_heatmap()
+    print(grid)
