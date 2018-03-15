@@ -7,13 +7,14 @@ class House:
         self.output = info[2]
 
     def find_closest_battery(self, grid):
-    ''' Returns the closest battery object or None
+        ''' Returns the closest battery object or None
 
         Args:
             Grid: grid that contains batteries
 
         Returns:
-            Battery: closest battery '''
+            Battery: closest battery
+        '''
 
         bat = None
         best = grid.x_dim + grid.y_dim
@@ -21,6 +22,6 @@ class House:
             if isinstance(grid[key], Battery): ## unnecesary if all batteries
                 cur_bat = grid[key]
                 dist = grid.distance(self.cord, cur_bat.cord)
-                if bat is None or best > dist):
+                if bat is None or best > dist:
                     bat= cur_bat
         return bat

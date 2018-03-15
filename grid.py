@@ -3,7 +3,7 @@ import plotly.graph_objs as go
 from plotly.offline import plot
 from numpy import subtract
 import csv
-import House
+from house import House
 
 
 class Grid:
