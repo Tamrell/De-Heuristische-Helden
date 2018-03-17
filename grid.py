@@ -23,6 +23,7 @@ class Grid:
 
         self.grid_list = {}
         self.total_probability = 0
+        self.total_sq_probability = 0
         self.houses = {}
         self.x_dim = dimensions[0]
         self.y_dim = dimensions[1]
@@ -48,9 +49,12 @@ class Grid:
 
         for point in self.grid_list:
             self.total_probability += (1 / self.grid_list[point].distance)
+            self.total_sq_probability += self.grid_list[point].rel_distance
         for point in self.grid_list:
             self.grid_list[point].probability = (1
                 / self.grid_list[point].distance) / self.total_probability
+            self.grid_list[point].rel_probability = (self.grid_list[point].rel_distance
+                / self.total_sq_probability)
 
     def set_houses(self, file):
         ''' Takes a .csv file and add the houses in the file to the houses
@@ -69,23 +73,31 @@ class Grid:
             for row in reader:
                 self.houses[(int(row[0]), int(row[1]))] = House(row)
 
-    def y_list(self, y):
+    def y_list(self, y, method=0):
         ''' Helper function for print_heatmap. Returns the probabilities
             of row y.
         '''
 
         dist_list = []
-        for i in range(self.x_dim):
-            dist_list.append(self.grid_list[(i, y)].probability)
+        if not method:
+            for i in range(self.x_dim):
+                dist_list.append(self.grid_list[(i, y)].probability)
 
+        if method == 1:
+            for i in range(self.x_dim):
+                dist_list.append(self.grid_list[(i, y)].rel_probability)
         return dist_list
 
-    def print_heatmap(self):
+    def print_heatmap(self, method=0):
         ''' Prints out the global density heatmap in a file called
             'labelled-heatmap.html' using Plotly.
+
+            Args:
+                method (Integer):   0: Global Density.
+                                    1: Relative Density.
         '''
 
-        trace = go.Heatmap(z = [self.y_list(i) for i in range(self.x_dim)])
+        trace = go.Heatmap(z = [self.y_list(i, method) for i in range(self.x_dim)])
         data = [trace]
         plot(data, filename='labelled-heatmap.html')
 
@@ -123,7 +135,15 @@ class Grid_Point:
 
         self.probability = 0
         self.distance = 0
+        self.rel_distance = 0
+        self.rel_probability = 0
+
         for house in houses:
-            self.distance += abs(house[0] - x) + abs(house[1] - y)
+            dist_to_house = abs(house[0] - x) + abs(house[1] - y)
+            if dist_to_house:
+                self.rel_distance += 1 / dist_to_house
+            else:
+                self.rel_distance += 1
+            self.distance += dist_to_house
         self.x = x
         self.y = y
