@@ -15,12 +15,10 @@ class Grid:
         self.houses = {}
         self.x_dim = dimensions[0]
         self.y_dim = dimensions[1]
+        self.set_houses(file)
+        self.set_global_density()
 
-        with open(file, newline='') as csvfile:
-            reader = csv.reader(csvfile, delimiter=',')
-            next(reader)
-            for row in reader:
-                self.houses[(int(row[0]), int(row[1]))] = House(row)
+    def set_global_density(self):
 
         for y in range(self.y_dim):
             for x in range(self.x_dim):
@@ -29,6 +27,14 @@ class Grid:
             self.total_probability += (1 / self.grid_list[point].distance)
         for point in self.grid_list:
             self.grid_list[point].probability = (1 / self.grid_list[point].distance) / self.total_probability
+
+    def set_houses(self, file):
+
+        with open(file, newline='') as csvfile:
+            reader = csv.reader(csvfile, delimiter=',')
+            next(reader)
+            for row in reader:
+                self.houses[(int(row[0]), int(row[1]))] = House(row)
 
     def y_list(self, y):
         """
@@ -57,8 +63,6 @@ class Grid:
                     string += "_ "
             string += "\n"
         return string
-
-
 
 
 class Grid_Point:
