@@ -1,7 +1,7 @@
 class Battery:
     ''' Battery class, initializes with tuple: coordinate and int: max_load
-    
-        atributes:
+
+        attributes:
         - cord: coordinate as (x, y) Tuple
         - max_load: maximum load of the battery as Integer
         - load: current load as float

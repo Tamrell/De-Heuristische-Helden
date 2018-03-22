@@ -1,7 +1,7 @@
 import imports
 class House:
     ''' House class, initializes with tuple: coordinate and int: output
-        atributes:
+        atrributes:
         - cord: Coordinate as (x, y) Tuple
         - output: output as float
     '''
