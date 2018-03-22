@@ -6,6 +6,7 @@ import csv
 from house import House
 import sys
 from load_batteries import *
+import termcolor
 
 class Grid:
 
@@ -130,7 +131,7 @@ class Grid:
         for y in range(self.y_dim):
             for x in range(self.x_dim):
                 if (x, y) in self.houses:
-                    string += "H "
+                    string += termcolor.colored("H", 'green', 'on_grey') + " "
                 else:
                     string += "_ "
             string += "\n"
