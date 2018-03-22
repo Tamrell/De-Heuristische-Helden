@@ -4,7 +4,7 @@ class House:
 
     def __init__(self, info):
         self.cord = (info[0], info[1])
-        self.output = info[2]
+        self.output = float(info[2])
 
     def find_closest_battery(self, grid):
         ''' Returns the closest battery object or None

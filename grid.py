@@ -89,6 +89,7 @@ class Grid:
 
             for line in lines:
                 location, capacity = process_line(line)
+                capacity = int(capacity)
 
                 # place batteries in a grid
                 battery_grid[location] = Battery(location, capacity)
