@@ -15,12 +15,13 @@ class House:
         Returns:
             Battery: closest battery
         '''
+        cords = grid.grid_list
 
         bat = None
         best = grid.x_dim + grid.y_dim
-        for key in grid:
-            if isinstance(grid[key], Battery): ## unnecesary if all batteries
-                cur_bat = grid[key]
+        for key in cords:
+            if isinstance(cords[key], Battery): ## unnecesary if all batteries
+                cur_bat = cords[key]
                 dist = grid.distance(self.cord, cur_bat.cord)
                 if bat is None or best > dist:
                     bat= cur_bat
