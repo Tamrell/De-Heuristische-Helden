@@ -15,6 +15,7 @@ class House:
         Returns:
             Battery: closest battery
         '''
+        grid = grid.grid_list
 
         bat = None
         best = grid.x_dim + grid.y_dim
