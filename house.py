@@ -1,6 +1,10 @@
 import imports
 class House:
-    ''' House class, initializes with tuple: coordinate and int: output'''
+    ''' House class, initializes with tuple: coordinate and int: output
+        atributes:
+        - cord: Coordinate as (x, y) Tuple
+        - output: output as float
+    '''
 
     def __init__(self, info):
         self.cord = (info[0], info[1])

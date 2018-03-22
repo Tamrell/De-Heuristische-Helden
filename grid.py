@@ -9,6 +9,12 @@ from load_batteries import *
 import termcolor
 
 class Grid:
+    '''
+    atributes:
+    - grid_list: dict containing: coordinates:Grid_Point
+    - houses: dict containing: coordinate:House
+
+     '''
 
     def __init__(self, file, dimensions=(50, 50)):
         ''' Constructor, needs a file with information about the houses and
