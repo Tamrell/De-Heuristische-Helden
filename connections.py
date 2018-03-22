@@ -81,7 +81,7 @@ class Connections:
             return True
 
         # disconnect battery
-    elif isinstance(item, Battery):
+        elif isinstance(item, Battery):
 
             battery_links = item.links
 
@@ -109,7 +109,7 @@ class Connections:
         Takes
             house1, house2: House instances from two seperate batteries
         Returns
-            True if swap was succesfull""""
+            True if swap was succesfull"""
 
         # check if not connected to same battery
         if house1.bat == house2.bat:
