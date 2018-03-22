@@ -9,6 +9,15 @@ class Connections:
             house, battery = connection
             print(house.cord, battery.cord)
 
+    def get_connection(self, item):
+        element = type(item)
+        if element == Battery:
+            return item.links
+        elif element == House:
+            return item.bat
+        else:
+            return None
+
     def connect(self, house, battery):
         house.bat = battery
         battery.links.append(house)
@@ -31,9 +40,32 @@ class Connections:
         return True
 
     def swap_connection(self, house1, house2):
+        for connection in connections:
+            if connection == (house1, house1.bat):
+                connection = (house1, house2.bat)
+            if connection == (house2, house2.bat):
+                connection = (house2, house1.bat)
+
         battery1, battery2 = house1.bat, house2.bat
         house1.bat, house2.bat = house2.bat, house1.bat
-        # shit bijhouden in eigen lijst
+
+        return True
 
     def calculate_score(self):
-        pass
+        score = 0
+        for connection in connections:
+            score += calculate_distance(connection)
+        return score
+
+    def test(self, batteries):
+
+        for battery in batteries:
+            cap = 0
+            for house in battery.links:
+                cap += house.output
+            if cap > battery.max_load:
+                return battery
+
+        return True
+
+# hier maken we zo lekker sets van
