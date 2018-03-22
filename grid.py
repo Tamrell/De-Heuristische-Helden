@@ -137,9 +137,11 @@ class Grid:
             string += "\n"
         return string
 
-    def distance(cord1, cord2):
-        dif = subtract(cord2, cord1)
-        return int(abs(dif[0] + dif[1]))
+    def distance(self, cord1, cord2):
+
+        (x1, y1) = cord1
+        (x2, y2) = cord2
+        return (abs(int(x1) - int(x2)) + abs(int(y2) - int(y1)))
 
 
 class Grid_Point:
