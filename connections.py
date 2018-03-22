@@ -21,31 +21,73 @@ class Connections:
             Battery instance: the Battery instance a given House instance is
                 connected to
             list of House instances: list of houses a given battery is
-                connected to"""
+                connected to
+        Raises
+            custom exception"""
 
         # determine input type
         element = type(item)
-        
+
+        # input is house instance
         if element == House:
             return item.bat
 
+        # input is battery instance
         elif element == Battery:
             return list({con for con in self.connections if con[1] == item})
+
+        # input is something else
         else:
-            return None
+            raise Exception("Unrecognized data type")
 
     def connect(self, house, battery):
+        """This function connects a house to a battery in the grid and in the
+            local representation
+        Takes
+            house: a House instance
+            battery: the Battery instance house must be connected to
+        Returns
+            none"""
+
+        # connect in grid
         house.bat = battery
         battery.links.append(house)
+
+        # connect in local repr
         self.connections.add((house, battery))
 
-    def disconnect_house(self, house):
-        if (house, house.bat) in connections:
-            self.connections.remove((house, house.bat))
-            house.bat = None
+    def disconnect(self, item):
+        """This function disconnects either a battery or house (given as param)
+        both in grid as in local repr
+
+        Takes
+            item: either a House or Battery instance to be disconnected
+        Returns
+            True if disconnection was succesfull; else False"""
+
+        # determine instance type
+        element = type(item)
+
+        if element == House:
+            try:
+                self.connections.remove((item, item.bat))
+                item.bat = None
+            except KeyError:
+                return False
             return True
-        else:
-            return False
+
+        elif element == Battery:
+            battery_links = item.links
+            for house in battery_links:
+                try:
+                    self.connections.remove((item, house))
+                    battery_links.remove(house)
+                except KeyError:
+                    return True
+
+        return True
+
+
 
     def disconnect_battery(self, battery):
         battery_links = battery.links
