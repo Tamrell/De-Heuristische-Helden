@@ -129,17 +129,37 @@ class Connections:
         return True
 
     def calculate_score(self):
+        """This function calculates the cost of a given set of connections
+        Takes:
+            none
+        Returns
+            score: the sum of manhattan distances between all houses and their
+            respective batteries"""
+
         score = 0
         for connection in connections:
+            # to do: implement this function
             score += calculate_distance(connection)
         return score
 
-    def test(self, batteries):
+    def test(self):
+        """This function tests if no batteries are overconnected
+        Takes:
+            none
+        Returns:
+            list of Battery instances consisting of all overconnected
+            Battery instances; else True"""
+
+        overloaded_batteries = []
         for connection in self.connections:
             battery = connection[1]
             cap = 0
             for house in battery.links:
                 cap += house.output
             if cap > battery.max_load:
-                return battery
+                overloaded_batteries.append(battery)
+
+        # return list if non-empty
+        if len(overloaded_batteries):
+            return overloaded_batteries
         return True
