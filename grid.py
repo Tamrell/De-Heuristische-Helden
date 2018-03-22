@@ -11,7 +11,7 @@ class Grid:
 
     def __init__(self, file, dimensions=(50, 50)):
         ''' Constructor, needs a file with information about the houses and
-            optional dimensions of the Grid (default is 50x50).
+            optional dimensions of the Grid (default islf.houses = {} 50x50).
 
             Args:
                 file: A csv file containing the information about the houses,
