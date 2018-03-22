@@ -42,19 +42,24 @@ class Connections:
 
     def connect(self, house, battery):
         """This function connects a house to a battery in the grid and in the
-            local representation
+            local representation. Also checks if battery does not get
+            overconnected by connecting house
         Takes
             house: a House instance
             battery: the Battery instance house must be connected to
         Returns
-            none"""
+            True if battery could be connected; else False"""
 
         # connect in grid
         house.bat = battery
         battery.links.append(house)
+        if battery.load + house.output > battery.max_load:
+            return False
+        battery.load += house.output
 
         # connect in local repr
         self.connections.add((house, battery))
+        return True
 
     def disconnect(self, item):
         """This function disconnects either a battery or house (given as param)
