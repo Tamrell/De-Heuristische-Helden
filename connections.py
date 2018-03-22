@@ -128,6 +128,19 @@ class Connections:
 
         return True
 
+    def calculate_distance(self, battery, house):
+        """This function calculates the distance between a battery and a house
+        Takes:
+            battery: Battery instance as starting point of connection
+            house: House instance as endpoint
+        Returns:
+            distance between battery and house"""
+
+        (x1, y1) = battery.cord
+        (x2, y2) = house.cord
+
+        return abs(x1-x2) + abs(y1 - y2)
+
     def calculate_score(self):
         """This function calculates the cost of a given set of connections
         Takes:
@@ -138,8 +151,8 @@ class Connections:
 
         score = 0
         for connection in connections:
-            # to do: implement this function
-            score += calculate_distance(connection)
+            (house, battery) = connections
+            score += calculate_distance(battery, house)
         return score
 
     def test(self):
