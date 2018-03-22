@@ -28,15 +28,12 @@ class Connections:
         Raises
             custom exception: if instance type is neither House nor Battery"""
 
-        # determine input type
-        element = type(item)
-
         # input is house instance
-        if element == House:
+        if isinstance(item, House):
             return item.bat
 
         # input is battery instance
-        elif element == Battery:
+        elif isinstance(item, Battery):
             return list({con for con in self.connections if con[1] == item})
 
         # input is something else
@@ -68,11 +65,8 @@ class Connections:
         Returns
             True if disconnection was succesfull; else False"""
 
-        # determine instance type
-        element = type(item)
-
         # disconnect house
-        if element == House:
+        if isinstance(item, House):
             try:
                 # disconnect in local repr
                 self.connections.remove((item, item.bat))
@@ -87,7 +81,7 @@ class Connections:
             return True
 
         # disconnect battery
-        elif element == Battery:
+    elif isinstance(item, Battery):
 
             battery_links = item.links
 
@@ -111,8 +105,18 @@ class Connections:
         return True
 
     def swap_connection(self, house1, house2):
+        """This function swaps two houses from two seperate batteries
+        Takes
+            house1, house2: House instances from two seperate batteries
+        Returns
+            True if swap was succesfull""""
 
-        # swap in set
+        # check if not connected to same battery
+        if house1.bat == house2.bat:
+            print("U an idiot")
+            return False
+
+        # swap in local repr
         self.connections.remove((house1, house1.bat))
         self.connections.add((house1, house2.bat))
         self.connections.remove((house2, house2.bat))
