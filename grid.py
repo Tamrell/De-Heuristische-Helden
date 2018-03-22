@@ -5,6 +5,7 @@ from numpy import subtract
 import csv
 from house import House
 import sys
+from load_batteries import *
 
 class Grid:
 
@@ -73,6 +74,26 @@ class Grid:
             for row in reader:
                 self.houses[(int(row[0]), int(row[1]))] = House(row)
 
+    def set_batteries(filename):
+    """reads batteries from a file and places them in a grit"""
+
+        battery_grid = {}
+
+        # open file
+        with open(filename) as f:
+            # get list of batteries
+            lines = csv.reader(f, delimiter = "\t")
+
+            # skip header
+            next(lines)
+
+            for line in lines:
+                location, capacity = process_line(line)
+
+                # place batteries in a grid
+                battery_grid[location] = Battery(location, capacity)
+                self.batteries = battery_grid
+
     def y_list(self, y, method=0):
         ''' Helper function for print_heatmap. Returns the probabilities
             of row y.
@@ -115,6 +136,10 @@ class Grid:
                     string += "_ "
             string += "\n"
         return string
+
+    def distance(cord1, cord2):
+        dif = subtract(cord2, cord1)
+        return int(abs(dif[0] + dif[1]))
 
 
 class Grid_Point:
