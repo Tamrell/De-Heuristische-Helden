@@ -12,5 +12,5 @@ if __name__ == "__main__":
         file = 'Data/wijk3_huizen.csv'
 
     grid = Grid(file)
-    grid.print_heatmap(1)
+    grid.print_heatmap()
     print(grid)
