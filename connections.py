@@ -1,4 +1,7 @@
 # C:\Users\Eigenaar\Documents\school\Thema 2\De-Heuristische-Helden\De-Heuristische-Helden
+from house import *
+from battery import *
+
 class Connections:
     def __init__(self):
         self.connections=set()
@@ -23,7 +26,7 @@ class Connections:
             list of House instances: list of houses a given battery is
                 connected to
         Raises
-            custom exception"""
+            custom exception: if instance type is neither House nor Battery"""
 
         # determine input type
         element = type(item)
@@ -38,7 +41,7 @@ class Connections:
 
         # input is something else
         else:
-            raise Exception("Unrecognized data type")
+            raise Exception("Invalid input type")
 
     def connect(self, house, battery):
         """This function connects a house to a battery in the grid and in the
@@ -68,33 +71,43 @@ class Connections:
         # determine instance type
         element = type(item)
 
+        # disconnect house
         if element == House:
             try:
+                # disconnect in local repr
                 self.connections.remove((item, item.bat))
+
+                # disconnect in grid
                 item.bat = None
+
+            # instance not connected
             except KeyError:
                 return False
+
             return True
 
+        # disconnect battery
         elif element == Battery:
+
             battery_links = item.links
+
+            # battery not connected
+            if len(battery_links) == 0:
+                return True
+
             for house in battery_links:
                 try:
+                    # disconnect in local repr
                     self.connections.remove((item, house))
+
+                    # disconnect in grid
                     battery_links.remove(house)
+
                 except KeyError:
-                    return True
+                    return False
 
-        return True
-
-
-
-    def disconnect_battery(self, battery):
-        battery_links = battery.links
-        for item in battery_links:
-            self.connections.remove(item)
-        battery_links = []
-
+        else:
+            raise Exception("unvalid input type")
         return True
 
     def swap_connection(self, house1, house2):
