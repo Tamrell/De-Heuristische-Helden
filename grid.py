@@ -10,10 +10,9 @@ import termcolor
 
 class Grid:
     '''
-    object atributes:
-
-    - grid_list: dict with coordinates:Grid_Point
-    
+    atributes:
+    - grid_list: dict containing: coordinates:Grid_Point
+    - houses: dict containing: coordinate:House
 
      '''
 
