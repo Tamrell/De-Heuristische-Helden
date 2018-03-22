@@ -74,8 +74,7 @@ class Grid:
             for row in reader:
                 self.houses[(int(row[0]), int(row[1]))] = House(row)
 
-    def set_batteries(filename):
-    """reads batteries from a file and places them in a grit"""
+    def set_batteries(self, filename):
 
         battery_grid = {}
 
