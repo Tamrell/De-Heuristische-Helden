@@ -42,12 +42,19 @@ class Connections:
 
     def connect(self, house, battery):
         """This function connects a house to a battery in the grid and in the
-            local representation
+            local representation. Also checks if battery does not get
+            overconnected by connecting house
         Takes
             house: a House instance
             battery: the Battery instance house must be connected to
         Returns
-            none"""
+            True if battery could be connected; else False"""
+
+        # check for overloadedness
+        if battery.load + house.output > battery.max_load:
+            return False
+
+        battery.load += house.output
 
         # connect in grid
         house.bat = battery
@@ -55,6 +62,7 @@ class Connections:
         battery.links.append(house)
         # connect in local repr
         self.connections.add((house, battery))
+        return True
 
     def disconnect(self, item):
         """This function disconnects either a battery or house (given as param)
@@ -81,7 +89,7 @@ class Connections:
             return True
 
         # disconnect battery
-    elif isinstance(item, Battery):
+        elif isinstance(item, Battery):
 
             battery_links = item.links
 
@@ -109,7 +117,7 @@ class Connections:
         Takes
             house1, house2: House instances from two seperate batteries
         Returns
-            True if swap was succesfull""""
+            True if swap was succesfull"""
 
         # check if not connected to same battery
         if house1.bat == house2.bat:
@@ -128,18 +136,51 @@ class Connections:
 
         return True
 
+    def calculate_distance(self, battery, house):
+        """This function calculates the distance between a battery and a house
+        Takes:
+            battery: Battery instance as starting point of connection
+            house: House instance as endpoint
+        Returns:
+            distance between battery and house"""
+
+        (x1, y1) = battery.cord
+        (x2, y2) = house.cord
+
+        return abs(x1-x2) + abs(y1 - y2)
+
     def calculate_score(self):
+        """This function calculates the cost of a given set of connections
+        Takes:
+            none
+        Returns
+            score: the sum of manhattan distances between all houses and their
+            respective batteries"""
+
         score = 0
         for connection in connections:
-            score += calculate_distance(connection)
+            (house, battery) = connections
+            score += calculate_distance(battery, house)
         return score
 
-    def test(self, batteries):
+    def test(self):
+        """This function tests if no batteries are overconnected
+        Takes:
+            none
+        Returns:
+            list of Battery instances consisting of all overconnected
+            Battery instances; else True"""
+
+        overloaded_batteries = []
         for connection in self.connections:
             battery = connection[1]
             cap = 0
             for house in battery.links:
                 cap += house.output
             if cap > battery.max_load:
-                return battery
+                overloaded_batteries.append(battery)
+
+        # return list if non-empty
+        if len(overloaded_batteries):
+            return overloaded_batteries
         return True
