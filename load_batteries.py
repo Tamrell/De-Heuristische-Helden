@@ -56,7 +56,7 @@ def process_line(line):
     Returns:
         location: (x, y)-tuple as coordinates of battery
         capacity: maximum load of battery"""
-
+    line = line[0].split(',') # line is nog niet in het goede format
     # first element of array
     location = get_coordinates(line[0])
 
@@ -73,7 +73,7 @@ def load_batteries(filename):
     # open file
     with open(filename) as f:
         # get list of batteries
-        lines = csv.reader(f, delimiter = "\t")
+        lines = csv.reader(f, delimiter = "\t") # might not want to use csv.reader on windows, compatibility issues with linux)
 
         # skip header
         next(lines)
