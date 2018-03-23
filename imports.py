@@ -1,4 +1,5 @@
-import grid
-import house
-import load_batteries
-import battery
+from grid import *
+from house import *
+from load_batteries import *
+from battery import *
+from sys import *

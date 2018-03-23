@@ -4,11 +4,15 @@ class House:
         atrributes:
         - cord: Coordinate as (x, y) Tuple
         - output: output as float
+        - free: true if not connected to a battery
+        - color: color in which the house will be printed
     '''
 
     def __init__(self, info):
         self.cord = (info[0], info[1])
         self.output = float(info[2])
+        self.free = True
+        self.color = 'white'
 
     def find_closest_battery(self, grid):
         ''' Returns the closest battery object or None
@@ -19,13 +23,16 @@ class House:
         Returns:
             Battery: closest battery
         '''
+        batteries = grid.batteries
 
         bat = None
         best = grid.x_dim + grid.y_dim
-        for battery in grid.batteries:
-            cur_bat = battery
-            dist = grid.distance(self.cord, cur_bat)
-            if bat is None or best > dist:
-                bat= cur_bat
-                best = dist
+        for battery in batteries:
+            batteries[battery] = b
+            if b.max_load >= b.load:
+                cur_bat = battery
+                dist = grid.distance(self.cord, cur_bat)
+                if bat is None or best > dist:
+                    bat= cur_bat
+                    best = dist
         return bat

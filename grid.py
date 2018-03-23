@@ -13,6 +13,7 @@ class Grid:
     atrributes:
     - grid_list: dict containing: coordinates:Grid_Point
     - houses: dict containing: coordinate:House
+    - batteries: dict containing: coordinate:Battery
 
      '''
 
@@ -36,6 +37,7 @@ class Grid:
         self.x_dim = dimensions[0]
         self.y_dim = dimensions[1]
         self.set_houses(file)
+        self.set_batteries(file)
         self.set_grid_points()
         self.set_global_density()
 
@@ -134,18 +136,21 @@ class Grid:
             empty spot and each 'H' represents a house.
         '''
 
-        string = ""
+        s = ""
         for y in range(self.y_dim):
             for x in range(self.x_dim):
                 if (x, y) in self.houses:
-                    string += termcolor.colored("H", 'green', 'on_grey') + " "
+                    s += termcolor.colored("H", self.houses[(x, y)].color)
+                    s += " "
+                elif (x, y) in self.batteries:
+                    s += termcolor.colored("B", self.batteries[(x, y)].color)
+                    s += " "
                 else:
-                    string += "_ "
-            string += "\n"
-        return string
+                    s += "_ "
+            s += "\n"
+        return s
 
     def distance(self, cord1, cord2):
-
         (x1, y1) = cord1
         (x2, y2) = cord2
         return (abs(int(x1) - int(x2)) + abs(int(y2) - int(y1)))

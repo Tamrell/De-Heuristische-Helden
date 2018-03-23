@@ -51,8 +51,8 @@ class Connections:
 
         # connect in grid
         house.bat = battery
+        house.color = battery.color
         battery.links.append(house)
-
         # connect in local repr
         self.connections.add((house, battery))
 
