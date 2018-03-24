@@ -3,14 +3,23 @@ from grid import *
 
 if __name__ == "__main__":
 
-    file = sys.argv[1]
-    if file == '1':
-        file = 'Data/wijk1_huizen.csv'
-    elif file == '2':
-        file = 'Data/wijk2_huizen.csv'
-    elif file == '3':
-        file = 'Data/wijk3_huizen.csv'
+    file1 = sys.argv[1]
+    if file1 == '1':
+        file1 = 'Data/wijk1_huizen.csv'
+    elif file1 == '2':
+        file1 = 'Data/wijk2_huizen.csv'
+    elif file1 == '3':
+        file1 = 'Data/wijk3_huizen.csv'
 
-    grid = Grid(file)
+    file2 = sys.argv[1]
+    if file2 == '1':
+        file2 = 'Data/wijk1_batterijen.txt'
+    elif file2 == '2':
+        file2 = 'Data/wijk2_batterijen.txt'
+    elif file2 == '3':
+        file2 = 'Data/wijk3_batterijen.txt'
+
+
+    grid = Grid(file1, file2)
     grid.print_heatmap()
     print(grid)

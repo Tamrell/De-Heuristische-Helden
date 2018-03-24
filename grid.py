@@ -17,7 +17,7 @@ class Grid:
 
      '''
 
-    def __init__(self, file, dimensions=(50, 50)):
+    def __init__(self, file1, file2, dimensions=(50, 50)):
         ''' Constructor, needs a file with information about the houses and
             optional dimensions of the Grid (default islf.houses = {} 50x50).
 
@@ -34,10 +34,11 @@ class Grid:
         self.total_probability = 0
         self.total_sq_probability = 0
         self.houses = {}
+        self.batteries = {}  # still needed
         self.x_dim = dimensions[0]
         self.y_dim = dimensions[1]
-        self.set_houses(file)
-        self.set_batteries(file)
+        self.set_houses(file1)
+        self.set_batteries(file2)
         self.set_grid_points()
         self.set_global_density()
 
@@ -85,8 +86,6 @@ class Grid:
 
     def set_batteries(self, filename):
 
-        battery_grid = {}
-
         # open file
         with open(filename) as f:
             # get list of batteries
@@ -100,8 +99,7 @@ class Grid:
                 capacity = int(capacity)
 
                 # place batteries in a grid
-                battery_grid[location] = Battery(location, capacity)
-                self.batteries = battery_grid
+                self.batteries[location] = Battery(location, capacity)
 
     def y_list(self, y, method=0):
         ''' Helper function for print_heatmap. Returns the probabilities
@@ -143,7 +141,7 @@ class Grid:
                     s += termcolor.colored("H", self.houses[(x, y)].color)
                     s += " "
                 elif (x, y) in self.batteries:
-                    s += termcolor.colored("B", self.batteries[(x, y)].color)
+                    s += termcolor.colored("B", 'grey', self.batteries[(x, y)].color)
                     s += " "
                 else:
                     s += "_ "

@@ -1,5 +1,10 @@
 from numpy import subtract
 
+def assign_color():
+    for color in ['on_green', 'on_blue', 'on_red', 'on_grey', 'on_yellow', 'on_magenta',
+                  'cyan', 'white']:
+        yield color
+
 class Battery:
     ''' Battery class, initializes with tuple: coordinate and int: max_load
 
@@ -10,14 +15,13 @@ class Battery:
         - links: list of houses the battery is connected with
         - color: color the houses will get if connected with this battery
     '''
+    color_generator = assign_color()
 
     def __init__(self, cord, max_load):
         self.cord = cord
         self.max_load = max_load
         self.load = 0
         self.links = []
-        self.color = self.__assign_color()
+        self.color = next(Battery.color_generator)
 
-    def __assign_color(self):
-        for color in ['green', 'blue', 'red', 'grey', 'yellow', 'orange']:
-            yield color
+        print(self.cord, "Added")

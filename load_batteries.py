@@ -19,8 +19,6 @@ def get_x(string):
     for char in string[:string_end]:
         if char.isdigit():
             end_string += char
-
-
     return int(end_string)
 
 def get_y(string):
@@ -56,7 +54,7 @@ def process_line(line):
     Returns:
         location: (x, y)-tuple as coordinates of battery
         capacity: maximum load of battery"""
-    line = line[0].split(',') # line is nog niet in het goede format
+
     # first element of array
     location = get_coordinates(line[0])
 
@@ -74,7 +72,7 @@ def load_batteries(filename):
     with open(filename) as f:
         # get list of batteries
         lines = csv.reader(f, delimiter = "\t") # might not want to use csv.reader on windows, compatibility issues with linux)
-
+        print(lines)
         # skip header
         next(lines)
 
@@ -83,4 +81,5 @@ def load_batteries(filename):
 
             # place batteries in a grid
             battery_grid[location] = Battery(location, capacity)
+            print(battery_grid)
         return battery_grid
