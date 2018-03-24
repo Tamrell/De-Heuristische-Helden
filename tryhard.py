@@ -11,21 +11,24 @@ def shortest_first(h_dict, grid):
     houses = [h_dict[cord] for cord in h_dict if h_dict[cord].free]
     for h in houses:
         b = h.find_closest_battery(grid)
-        d = grid.distance(h.cord, b.cord)
-        nordered.append((d, h, b))
+        if b:
+            d = grid.distance(h.cord, b.cord)
+            nordered.append((d, h, b))
     return [(con[1], con[2]) for con in sorted(nordered)]
 
 def connect_them_bitches(grid):
     c = Connections()
     cons = True
     while cons:
-        print(grid)
         cons = shortest_first(grid.houses, grid)
         still_good = True
         i = 0
         while still_good and i < len(cons):
             still_good = c.connect(cons[i][0], cons[i][1])
             i += 1
+
+def optimize_them_bitches(grid):
+    pass
 
 
 
