@@ -1,8 +1,8 @@
 from numpy import subtract
 
 def assign_color():
-    for color in ['on_green', 'on_blue', 'on_red', 'on_grey', 'on_yellow', 'on_magenta',
-                  'cyan', 'white']:
+    for color in ['on_green', 'on_blue', 'on_red', 'on_cyan', 'on_yellow',
+                  'on_magenta', 'on_white']:
         yield color
 
 class Battery:

@@ -51,7 +51,7 @@ class Connections:
             True if battery could be connected; else False"""
 
         # check for overloadedness
-        if battery.load + house.output > battery.max_load:
+        if battery.load + house.output > battery.max_load or not house.free:
             return False
 
         battery.load += house.output
@@ -59,6 +59,7 @@ class Connections:
         # connect in grid
         house.bat = battery
         house.color = battery.color
+        house.free = False
         battery.links.append(house)
         # connect in local repr
         self.connections.add((house, battery))

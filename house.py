@@ -14,6 +14,9 @@ class House:
         self.free = True
         self.color = 'white'
 
+    def __lt__(self, other):
+        return True
+
     def find_closest_battery(self, grid):
         ''' Returns the closest battery object or None
 
@@ -28,10 +31,10 @@ class House:
         bat = None
         best = grid.x_dim + grid.y_dim
         for battery in batteries:
-            batteries[battery] = b
-            if b.max_load >= b.load:
-                cur_bat = battery
-                dist = grid.distance(self.cord, cur_bat)
+            b = batteries[battery]
+            if b.max_load >= b.load + self.output:
+                cur_bat = b
+                dist = grid.distance(self.cord, cur_bat.cord)
                 if bat is None or best > dist:
                     bat= cur_bat
                     best = dist

@@ -138,10 +138,15 @@ class Grid:
         for y in range(self.y_dim):
             for x in range(self.x_dim):
                 if (x, y) in self.houses:
-                    s += termcolor.colored("H", self.houses[(x, y)].color)
+                    color = self.houses[(x, y)].color
+                    if color == 'white':
+                        s += termcolor.colored("H", color)
+                    else:
+                        s += termcolor.colored("H", 'grey', color)
                     s += " "
                 elif (x, y) in self.batteries:
-                    s += termcolor.colored("B", 'grey', self.batteries[(x, y)].color)
+                    color = self.batteries[(x, y)].color
+                    s += termcolor.colored("B", 'grey', color)
                     s += " "
                 else:
                     s += "_ "
