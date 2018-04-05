@@ -39,3 +39,15 @@ class Battery:
                     best = dist
                     best_cord = h
         return best_cord
+
+    def find_furthest_house(self, grid):
+
+        best = 0
+        best_house = None
+
+        for house in self.links:
+            dist = grid.distance(house.cord, self.cord)
+            if dist > best:
+                best = dist
+                best_house = house
+        return best_house

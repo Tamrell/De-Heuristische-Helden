@@ -12,8 +12,9 @@ def shortest_first(h_dict, grid):
     return [(con[1], con[2]) for con in sorted(nordered)]
 
 def remove_them_inneficient_bitches(grid):
-    for battery in grid.batteries:
-        pass
+    c = Connections()
+    for battery in grid.batteries.values():
+        c.unconnect(battery.find_furthest_house(grid))
 
 def connect_them_bitches(grid):
     c = Connections()
@@ -57,6 +58,11 @@ if __name__ == "__main__":
 
     grid = Grid(file1, file2)
     connect_them_bitches(grid)
+    print(grid)
+    for i in range(10):
+        for j in range(10):
+            remove_them_inneficient_bitches(grid)
+        connect_them_bitches(grid)
     print(grid)
     for b in grid.batteries.values():
         print(b.color, ":", b.load)
