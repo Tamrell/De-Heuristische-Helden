@@ -13,6 +13,7 @@ class House:
         self.output = float(info[2])
         self.free = True
         self.color = 'white'
+        self.bat = None
 
     def __lt__(self, other):
         return True

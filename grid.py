@@ -146,7 +146,7 @@ class Grid:
                     s += " "
                 elif (x, y) in self.batteries:
                     color = self.batteries[(x, y)].color
-                    s += termcolor.colored("B", 'grey', color)
+                    s += termcolor.colored("B", 'grey', color, attrs=['reverse', 'blink'])
                     s += " "
                 else:
                     s += "_ "

@@ -60,7 +60,7 @@ class Connections:
         house.bat = battery
         house.color = battery.color
         house.free = False
-        battery.links.append(house)
+        battery.links.add(house)
         # connect in local repr
         self.connections.add((house, battery))
         return True
@@ -112,6 +112,17 @@ class Connections:
         else:
             raise Exception("unvalid input type")
         return True
+
+    def unconnect(self, house):
+        """Disconnects the house from its battery"""
+        try:
+            house.bat.load -= house.output
+            house.bat.links.remove(house)
+            house.color = 'white'
+            house.bat = None
+        except:
+            print("HAHA GETREKT")
+
 
     def swap_connection(self, house1, house2):
         """This function swaps two houses from two seperate batteries
