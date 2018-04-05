@@ -23,3 +23,17 @@ class Battery:
         self.load = 0
         self.links = set()
         self.color = next(Battery.color_generator)
+
+    def find_closest_house(self, grid, house_list):
+
+        best = grid.x_dim + grid.y_dim
+        best_cord = ()
+
+        for h in house_list:
+            housyboi = grid.houses[h]
+            if self.max_load >= self.load + housyboi.output:
+                dist = grid.distance(self.cord, h)
+                if best > dist:
+                    best = dist
+                    best_cord = h
+        return best_cord
