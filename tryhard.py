@@ -1,10 +1,5 @@
 from imports import *
 from connections import *
-# init grid
-# create a list with all houses and their distance to all batteries,
-# sort the list on shortest distances
-# try to connect them all
-# make new list with leftover houses and their distance to non-overloaded battery
 
 def shortest_first(h_dict, grid):
     nordered = []
@@ -15,6 +10,10 @@ def shortest_first(h_dict, grid):
             d = grid.distance(h.cord, b.cord)
             nordered.append((d, h, b))
     return [(con[1], con[2]) for con in sorted(nordered)]
+
+def remove_them_inneficient_bitches(grid):
+    for battery in grid.batteries:
+        pass
 
 def connect_them_bitches(grid):
     c = Connections()
@@ -27,10 +26,15 @@ def connect_them_bitches(grid):
             still_good = c.connect(cons[i][0], cons[i][1])
             i += 1
 
+def make_sure_them_bitches_be_fitting(h_dict, grid):
+    houses = [h_dict[cord] for cord in h_dict if h_dict[cord].free]
+
+
+
 def optimize_them_bitches(grid):
+    # need to make sure everything is connected
+    # then run hill climber for a time on a longest first.
     pass
-
-
 
 
 if __name__ == "__main__":
@@ -53,5 +57,6 @@ if __name__ == "__main__":
 
     grid = Grid(file1, file2)
     connect_them_bitches(grid)
-
     print(grid)
+    for b in grid.batteries.values():
+        print(b.color, ":", b.load)

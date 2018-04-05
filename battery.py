@@ -21,10 +21,8 @@ class Battery:
         self.cord = cord
         self.max_load = max_load
         self.load = 0
-        self.links = []
+        self.links = set()
         self.color = next(Battery.color_generator)
-
-        print(self.cord, "Added")
 
     def find_closest_house(self, grid, house_list):
 
