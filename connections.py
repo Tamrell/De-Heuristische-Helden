@@ -120,6 +120,7 @@ class Connections:
             house.bat.links.remove(house)
             house.color = 'white'
             house.bat = None
+            house.free = True
         except:
             print("HAHA GETREKT")
 

@@ -38,7 +38,7 @@ class Battery:
                     best_cord = h
         return best_cord
 
-    def find_furthest_house(self):
+    def find_furthest_house(self, grid):
 
         best = 0
         best_house = None
