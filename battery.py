@@ -24,6 +24,8 @@ class Battery:
         self.links = set()
         self.color = next(Battery.color_generator)
 
+
+
     def find_closest_house(self, grid, house_list):
 
         best = grid.x_dim + grid.y_dim
