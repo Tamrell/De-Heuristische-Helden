@@ -1,6 +1,6 @@
 from imports import *
 from connections import *
-from bokeh.plotting import figure, show
+from plots import plot
 
 def shortest_first(h_dict, grid):
     nordered = []
@@ -74,18 +74,4 @@ if __name__ == "__main__":
     print(grid)
     for b in grid.batteries.values():
         print(b.color, ":", b.load)
-
-    x_h = []
-    y_h = []
-    x_b = []
-    y_b = []
-    for cord in grid.houses:
-        x_h.append(cord[0])
-        y_h.append(cord[1])
-    for cord in grid.batteries:
-        x_b.append(cord[0])
-        y_b.append(cord[1])
-    p = figure()
-    p.cross(x=x_h, y=y_h)
-    p.circle(x=x_b, y=y_b)
-    show(p)
+    plot(grid)
