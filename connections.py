@@ -161,7 +161,7 @@ class Connections:
         (x1, y1) = battery.cord
         (x2, y2) = house.cord
 
-        return abs(x1-x2) + abs(y1 - y2)
+        return abs(int(x1) - int(x2)) + abs(int(y1) - int(y2))
 
     def calculate_score(self):
         """This function calculates the cost of a given set of connections
@@ -172,9 +172,9 @@ class Connections:
             respective batteries"""
 
         score = 0
-        for connection in connections:
-            (house, battery) = connections
-            score += calculate_distance(battery, house)
+        for connection in self.connections:
+            (house, battery) = connection
+            score += self.calculate_distance(battery, house)
         return score
 
     def test(self):
