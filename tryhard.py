@@ -41,9 +41,15 @@ def overload_them_bitches(grid):
         c.connect(h, b, True)
 
 def optimize_them_bitches(grid):
-    # for each underloaded battery, search for the closest house connected to an
-    # overloaded battery, and switch the connection
-    pass
+    # for each underloaded battery, search for the most profitable switch in  house
+    # connected to an overloaded battery, and switch the connection
+    # most profitable: maybe closest house of an overloaded battery, maybe least increasement of length.
+
+    cheapest = 30
+    for b in grid.batteries.values():
+        while b.fits(cheapest):
+            
+
 
 
 if __name__ == "__main__":
@@ -73,5 +79,5 @@ if __name__ == "__main__":
     #     connect_them_bitches(grid)
     print(grid)
     for b in grid.batteries.values():
-        print(b.color, ":", b.load)
+        print(b.color, ":", b.load, "of", b.max_load)
     plot(grid)
