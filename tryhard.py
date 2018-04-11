@@ -29,6 +29,7 @@ def connect_them_bitches(grid):
 
 def make_sure_them_bitches_be_fitting(h_dict, grid):
     houses = [h_dict[cord] for cord in h_dict if h_dict[cord].free]
+    pass
 
 
 

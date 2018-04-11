@@ -25,7 +25,15 @@ class Battery:
         self.color = next(Battery.color_generator)
 
     def find_closest_house(self, grid, house_list):
+        ''' Returns the closest House object
 
+        Args:
+            Grid: grid that contains batteries
+            List: list containing houses on the grid
+
+        Returns:
+            House: closest House
+        '''
         best = grid.x_dim + grid.y_dim
         best_cord = ()
 
@@ -38,8 +46,30 @@ class Battery:
                     best_cord = h
         return best_cord
 
-    def find_furthest_house(self, grid):
+    def find_cheapest_house(self):
+        ''' Returns the House object with the lowest output in self.links.
 
+        Args:
+            None
+
+        Returns:
+            House: 'cheapest' House
+        '''
+        cheapest = list(self.links)[0]
+        for h in self.links:
+            if h.output < cheapest.output:
+                cheapest = h
+        return cheapest
+
+    def find_furthest_house(self, grid):
+        ''' Returns the furthest House object in self.links.
+
+        Args:
+            Grid: grid object containing the houses
+
+        Returns:
+            House: furthest House in the self.links
+        '''
         best = 0
         best_house = None
 

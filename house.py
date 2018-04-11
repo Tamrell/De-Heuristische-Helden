@@ -16,13 +16,15 @@ class House:
         self.bat = None
 
     def __lt__(self, other):
+        '''For sorting purposes, there is no need to differentiate. '''
         return True
 
-    def find_closest_battery(self, grid):
+    def find_closest_battery(self, grid, free=True):
         ''' Returns the closest battery object or None
 
         Args:
             Grid: grid that contains batteries
+            Bool(optional): False if the batteries may be overloaded
 
         Returns:
             Battery: closest battery
@@ -31,12 +33,12 @@ class House:
 
         bat = None
         best = grid.x_dim + grid.y_dim
-        for battery in batteries:
-            b = batteries[battery]
-            if b.max_load >= b.load + self.output:
+        for b in batteries.values():
+            if not free or b.max_load >= b.load + self.output:
                 cur_bat = b
                 dist = grid.distance(self.cord, cur_bat.cord)
                 if bat is None or best > dist:
                     bat= cur_bat
                     best = dist
+
         return bat
