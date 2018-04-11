@@ -34,11 +34,11 @@ class Grid:
         self.total_probability = 0
         self.total_sq_probability = 0
         self.houses = {}
-        self.batteries = {}  # still needed
+        self.batteries = {}
         self.x_dim = dimensions[0]
         self.y_dim = dimensions[1]
-        self.set_houses(file1)
         self.set_batteries(file2)
+        self.set_houses(file1, self.batteries.values())
         self.set_grid_points()
         self.set_global_density()
 
@@ -64,10 +64,10 @@ class Grid:
         for point in self.grid_list:
             self.grid_list[point].probability = (1
                 / self.grid_list[point].distance) / self.total_probability
-            self.grid_list[point].rel_probability = (self.grid_list[point].rel_distance
-                / self.total_sq_probability)
+            self.grid_list[point].rel_probability = (
+            self.grid_list[point].rel_distance / self.total_sq_probability)
 
-    def set_houses(self, file):
+    def set_houses(self, file, batteries):
         ''' Takes a .csv file and add the houses in the file to the houses
             dictionary of the Grid. Keys of the houses are the x-y-coordinates
             in a tuple.
@@ -82,7 +82,7 @@ class Grid:
             reader = csv.reader(csvfile, delimiter=',')
             next(reader)
             for row in reader:
-                self.houses[(int(row[0]), int(row[1]))] = House(row)
+                self.houses[(int(row[0]), int(row[1]))] = House(row, batteries)
 
     def set_batteries(self, filename):
 
@@ -125,7 +125,8 @@ class Grid:
                                     1: Relative Density.
         '''
 
-        trace = go.Heatmap(z = [self.y_list(i, method) for i in range(self.x_dim)])
+        trace = go.Heatmap(z = [self.y_list(i, method) for i
+                                in range(self.x_dim)])
         data = [trace]
         plot(data, filename='labelled-heatmap.html')
 
@@ -146,7 +147,8 @@ class Grid:
                     s += " "
                 elif (x, y) in self.batteries:
                     color = self.batteries[(x, y)].color
-                    s += termcolor.colored("B", 'grey', color, attrs=['reverse', 'blink'])
+                    s += termcolor.colored("B", 'grey', color,
+                                            attrs=['reverse', 'blink'])
                     s += " "
                 else:
                     s += "_ "

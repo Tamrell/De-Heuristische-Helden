@@ -24,7 +24,16 @@ class Battery:
         self.links = set()
         self.color = next(Battery.color_generator)
 
+    def __lt__(self, other):
+        '''For sorting purposes, value is equal to the load. '''
+        if self.load < other.load:
+            return True
+        return False
 
+    def fits(self, output):
+        if self.max_load >= self.load + output:
+            return True
+        return False
 
     def find_closest_house(self, grid, house_list):
         ''' Returns the closest House object
