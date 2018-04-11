@@ -1,6 +1,7 @@
 from imports import *
 from connections import *
 from random import shuffle, choice
+import copy
 
 def connect_dem_classy_ladies(grid):
 
@@ -44,8 +45,7 @@ def connect_dem_random_ladies(grid):
             return False
         house_list.remove(h)
 
-    print(c.calculate_score())
-    return True
+    return c.calculate_score()
 
 
 
@@ -69,15 +69,21 @@ if __name__ == "__main__":
         file2 = 'Data/wijk3_batterijen.txt'
 
     grid = Grid(file1, file2)
+    best_score = 9999
+    iterations = 0
 
-    while not connect_dem_random_ladies(grid):
-        print(grid)
+    while iterations < 1000:
+        score = connect_dem_random_ladies(grid)
+        if score and score < best_score:
+            best_grid = copy.deepcopy(grid)
+            best_score = score
+            print(best_score)
         Battery.color_generator = assign_color()
         grid = Grid(file1, file2)
+        iterations += 1
 
-    print(grid)
-    for b in grid.batteries.values():
-        print(b.color, ":", b.load)
+    print(best_grid)
+    print(best_score)
 
     # bat = grid.batteries[(3, 45)]
     # house = bat.find_closest_house(grid, grid.houses)
