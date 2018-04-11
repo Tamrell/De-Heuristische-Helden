@@ -44,6 +44,7 @@ def connect_dem_random_ladies(grid):
             return False
         house_list.remove(h)
 
+    print(c.calculate_score())
     return True
 
 
