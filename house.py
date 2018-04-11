@@ -22,7 +22,7 @@ class House:
         '''For sorting purposes, there is no need to differentiate. '''
         return True
 
-    def distance(self, cord1, cord2, euclidian=True):
+    def distance(self, cord1, cord2, euclidian=False):
         if euclidian:
             return self.euclidian(cord1, cord2)
         (x1, y1) = cord1

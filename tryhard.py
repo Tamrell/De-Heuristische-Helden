@@ -41,8 +41,8 @@ def overload_them_bitches(grid):
         c.connect(h, b, True)
 
 def optimize_them_bitches(grid):
-    # need to make sure everything is connected
-    # then run hill climber for a time on a longest first.
+    # for each underloaded battery, search for the closest house connected to an
+    # overloaded battery, and switch the connection
     pass
 
 
