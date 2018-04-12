@@ -1,6 +1,7 @@
 # C:\Users\Eigenaar\Documents\school\Thema 2\De-Heuristische-Helden\De-Heuristische-Helden
 from house import *
 from battery import *
+from random import sample, choice
 
 class Connections:
     def __init__(self):
@@ -51,7 +52,7 @@ class Connections:
             True if battery could be connected; else False"""
 
         # check for overloadedness
-        if (battery.load + house.output > battery.max_load and not overload 
+        if (battery.load + house.output > battery.max_load and not overload
             ) or not house.free:
             return False
 
@@ -125,6 +126,27 @@ class Connections:
         except:
             print("HAHA GETREKT")
 
+    def rand_swapper(self, grid):
+        legit = False
+        checkers = 0
+        while not legit and checkers < 5000:
+            checkers += 1
+            b1, b2 = sample(grid.batteries.values(), 2)
+            h1 = choice(b1.links)
+            h2 = choice(b2.links)
+            if b1.max_load >= b1.load - h1.output + h2.output:
+                if b2.max_load >= b2.load - h2.output + h1.output:
+                    if h1.dists[b2] + h2.dists[b1] < h1.dists[b1] + h2.dists[b2]:
+                        legit = True
+        if checkers >= 5000:
+            return False
+        self.unconnect(h1)
+        self.unconnect(h2)
+        self.connect(h1, b2)
+        self.connect(h2, b1)
+        return True
+
+
 
     def swap_connection(self, house1, house2):
         """This function swaps two houses from two seperate batteries
@@ -170,11 +192,12 @@ class Connections:
         Returns
             score: the sum of manhattan distances between all houses and their
             respective batteries"""
+        b_cost = {1506:500, 1507:500, 1508:500, 450:90, 90:135, 180:180}
 
         score = 0
         for connection in self.connections:
-            (house, battery) = connection
-            score += self.calculate_distance(battery, house)
+            (h, b) = connection
+            score += h.dists[b] # * 9 + b_cost[b.max_load] * 10
         return score
 
     def test(self):

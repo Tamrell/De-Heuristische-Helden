@@ -30,7 +30,7 @@ def connect_them_bitches(grid):
     print(c.calculate_score())
 
 def connect_them_bitches_for_real(grid):
-
+    pass
 
 def make_sure_them_bitches_be_fitting(h_dict, grid):
     houses = [h_dict[cord] for cord in h_dict if h_dict[cord].free]
