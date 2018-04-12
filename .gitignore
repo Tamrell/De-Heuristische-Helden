@@ -1,4 +1,4 @@
 *.html
+test.py
 __pycache__/
 *.pyc
-test.py
