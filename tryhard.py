@@ -27,7 +27,10 @@ def connect_them_bitches(grid):
         while still_good and i < len(cons):
             still_good = c.connect(cons[i][0], cons[i][1])
             i += 1
-    print(c.calculate_score())
+    print(grid.score())
+    for i in range(10):
+        c.rand_swapper(grid)
+    print(grid.score())
 
 def connect_them_bitches_for_real(grid):
     pass
@@ -74,7 +77,7 @@ if __name__ == "__main__":
         file2 = 'Data/wijk3_batterijen.txt'
 
     grid = Grid(file1, file2)
-    overload_them_bitches(grid)
+    connect_them_bitches(grid)
     # for i in range(10):
     #     for j in range(10):
     #         remove_them_inneficient_bitches(grid)

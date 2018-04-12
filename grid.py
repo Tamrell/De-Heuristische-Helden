@@ -130,6 +130,13 @@ class Grid:
         data = [trace]
         plot(data, filename='labelled-heatmap.html')
 
+    def score(self):
+        score = 0
+        for b in self.batteries.values():
+            for h in b.links:
+                score += h.dists[b]
+        return score
+
     def __str__(self):
         ''' Returns a string that represents the Grid. Each '_' represents an
             empty spot and each 'H' represents a house.
