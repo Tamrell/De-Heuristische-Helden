@@ -51,7 +51,7 @@ class Connections:
             True if battery could be connected; else False"""
 
         # check for overloadedness
-        if (battery.load + house.output > battery.max_load and not overload 
+        if (battery.load + house.output > battery.max_load and not overload
             ) or not house.free:
             return False
 
