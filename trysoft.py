@@ -72,7 +72,7 @@ if __name__ == "__main__":
     best_score = 9999
     iterations = 0
 
-    while iterations < 1000:
+    while iterations < 100:
         score = connect_dem_random_ladies(grid)
         if score and score < best_score:
             best_grid = copy.deepcopy(grid)
