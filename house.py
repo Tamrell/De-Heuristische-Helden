@@ -44,5 +44,5 @@ class House:
         Returns:
             Battery: closest battery
         '''
-        return min([(d, b) if (not overload or b.fits(self.output))
+        return min([(d, b) if (overload or b.fits(self.output))
                     else (100, None) for b, d in self.dists.items()])[1]
