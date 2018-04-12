@@ -2,6 +2,7 @@ from imports import *
 from connections import *
 from plots import plot
 
+
 def shortest_first(h_dict, grid):
     nordered = []
     houses = [h_dict[cord] for cord in h_dict if h_dict[cord].free]
@@ -45,10 +46,11 @@ def optimize_them_bitches(grid):
     # connected to an overloaded battery, and switch the connection
     # most profitable: maybe closest house of an overloaded battery, maybe least increasement of length.
 
-    cheapest = 30
+    cheapest = 30 ###### what measure do we use? the smallest?
     for b in grid.batteries.values():
         while b.fits(cheapest):
-            
+            pass
+
 
 
 
