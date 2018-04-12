@@ -40,7 +40,7 @@ class Connections:
         else:
             raise Exception("Invalid input type")
 
-    def connect(self, house, battery):
+    def connect(self, house, battery, overload=False):
         """This function connects a house to a battery in the grid and in the
             local representation. Also checks if battery does not get
             overconnected by connecting house
@@ -51,7 +51,8 @@ class Connections:
             True if battery could be connected; else False"""
 
         # check for overloadedness
-        if battery.load + house.output > battery.max_load or not house.free:
+        if (battery.load + house.output > battery.max_load and not overload 
+            ) or not house.free:
             return False
 
         battery.load += house.output

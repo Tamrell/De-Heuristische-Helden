@@ -24,10 +24,27 @@ class Battery:
         self.links = set()
         self.color = next(Battery.color_generator)
 
+    def __lt__(self, other):
+        '''For sorting purposes, value is equal to the load. '''
+        if self.load < other.load:
+            return True
+        return False
 
+    def fits(self, output):
+        if self.max_load >= self.load + output:
+            return True
+        return False
 
     def find_closest_house(self, grid, house_list):
+        ''' Returns the closest House object
 
+        Args:
+            Grid: grid that contains batteries
+            List: list containing houses on the grid
+
+        Returns:
+            House: closest House
+        '''
         best = grid.x_dim + grid.y_dim
         best_cord = ()
 
@@ -40,8 +57,30 @@ class Battery:
                     best_cord = h
         return best_cord
 
-    def find_furthest_house(self, grid):
+    def find_cheapest_house(self):
+        ''' Returns the House object with the lowest output in self.links.
 
+        Args:
+            None
+
+        Returns:
+            House: 'cheapest' House
+        '''
+        cheapest = list(self.links)[0]
+        for h in self.links:
+            if h.output < cheapest.output:
+                cheapest = h
+        return cheapest
+
+    def find_furthest_house(self, grid):
+        ''' Returns the furthest House object in self.links.
+
+        Args:
+            Grid: grid object containing the houses
+
+        Returns:
+            House: furthest House in the self.links
+        '''
         best = 0
         best_house = None
 
