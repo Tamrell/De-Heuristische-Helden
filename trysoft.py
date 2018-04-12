@@ -1,7 +1,8 @@
 from imports import *
 from connections import *
-from random import shuffle, choice
+from random import shuffle, choice, sample
 import copy
+from plots import *
 
 def connect_dem_classy_ladies(grid):
 
@@ -26,6 +27,7 @@ def connect_dem_classy_ladies(grid):
                 return False
             house_list.remove(h)
 
+
 def connect_dem_random_ladies(grid):
     houses = grid.houses
     house_list = [cord for cord in houses]
@@ -45,10 +47,25 @@ def connect_dem_random_ladies(grid):
             return False
         house_list.remove(h)
 
-    return c.calculate_score()
+    return c
 
 
+def hillclimb_the_ladies(grid, c):
 
+    best_score = c.calculate_score()
+    houses = grid.houses
+    iterations = 0
+
+    while iterations < 100:
+        [h1, h2] = sample(list(houses), 2)
+        c.swap_connection(houses[h1], houses[h2])
+        if c.test() is not True or c.calculate_score() > best_score:
+            c.swap_connection(houses[h1], houses[h2])
+            iterations += 1
+            continue
+        best_score = c.calculate_score
+        print(best_score)
+        iterations += 1
 
 if __name__ == "__main__":
 
@@ -72,18 +89,24 @@ if __name__ == "__main__":
     best_score = 9999
     iterations = 0
 
-    while iterations < 100:
-        score = connect_dem_random_ladies(grid)
-        if score and score < best_score:
+    while iterations < 10:
+        c = connect_dem_random_ladies(grid)
+        if c:
+            score = c.calculate_score()
+        if c and score < best_score:
             best_grid = copy.deepcopy(grid)
             best_score = score
+            best_c = copy.deepcopy(c)
             print(best_score)
         Battery.color_generator = assign_color()
         grid = Grid(file1, file2)
         iterations += 1
 
-    print(best_grid)
-    print(best_score)
+    best_c.rand_swapper(best_grid)
+    # print(best_grid)
+
+    # print(best_score)
+    # hover_plot(best_grid)
 
     # bat = grid.batteries[(3, 45)]
     # house = bat.find_closest_house(grid, grid.houses)

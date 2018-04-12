@@ -131,9 +131,9 @@ class Connections:
         checkers = 0
         while not legit and checkers < 5000:
             checkers += 1
-            b1, b2 = sample(grid.batteries.values(), 2)
-            h1 = choice(b1.links)
-            h2 = choice(b2.links)
+            [b1, b2] = sample(list(grid.batteries.values()), 2)
+            [h1] = sample(set(b1.links), 1)
+            [h2] = sample(set(b2.links), 1)
             if b1.max_load >= b1.load - h1.output + h2.output:
                 if b2.max_load >= b2.load - h2.output + h1.output:
                     if h1.dists[b2] + h2.dists[b1] < h1.dists[b1] + h2.dists[b2]:
