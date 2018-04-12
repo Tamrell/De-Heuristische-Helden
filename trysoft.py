@@ -102,8 +102,10 @@ if __name__ == "__main__":
         grid = Grid(file1, file2)
         iterations += 1
 
-    best_c.rand_swapper(best_grid)
-    # print(best_grid)
+    print(best_grid)
+    while True:
+        best_c.rand_swapper(best_grid)
+        print(best_grid)
 
     # print(best_score)
     # hover_plot(best_grid)
