@@ -1,6 +1,7 @@
 from imports import *
 from connections import *
 from plots import *
+from random import choice
 
 def shortest_first(h_dict, grid):
     nordered = []
@@ -17,7 +18,7 @@ def remove_them_inneficient_bitches(grid):
     for battery in grid.batteries.values():
         c.unconnect(battery.find_furthest_house(grid))
 
-def connect_them_bitches(grid):
+def connect_them_bitches(grid, swap=True):
     c = Connections()
     cons = True
     while cons:
@@ -28,16 +29,30 @@ def connect_them_bitches(grid):
             still_good = c.connect(cons[i][0], cons[i][1])
             i += 1
     print(grid.score())
-    for i in range(10):
-        c.rand_swapper(grid)
+    # while c.rand_swapper(grid) and swap:
+    #     connect_them_bitches(grid, False)
     print(grid.score())
 
-def connect_them_bitches_for_real(grid):
-    pass
-
 def make_sure_them_bitches_be_fitting(h_dict, grid):
-    houses = [h_dict[cord] for cord in h_dict if h_dict[cord].free]
-    pass
+    houses = [h for h in h_dict.values() if h.free]
+    c = Connections()
+    for h in houses:
+        print(h.output)
+        needed = -20 * h.output 
+        candidates = sorted([(h2.output, h2) for h2 in grid.houses.values()
+                            if not h2.free])
+        for candidate in candidates:
+            if needed < 0:
+                needed += candidate[1].output
+                c.unconnect(candidate[1])
+        c.connect(h, h.find_closest_battery(grid))
+        return True
+        # for candidate in furthest:
+        #     if h.output - candidate.output >= needed:
+        #         c.unconnect(candidate)
+        #         c.connect(h, bat)
+        #         return True
+    return False
 
 def overload_them_bitches(grid):
     c = Connections()
@@ -78,6 +93,8 @@ if __name__ == "__main__":
 
     grid = Grid(file1, file2)
     connect_them_bitches(grid)
+    while make_sure_them_bitches_be_fitting(grid.houses, grid):
+        connect_them_bitches(grid)
     # for i in range(10):
     #     for j in range(10):
     #         remove_them_inneficient_bitches(grid)
@@ -85,4 +102,4 @@ if __name__ == "__main__":
     print(grid)
     for b in grid.batteries.values():
         print(b.color, ":", b.load, "of", b.max_load)
-    #hover_plot(grid)
+    hover_plot(grid)
