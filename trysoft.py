@@ -89,7 +89,7 @@ if __name__ == "__main__":
     best_score = 9999
     iterations = 0
 
-    while iterations < 10:
+    while iterations < 10000:
         c = connect_dem_random_ladies(grid)
         if c:
             score = c.calculate_score()
@@ -103,9 +103,13 @@ if __name__ == "__main__":
         iterations += 1
 
     print(best_grid)
-    while True:
-        best_c.rand_swapper(best_grid)
-        print(best_grid)
+    # i = 0
+    # while best_c.rand_swapper(best_grid):
+    #         best_c.rand_swapper(best_grid)
+    #         print(best_grid)
+
+    print(best_grid.score())
+    # print(best_grid)
 
     # print(best_score)
     # hover_plot(best_grid)

@@ -129,8 +129,9 @@ class Connections:
     def rand_swapper(self, grid):
         legit = False
         checkers = 0
-        while not legit and checkers < 9999999:
+        while not legit and checkers < 999999:
             checkers += 1
+            print(checkers)
             [b1, b2] = sample(list(grid.batteries.values()), 2)
             [h1] = sample(set(b1.links), 1)
             [h2] = sample(set(b2.links), 1)
@@ -138,7 +139,7 @@ class Connections:
                 if b2.max_load >= b2.load - h2.output + h1.output:
                     if h1.dists[b2] + h2.dists[b1] < h1.dists[b1] + h2.dists[b2]:
                         legit = True
-        if checkers >= 9999999:
+        if checkers >= 999999:
             return False
         self.unconnect(h1)
         self.unconnect(h2)
