@@ -38,7 +38,7 @@ def make_sure_them_bitches_be_fitting(h_dict, grid):
     c = Connections()
     for h in houses:
         print(h.output)
-        needed = -20 * h.output 
+        needed = -20 * h.output
         candidates = sorted([(h2.output, h2) for h2 in grid.houses.values()
                             if not h2.free])
         for candidate in candidates:
@@ -54,6 +54,14 @@ def make_sure_them_bitches_be_fitting(h_dict, grid):
         #         return True
     return False
 
+def last_fits(grid):
+    houses = [h for h in grid.houses.values() if h.free] # in 1 regel?
+    f_houses = [h for h in grid.houses.values() if not h.free] # in 1 regel?
+    batteries = {b for b in grid.batteries.values()}
+    for h in houses:
+        pass
+
+
 def overload_them_bitches(grid):
     c = Connections()
     for h in grid.houses.values():
@@ -63,15 +71,14 @@ def overload_them_bitches(grid):
         c.connect(h, b, True)
     print(c.calculate_score())
 
-def optimize_them_overloaded_bitches(grid):
+def correct_them_overloaded_bitches(grid):
     # for each underloaded battery, search for the most profitable switch in  house
     # connected to an overloaded battery, and switch the connection
     # most profitable: maybe closest house of an overloaded battery, maybe least increasement of length.
+    b = max([(b.load, b) for b in grid.batteries.values()])
+    while not b.fits():
+        pass
 
-    cheapest = 30 ###### what measure do we use? the smallest?
-    for b in grid.batteries.values():
-        while b.fits(cheapest):
-            pass
 
 if __name__ == "__main__":
 
@@ -93,13 +100,24 @@ if __name__ == "__main__":
 
     grid = Grid(file1, file2)
     connect_them_bitches(grid)
-    while make_sure_them_bitches_be_fitting(grid.houses, grid):
-        connect_them_bitches(grid)
+    #while make_sure_them_bitches_be_fitting(grid.houses, grid):
+    #    connect_them_bitches(grid)
     # for i in range(10):
     #     for j in range(10):
     #         remove_them_inneficient_bitches(grid)
     #     connect_them_bitches(grid)
     print(grid)
+    b_count = 0
     for b in grid.batteries.values():
+        b_count += b.max_load
         print(b.color, ":", b.load, "of", b.max_load)
-    hover_plot(grid)
+    count = 0
+    h_count = 0
+    for h in grid.houses.values():
+        count += h.output
+        h_count += 1
+    print("total houses:", h_count)
+    print("total output:", count)
+    print("average output:", count/h_count)
+    print("total capacity:", b_count)
+    #hover_plot(grid)

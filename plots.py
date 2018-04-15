@@ -42,5 +42,7 @@ def hover_plot(grid):
     p.legend.location = "top_left"
     p.legend.click_policy="hide"
     hover = HoverTool(names=bats)
-    p.add_tools(hover)
+    hover.tooltips = [("Battery", "$color[hex, swatch]:fill_color")]
+    #p.add_tools(hover)
+
     show(p)

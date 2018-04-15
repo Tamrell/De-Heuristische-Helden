@@ -143,8 +143,8 @@ class Grid:
         '''
 
         s = ""
-        for y in range(self.y_dim):
-            for x in range(self.x_dim):
+        for y in range(self.y_dim + 1):
+            for x in range(self.x_dim + 1):
                 if (x, y) in self.houses:
                     color = self.houses[(x, y)].color
                     if color == 'white':
