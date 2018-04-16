@@ -53,7 +53,7 @@ class case:
         self.connections.append((house, battery))
         return True
 
-    def value(self):
+    def calc_value(self):
         score = 0
         for connection in self.connections:
             house, battery = connection
@@ -62,15 +62,9 @@ class case:
 
     def __init__(self, houses, batteries, connections, value):
         self.value = value
-        self.houses = []
-        for house in houses:
-            new_house = House(house.x, house.y, house.capacity)
-            self.houses.append(new_house)
+        self.houses = [House(house.x, house.y, house.capacity) for house in houses]
 
-        self.batteries = []
-        for battery in batteries:
-            new_battery = Battery(battery.x, battery.y, battery.current_capacity, battery.max_capacity)
-            self.batteries.append(new_battery)
+        self.batteries = [Battery(battery.x, battery.y, battery.current_capacity, battery.max_capacity) for battery in batteries]
 
         self.connections = copy.deepcopy(connections)
 
@@ -86,9 +80,9 @@ stack = []
 current_case = case(houses, batteries, [], 0)
 stack.append((current_case.value, current_case))
 
-bound = 10000
+bound = 10000# 3517
 iter = 0
-scale = 100
+scale = 1000
 
 start_time = time.time()
 if len(sys.argv) == 1:
@@ -96,66 +90,79 @@ if len(sys.argv) == 1:
     sys.exit()
 
 filename = sys.argv[1]
-outputfile = open(filename,"wb")
 
 import csv
 rows = []
-with open(filename, "a") as outputfile:
-    writer = csv.writer(outputfile, dialect = "excel-tab")
+try:
+    with open(filename, "a") as outputfile:
+        writer = csv.writer(outputfile, dialect = "excel-tab")
 
-    while len(stack) > 0:
-        rows.append([str(iter)+";", str(bound)+";"])
+        while len(stack) > 0:
+            rows.append([str(iter)+";", str(bound)+";"])
 
-        if iter > 35000:
-            break
-        #if time.time() - start_time > 30:
-        #    break
+            #if iter > 10000:
+            #    sys.exit()
+            #if time.time() - start_time > 300:
+            #    sys.exit()
 
-        if iter % scale == 0:
-            print(iter, best_case, bound)
-            for row in rows:
-                writer.writerow(row)
-            rows = []
+            if iter % scale == 0:
+                print(iter, best_case, bound)
+                try:
+                    for row in rows:
+                        writer.writerow(row)
+                except Exception as e:
+                    print("could not safe due to error\t", e)
+                rows = []
 
-
-        (value, current_case) = stack.pop()
-        if len(current_case.houses) == 0:
-            if best_case == None:
-                best_case = current_case
-            else:
-                if value < bound:
+            (value, current_case) = stack.pop()
+            if len(current_case.houses) == 0:
+                if best_case == None:
                     best_case = current_case
-                    bound = value
-
-
-        else:
-
-            for i in range(number_of_batteries):
-                new_case = case(current_case.houses, current_case.batteries, current_case.connections, current_case.value)
-                value = new_case.apply_change(i)
-                #value /= len(new_case.connections)
-                if value != False:
+                    #print(best_case.calc_value())
+                else:
                     if value < bound:
-                        try:
-                            stack.append((value, new_case))
-                        except MemoryError:
-                            print("out of memory")
-                            for row in rows:
-                                writer.writerow(row)
-                            sys.exit()
+                        best_case = current_case
+                        bound = value
+                print("solution\t", best_case, "\tvalue\t", value, "\ttime\t", time.time() - start_time , "\titer\t", iter)
+            else:
+                """
+                    tot nu toe beste score: wel batterijen sorteren, maar niet schrappen
+                    """
+                battery_list = [(i, current_case.batteries[i], current_case.distance(current_case.batteries[i], current_case.houses[0])) for i in range(len(batteries))]
+                sorted_batteries = sorted(battery_list, key=itemgetter(2), reverse = True) #omgekeerd vanwege appenden
+                number_of_batteries = len(sorted_batteries)
 
-                        if len(sys.argv) >= 3:
-                            if sys.argv[2] == "1":
-                                #"sorteert neerwaards"
-                                stack = sorted(stack, key=itemgetter(0), reverse=True)
-                            elif sys.argv[2] == "2":
-                                #"sorteert opwaards"
-                                stack = sorted(stack, key=itemgetter(0), reverse = False)
-                        else:
-                            pass#print("sorteer niet")
-            iter += 1
+                for battery_combi in sorted_batteries:
+                    battery_n = battery_combi[0]
 
-    for row in rows:
-        writer.writerow(row)
+                    new_case = case(current_case.houses, current_case.batteries, current_case.connections, current_case.value)
+                    value = new_case.apply_change(battery_n)
+                    #value /= len(new_case.connections)
+                    if value:
+                        if value < bound:
+                            try:
+                                stack.append((value, new_case))
+                            except MemoryError:
+                                print("out of memory")
+                                try:
+                                    for row in rows:
+                                        writer.writerow(row)
+                                except Exception as e:
+                                    print("could not safe during memory error due to error\t", e)
+                                sys.exit()
+                            """
+                            if len(sys.argv) >= 3:
+                                if sys.argv[2] == "1":
+                                    #"sorteert neerwaards"
+                                    stack = sorted(stack, key=itemgetter(0), reverse=True)
+                                elif sys.argv[2] == "2":
+                                    #"sorteert opwaards"
+                                    stack = sorted(stack, key=itemgetter(0), reverse = False)
+                            else:
+                                pass#print("sorteer niet")"""
+                iter += 1
+        print("out of stack", iter, bound, time.time() - start_time)
 
-print(iter, time.time() - start_time)
+
+except KeyboardInterrupt:
+    print("iter\t", iter, "\tbound\t", bound, "\ttime\t", time.time() - start_time)
