@@ -43,7 +43,7 @@ def connect_dem_random_ladies(grid):
             return False
         house_list.remove(h)
 
-    return c
+    return True
 
 
 def hillclimb_the_ladies(grid):

@@ -7,7 +7,7 @@ import copy
 from Classes.load_batteries import *
 
 from Classes.house import House
-from Classes.battery import *
+from Classes.battery import Battery
 
 import sys
 import termcolor
@@ -19,9 +19,9 @@ class Grid:
     - houses: dict containing: coordinate:House
     - batteries: dict containing: coordinate:Battery
 
-    '''
+     '''
 
-    def __init__(self, file1, file2, grid_number, dimensions=(50, 50)):
+    def __init__(self, file1, file2, dimensions=(50, 50)):
         ''' Constructor, needs a file with information about the houses and
             optional dimensions of the Grid (default islf.houses = {} 50x50).
 
@@ -33,7 +33,6 @@ class Grid:
                 dimensions (Tuple): A tuple containing the x- and y-coordinates
                 of the Grid, defaults to 50x50.
         '''
-        self.grid_number = grid_number
         self.grid_list = {}
         self.total_probability = 0
         self.total_sq_probability = 0
@@ -72,22 +71,6 @@ class Grid:
             if b.load > b.max_load:
                 return False
         return True
-
-    def stats(self):
-        b_count = 0
-        for b in self.batteries.values():
-            b_count += b.max_load
-            print(b.color, ":", b.load, "of", b.max_load)
-        count = 0
-        h_count = 0
-        for h in self.houses.values():
-            count += h.output
-            h_count += 1
-        print("score:", self.score())
-        print("total houses:", h_count)
-        print("total output:", count)
-        print("average output:", count/h_count)
-        print("total capacity:", b_count)
 
     def set_grid_points(self):
         ''' Initiates all the Grid_Points for the Grid. '''
@@ -180,6 +163,7 @@ class Grid:
     def score(self):
         score = 0
         for b in self.batteries.values():
+            print(b.links)
             for h in b.links:
                 score += h.dists[b]
         return score
