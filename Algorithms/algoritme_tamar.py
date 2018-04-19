@@ -1,13 +1,29 @@
 # C:\Users\Eigenaar\Documents\school\Thema 2\De-Heuristische-Helden\De-Heuristische-Helden
-
-import sys
-import random
-import copy
-import time
 from operator import itemgetter
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(__file__, '..', '..', 'Classes')))
+print(sys.path)
 from grid import *
+from plots import *
+import imports
+import time
+import copy
 
 best_case = None
+
+def update_grid(main, connections):
+    import house
+    import battery
+    for connection in connections:
+        house, battery = connection
+        grid_house = house.House((house.x, house.y),[])
+        grid_battery = battery.Battery((battery.x, battery.y), battery.max_capacity)
+
+        grid_house.bat = grid_battery
+        grid_battery.links.add(grid_house)
+
+    return main
 
 def check(connections):
     batteries = {}
@@ -33,8 +49,12 @@ class Battery:
             self.max_capacity = max_capacity
         self.current_capacity = current_capacity
 
-
-main = Grid("wijk1_huizen.csv", "wijk1_batterijen.txt")
+#sys.path.insert(0, os.path.abspath(os.path.join(__file__, '..', '..', 'Classes')))
+fileDir = os.path.abspath(os.path.join(__file__, '..', '..', 'Data'))
+filename1 = os.path.join(fileDir, 'wijk1_huizen.csv')
+filename2 = os.path.join(fileDir, 'wijk1_batterijen.txt')
+print(filename1, filename2)
+main = Grid(filename1, filename2)
 batteries = [Battery(battery.cord[0], battery.cord[1], 0, battery.max_load) for battery in main.batteries.values()]
 number_of_batteries = len(batteries)
 
@@ -107,7 +127,6 @@ stack.append((greedy_case.value, greedy_case))
 """
 #print("greedy opening:\t", greedy_case.value, len(greedy_case.connections))
 
-
 bound = 10000#3800#3517
 iter = 0
 scale = 100
@@ -144,6 +163,8 @@ try:
 
             (value, current_case) = stack.pop()
             if len(current_case.houses) == 0:
+                main = update_grid(current_case, current_case.connections)
+                plot(main)
                 if value < bound:
                     best_case = current_case
                     bound = value
