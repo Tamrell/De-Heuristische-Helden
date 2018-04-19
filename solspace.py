@@ -14,11 +14,11 @@ def random_connect(grid):
     if [h for h in grid.houses.values() if h.free]:
         return False
     else:
+        print("before ex:", grid.score())
         c.ex_swapper(grid)
-        print(grid.score())
-        for i in range(10):
-            c.true_ex_swapper(grid)
-            print(grid.score()) 
+        print("after ex:", grid.score())
+        while c.true_ex_swapper(grid):
+            print("after steepest:", grid.score())
         return True
 
 if __name__ == "__main__":
