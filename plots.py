@@ -1,5 +1,9 @@
 from bokeh.plotting import figure, show
 from bokeh.models import HoverTool
+import scipy.special
+
+from bokeh.layouts import gridplot
+from bokeh.plotting import figure, show, output_file
 
 # plot with dict as subset
 
@@ -44,5 +48,10 @@ def hover_plot(grid):
     hover = HoverTool(names=bats)
     hover.tooltips = [("Battery", "$color[hex, swatch]:fill_color")]
     #p.add_tools(hover)
+    show(p)
 
+def line_plot(data):
+    p = figure(title="distribution", plot_width=300, plot_height=300)
+    data = sorted([(d, data[d]) for d in data])
+    p.line(x=[d[0] for d in data], y=[d[1] for d in data])
     show(p)

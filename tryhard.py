@@ -99,7 +99,9 @@ if __name__ == "__main__":
         file2 = 'Data/wijk3_batterijen.txt'
 
     grid = Grid(file1, file2)
-    connect_them_bitches(grid)
+    overload_them_bitches(grid)
+    c = Connections()
+    #c.ex_swapper(grid)
     #while make_sure_them_bitches_be_fitting(grid.houses, grid):
     #    connect_them_bitches(grid)
     # for i in range(10):
@@ -116,8 +118,9 @@ if __name__ == "__main__":
     for h in grid.houses.values():
         count += h.output
         h_count += 1
+    print(grid.score())
     print("total houses:", h_count)
     print("total output:", count)
     print("average output:", count/h_count)
     print("total capacity:", b_count)
-    #hover_plot(grid)
+    hover_plot(grid)

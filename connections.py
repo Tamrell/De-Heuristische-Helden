@@ -124,12 +124,13 @@ class Connections:
             house.bat = None
             house.free = True
         except:
-            print("HAHA GETREKT")
+            print("HAHA GETREKT unconnect")
+            dinput(grid)
 
-    def rand_swapper(self, grid):
+    def rand_swapper(self, grid, limit=50000):
         legit = False
         checkers = 0
-        while not legit and checkers < 5000000:
+        while not legit and checkers < limit:
             checkers += 1
             #print(checkers)
             [b1, b2] = sample(list(grid.batteries.values()), 2)
@@ -139,7 +140,7 @@ class Connections:
                 if b2.max_load >= b2.load - h2.output + h1.output:
                     if h1.dists[b2] + h2.dists[b1] < h1.dists[b1] + h2.dists[b2]:
                         legit = True
-        if checkers >= 5000000:
+        if checkers >= limit:
             return False
         self.unconnect(h1)
         self.unconnect(h2)
@@ -147,6 +148,66 @@ class Connections:
         self.connect(h2, b1)
         return True
 
+    def ex_swapper(self, grid):
+        check = True
+        while check:
+            swaps = [(h1, h2) for h1 in grid.houses.values() for h2 in grid.houses.values()]
+            check = False
+            best = (0, None, None)
+            for h1, h2 in swaps:
+                b1 = h1.bat
+                b2 = h2.bat
+                if b1.max_load >= b1.load - h1.output + h2.output:
+                    if b2.max_load >= b2.load - h2.output + h1.output:
+                        diff = h1.dists[b2] + h2.dists[b1] - h1.dists[b1] - h2.dists[b2]
+                        if diff < 0:
+                            if diff < best[0]:
+                                best = (diff, h1, h2)
+            if best[1] and best[2]:
+                b1 = best[1].bat
+                b2 = best[2].bat
+                self.unconnect(best[1])
+                self.unconnect(best[2])
+                self.connect(best[1], b2)
+                self.connect(best[2], b1)
+                check = True
+        print("tried it all...")
+        return True
+    #deze kan sws recursief.
+    def true_ex_swapper(self, grid):
+        houses = [h for h in grid.houses.values()]
+        best = (grid.score(), [])
+        for h1 in houses:
+            for h2 in houses:
+                if self.hard_swap(h1, h2):
+                    for h3 in [h1, h2]: # in houses necessary?
+                        for h4 in houses:
+                            if self.hard_swap(h3, h4):
+                                if grid.score() < best[0]:
+                                    best = (grid.score(), [h1, h2, h3, h4])
+                                self.hard_swap(h3, h4)
+                    self.hard_swap(h1, h2)
+        if best[1]:
+            self.hard_swap(best[1][0], best[1][1])
+            self.hard_swap(best[1][2], best[1][3])
+            return True
+        else:
+            return False
+
+    def hard_swap(self, h1, h2):
+        if h1 == h2:
+            return False
+        b1 = h1.bat
+        b2 = h2.bat
+        if b1.max_load >= b1.load - h1.output + h2.output:
+            if b2.max_load >= b2.load - h2.output + h1.output:
+                self.unconnect(h1)
+                self.unconnect(h2)
+                self.connect(h1, b2)
+                self.connect(h2, b1)
+                return True
+        else:
+            return False
 
 
     def swap_connection(self, house1, house2):

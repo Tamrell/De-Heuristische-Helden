@@ -82,6 +82,10 @@ class Grid:
             reader = csv.reader(csvfile, delimiter=',')
             next(reader)
             for row in reader:
+                # if (int(row[0]), int(row[1])) in self.houses:
+                #     print(self.houses[(int(row[0]), int(row[1]))].output)
+                #     print(str((int(row[0]), int(row[1]))))
+                #     input("yep, there is a double house on 1")
                 self.houses[(int(row[0]), int(row[1]))] = House(row, batteries)
 
     def set_batteries(self, filename):
