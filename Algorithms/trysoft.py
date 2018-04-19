@@ -1,5 +1,3 @@
-from imports import *
-from connections import *
 from random import shuffle, choice, sample
 import copy
 from plots import *
@@ -10,7 +8,6 @@ def connect_dem_classy_ladies(grid):
     house_list = [cord for cord in houses]
     batteries = grid.batteries
     battery_list = [cord for cord in batteries]
-    c = Connections()
 
     while house_list:
         if not battery_list:
@@ -23,7 +20,7 @@ def connect_dem_classy_ladies(grid):
             if h == ():
                 battery_list.remove(b)
                 break
-            if not c.connect(houses[h], batteries[b]):
+            if not connect(houses[h], batteries[b]):
                 return False
             house_list.remove(h)
 
@@ -33,7 +30,6 @@ def connect_dem_random_ladies(grid):
     house_list = [cord for cord in houses]
     batteries = grid.batteries
     battery_list = [cord for cord in batteries]
-    c = Connections()
 
     while house_list:
         if not battery_list:
@@ -43,27 +39,27 @@ def connect_dem_random_ladies(grid):
         if h == ():
             battery_list.remove(b)
             continue
-        if not c.connect(houses[h], batteries[b]):
+        if not connect(houses[h], batteries[b]):
             return False
         house_list.remove(h)
 
     return c
 
 
-def hillclimb_the_ladies(grid, c):
+def hillclimb_the_ladies(grid):
 
-    best_score = c.calculate_score()
+    best_score = grid.score()
     houses = grid.houses
     iterations = 0
 
     while iterations < 100:
         [h1, h2] = sample(list(houses), 2)
-        c.swap_connection(houses[h1], houses[h2])
-        if c.test() is not True or c.calculate_score() > best_score:
-            c.swap_connection(houses[h1], houses[h2])
-            iterations += 1
-            continue
-        best_score = c.calculate_score
+        if hard_swap(houses[h1], houses[h2]):
+            if not legal(grid) or grid.score() > best_score:
+                hard_swap(houses[h1], houses[h2])
+                iterations += 1
+                continue
+        best_score = grid.score()
         print(best_score)
         iterations += 1
 
@@ -87,19 +83,16 @@ if __name__ == "__main__":
 
     grid = Grid(file1, file2)
     houses = grid.houses.values()
-    print(len(houses))
     best_score = 9999
     iterations = 0
 
     while iterations < 10000:
-        c = connect_dem_random_ladies(grid)
-        if c:
-            score = c.calculate_score()
-        if c and score < best_score:
-            best_grid = copy.deepcopy(grid)
-            best_score = score
-            best_c = copy.deepcopy(c)
-            print(best_score)
+        if connect_dem_random_ladies(grid):
+            score = grid.score()
+            if score < best_score:
+                best_grid = copy.deepcopy(grid)
+                best_score = score
+                print(best_score)
         Battery.color_generator = assign_color()
         grid = Grid(file1, file2)
         iterations += 1
