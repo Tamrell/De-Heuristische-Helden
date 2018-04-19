@@ -8,16 +8,16 @@ def connect(house, battery, overload=False):
     Returns
         True if battery could be connected; else False"""
     # check for overloadedness
-    if (battery.load + house.output > battery.max_load and not overload
-        ) or not house.free:
+    if (not battery.fits(house.output) and not overload) or not house.free:
         return False
-        battery.load += house.output
-        # connect in grid
-        house.bat = battery
-        house.color = battery.color
-        house.free = False
-        battery.links.add(house)
-        return True
+
+    battery.load += house.output
+    # connect in grid
+    house.bat = battery
+    house.color = battery.color
+    house.free = False
+    battery.links.add(house)
+    return True
 
 def unconnect(self, house):
     """Disconnects the house from its battery"""
@@ -61,11 +61,3 @@ def calculate_distance(battery, house): ## remove from grid and house
     (x1, y1) = battery.cord
     (x2, y2) = house.cord
     return abs(int(x1) - int(x2)) + abs(int(y1) - int(y2))
-
-def legal(grid):
-    if [h for h in grid.houses.values() if h.free]:
-        return False
-    for b in grid.batteries.values():
-        if b.load > b.max_load:
-            return False
-    return True

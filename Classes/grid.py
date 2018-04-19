@@ -44,12 +44,20 @@ class Grid:
         self.set_houses(file1, self.batteries.values())
         self.set_grid_points()
         self.set_global_density()
-        self.initial_houses = copy.copy(self.houses) ##recalc!!
-        self.initial_batteries = copy.copy(self.batteries)
+        self.initial_houses = copy.deepcopy(self.houses) ##recalc!!
+        self.initial_batteries = copy.deepcopy(self.batteries)
 
     def reset(self):
-        self.houses.update(self.initial_houses)
-        self.batteries.update(self.initial_batteries)
+        self.houses = copy.deepcopy(self.initial_houses)
+        self.batteries = copy.deepcopy(self.initial_batteries)
+
+    def legal(self):
+        if [h for h in self.houses.values() if h.free]:
+            return False
+        for b in self.batteries.values():
+            if b.load > b.max_load:
+                return False
+        return True
 
     def set_grid_points(self):
         ''' Initiates all the Grid_Points for the Grid. '''
@@ -142,6 +150,7 @@ class Grid:
     def score(self):
         score = 0
         for b in self.batteries.values():
+            print(b.links)
             for h in b.links:
                 score += h.dists[b]
         return score

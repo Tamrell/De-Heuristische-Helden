@@ -11,34 +11,35 @@ def random_connect(grid):
             connect(h, choice(bats))
         else:
             return False
-    if [h for h in grid.houses.values() if h.free]:
-        return False
-    else:
+    if grid.legal():
         print("before greedy climber:", grid.score())
-        ex_swapper(grid)
+        #ex_swapper(grid)
         print("after greedy climber:", grid.score())
-        while hillskipper(grid):
-            print("after skipper:", grid.score())
+        #while hillskipper(grid):
+        #    print("after skipper:", grid.score())
         return True
+    else:
+        return False
 
-def random_sampler(grid, solutions=2):
-    i = 0
+def random_sampler(grid, solutions=10):
     scores = {}
     best = (100000000, None) ###infinite###
-    while i < solutions:
+    while solutions > 0:
         grid.reset()
         if random_connect(grid):
+            print(grid)
             if grid.score() in scores:
                 scores[grid.score()] += 1
             else:
                 scores[grid.score()] = 1
-            print(i, grid.score())
-            solutions += 1
+            print(solutions, grid.score())
+            solutions -= 1
             if grid.score() < best[0]:
                 best = (grid.score(), grid)
-    line_plot(scores)
-    for i in range(100000000):
+            print(grid.score())
+    # line_plot(scores)
+    for i in range(10000000):
         i += 1
         i -= 1
     print(best[0])
-    hover_plot(best[1])
+    # hover_plot(best[1])
