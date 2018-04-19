@@ -19,7 +19,7 @@ class Grid:
     - houses: dict containing: coordinate:House
     - batteries: dict containing: coordinate:Battery
 
-     '''
+    '''
 
     def __init__(self, file1, file2, grid_number, dimensions=(50, 50)):
         ''' Constructor, needs a file with information about the houses and
@@ -49,11 +49,11 @@ class Grid:
         self.initial_batteries = copy.deepcopy(self.batteries)
 
     def reset(self):
-        self.houses = copy.deepcopy(self.initial_houses)
-        self.batteries = copy.deepcopy(self.initial_batteries)
-        for h in self.houses.values():
-            for b in self.batteries.values():
-                h.dists[b] = self.distance(b.cord, h.cord)
+        file_name = 'Data/Objects/grid_with_batteries_' +
+        self.grid_number + 'pkl'
+        with open(file_name, 'rb') as input:
+            grid = pickle.load(input)
+        return grid
 
 
     def legal(self):
