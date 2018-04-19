@@ -62,24 +62,6 @@ def last_fits(grid):
         pass
 
 
-def overload_them_bitches(grid):
-    c = Connections()
-    for h in grid.houses.values():
-        b = h.find_closest_battery(grid, True)
-        if not b:
-            input(grid)
-        c.connect(h, b, True)
-    print(c.calculate_score())
-
-def correct_them_overloaded_bitches(grid):
-    # for each underloaded battery, search for the most profitable switch in  house
-    # connected to an overloaded battery, and switch the connection
-    # most profitable: maybe closest house of an overloaded battery, maybe least increasement of length.
-    b = max([(b.load, b) for b in grid.batteries.values()])
-    while not b.fits():
-        pass
-
-
 if __name__ == "__main__":
 
     file1 = sys.argv[1]
@@ -100,27 +82,5 @@ if __name__ == "__main__":
 
     grid = Grid(file1, file2)
     overload_them_bitches(grid)
-    c = Connections()
-    #c.ex_swapper(grid)
-    #while make_sure_them_bitches_be_fitting(grid.houses, grid):
-    #    connect_them_bitches(grid)
-    # for i in range(10):
-    #     for j in range(10):
-    #         remove_them_inneficient_bitches(grid)
-    #     connect_them_bitches(grid)
-    print(grid)
-    b_count = 0
-    for b in grid.batteries.values():
-        b_count += b.max_load
-        print(b.color, ":", b.load, "of", b.max_load)
-    count = 0
-    h_count = 0
-    for h in grid.houses.values():
-        count += h.output
-        h_count += 1
-    print(grid.score())
-    print("total houses:", h_count)
-    print("total output:", count)
-    print("average output:", count/h_count)
-    print("total capacity:", b_count)
+    grid.stats
     hover_plot(grid)
