@@ -4,6 +4,7 @@ from plotly.offline import plot
 from numpy import subtract
 import csv
 import copy
+import pickle
 from Classes.load_batteries import *
 
 from Classes.house import House
@@ -50,7 +51,7 @@ class Grid:
 
     def reset(self, report=True):
         if report:
-            file_name = 'Data/Objects/grid_with_batteries_' + self.grid_number + 'pkl'
+            file_name = 'Data/Objects/grid_with_batteries_' + self.grid_number + '.pkl'
             with open(file_name, 'rb') as input:
                 grid = pickle.load(input)
             return grid
