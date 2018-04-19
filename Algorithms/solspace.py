@@ -27,7 +27,6 @@ def random_sampler(grid, solutions=10):
     while solutions > 0:
         grid.reset()
         if random_connect(grid):
-            print(grid)
             if grid.score() in scores:
                 scores[grid.score()] += 1
             else:
@@ -37,9 +36,9 @@ def random_sampler(grid, solutions=10):
             if grid.score() < best[0]:
                 best = (grid.score(), grid)
             print(grid.score())
-    # line_plot(scores)
+    line_plot(scores)
     for i in range(10000000):
         i += 1
         i -= 1
     print(best[0])
-    # hover_plot(best[1])
+    hover_plot(best[1])

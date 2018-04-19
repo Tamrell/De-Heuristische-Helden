@@ -50,6 +50,10 @@ class Grid:
     def reset(self):
         self.houses = copy.deepcopy(self.initial_houses)
         self.batteries = copy.deepcopy(self.initial_batteries)
+        for h in self.houses.values():
+            for b in self.batteries.values():
+                h.dists[b] = self.distance(b.cord, h.cord)
+
 
     def legal(self):
         if [h for h in self.houses.values() if h.free]:
@@ -150,9 +154,10 @@ class Grid:
     def score(self):
         score = 0
         for b in self.batteries.values():
-            print(b.links)
+            print(b.color, b.links)
             for h in b.links:
                 score += h.dists[b]
+                print(score)
         return score
 
     def __str__(self):

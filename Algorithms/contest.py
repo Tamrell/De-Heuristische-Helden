@@ -16,7 +16,7 @@ def connect(house, battery, overload=False):
     house.bat = battery
     house.color = battery.color
     house.free = False
-    battery.links.add(house)
+    battery.links.add(house) ##doesnot happen
     return True
 
 def unconnect(self, house):
