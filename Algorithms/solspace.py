@@ -13,9 +13,9 @@ def random_connect(grid):
         else:
             return False
     if grid.legal():
-        print("before greedy climber:", grid.score())
+        #print("before greedy climber:", grid.score())
         #ex_swapper(grid)
-        print("after greedy climber:", grid.score())
+        #print("after greedy climber:", grid.score())
         #while hillskipper(grid):
         #    print("after skipper:", grid.score())
         return True
@@ -25,7 +25,7 @@ def random_connect(grid):
 def random_sampler(grid, nbh, solutions=10):
     best = (float('inf'), None)
     while solutions > 0:
-        grid.reset()
+        grid.reset(False)
         if random_connect(grid):
             add_data(grid.score(), nbh)
             solutions -= 1
@@ -36,7 +36,6 @@ def random_sampler(grid, nbh, solutions=10):
     hover_plot(best[1])
 
 def add_data(score, nbh):
-    filename =  os.path.abspath('Results/Solspaces/SS'
-                                 + nbh +'.csv')
+    filename =  os.path.abspath('Results/Solspaces/SS' + nbh +'.csv')
     with open(filename, 'a') as data:
         data.write(str(score) + '\n')
