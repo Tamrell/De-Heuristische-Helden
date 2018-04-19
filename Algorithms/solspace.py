@@ -1,6 +1,7 @@
 from Algorithms.contest import *
 from Algorithms.plots import *
 from random import shuffle, choice
+import os
 
 def random_connect(grid):
     houses = [h for h in grid.houses.values() if h.free]
@@ -21,24 +22,21 @@ def random_connect(grid):
     else:
         return False
 
-def random_sampler(grid, solutions=10):
-    scores = {}
-    best = (100000000, None) ###infinite###
+def random_sampler(grid, nbh, solutions=10):
+    best = (float('inf'), None)
     while solutions > 0:
         grid.reset()
         if random_connect(grid):
-            if grid.score() in scores:
-                scores[grid.score()] += 1
-            else:
-                scores[grid.score()] = 1
-            print(solutions, grid.score())
+            add_data(grid.score(), nbh)
             solutions -= 1
             if grid.score() < best[0]:
                 best = (grid.score(), grid)
-            print(grid.score())
-    line_plot(scores)
-    for i in range(10000000):
-        i += 1
-        i -= 1
+    print(best[1])
     print(best[0])
     hover_plot(best[1])
+
+def add_data(score, nbh):
+    filename =  os.path.abspath('Results/Solspaces/SS'
+                                 + nbh +'.csv')
+    with open(filename, 'a') as data:
+        data.write(str(score) + '\n')
