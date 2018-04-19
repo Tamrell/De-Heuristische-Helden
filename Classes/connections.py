@@ -195,6 +195,13 @@ class Connections:
             return False
 
     def hard_swap(self, h1, h2):
+
+        """This function swaps two houses from two seperate batteries
+        Takes
+            house1, house2: House instances from two seperate batteries
+        Returns
+            True if swap was succesfull"""
+
         if h1 == h2:
             return False
         b1 = h1.bat

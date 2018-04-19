@@ -3,9 +3,13 @@ import plotly.graph_objs as go
 from plotly.offline import plot
 from numpy import subtract
 import csv
-from house import House
+import copy
+from Classes.load_batteries import *
+
+from Classes.house import House
+from Classes.battery import Battery
+
 import sys
-from load_batteries import *
 import termcolor
 
 class Grid:
@@ -29,7 +33,6 @@ class Grid:
                 dimensions (Tuple): A tuple containing the x- and y-coordinates
                 of the Grid, defaults to 50x50.
         '''
-
         self.grid_list = {}
         self.total_probability = 0
         self.total_sq_probability = 0
@@ -41,6 +44,12 @@ class Grid:
         self.set_houses(file1, self.batteries.values())
         self.set_grid_points()
         self.set_global_density()
+        self.initial_houses = copy.copy(self.houses) ##recalc!!
+        self.initial_batteries = copy.copy(self.batteries)
+
+    def reset(self):
+        self.houses.update(self.initial_houses)
+        self.batteries.update(self.initial_batteries)
 
     def set_grid_points(self):
         ''' Initiates all the Grid_Points for the Grid. '''
@@ -82,10 +91,6 @@ class Grid:
             reader = csv.reader(csvfile, delimiter=',')
             next(reader)
             for row in reader:
-                # if (int(row[0]), int(row[1])) in self.houses:
-                #     print(self.houses[(int(row[0]), int(row[1]))].output)
-                #     print(str((int(row[0]), int(row[1]))))
-                #     input("yep, there is a double house on 1")
                 self.houses[(int(row[0]), int(row[1]))] = House(row, batteries)
 
     def set_batteries(self, filename):

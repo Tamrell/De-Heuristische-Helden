@@ -1,5 +1,5 @@
 import csv
-from battery import *
+from Classes.battery import *
 
 def get_x(string):
     """gets the first element of [x, y]

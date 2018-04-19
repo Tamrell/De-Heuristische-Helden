@@ -1,5 +1,8 @@
 import sys
-from grid import *
+from Classes.grid import Grid
+from Algorithms.hillskipper import *
+from Algorithms.greedy_hillclimber import *
+from Algorithms.solspace import *
 
 if __name__ == "__main__":
 
@@ -19,7 +22,6 @@ if __name__ == "__main__":
     elif file2 == '3':
         file2 = 'Data/wijk3_batterijen.txt'
 
-
     grid = Grid(file1, file2)
-    grid.print_heatmap()
+    random_sampler(grid)
     print(grid)
