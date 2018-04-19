@@ -21,7 +21,7 @@ class Grid:
 
      '''
 
-    def __init__(self, file1, file2, dimensions=(50, 50)):
+    def __init__(self, file1, file2, grid_number, dimensions=(50, 50)):
         ''' Constructor, needs a file with information about the houses and
             optional dimensions of the Grid (default islf.houses = {} 50x50).
 
@@ -33,6 +33,7 @@ class Grid:
                 dimensions (Tuple): A tuple containing the x- and y-coordinates
                 of the Grid, defaults to 50x50.
         '''
+        self.grid_number = grid_number
         self.grid_list = {}
         self.total_probability = 0
         self.total_sq_probability = 0

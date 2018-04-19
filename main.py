@@ -22,7 +22,7 @@ if __name__ == "__main__":
     elif file2 == '3':
         file2 = 'Data/wijk3_batterijen.txt'
 
-    grid = Grid(file1, file2)
+    grid = Grid(file1, file2, sys.argv[1])
     alg = input("Which algorithm do you want to run?\n  s: Solspace\n <key>: <algorithm>\n")
     if alg == 's':
         solutions = input("How many sample solutions do you want to generate? (int)\n")
