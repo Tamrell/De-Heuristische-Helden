@@ -91,7 +91,7 @@ if __name__ == "__main__":
     best_score = 9999
     iterations = 0
 
-    while iterations < 100:
+    while iterations < 10000:
         c = connect_dem_random_ladies(grid)
         if c:
             score = c.calculate_score()
@@ -113,7 +113,7 @@ if __name__ == "__main__":
     # print(best_grid)
 
     # print(best_score)
-    # hover_plot(best_grid)
+    hover_plot(best_grid)
 
     # bat = grid.batteries[(3, 45)]
     # house = bat.find_closest_house(grid, grid.houses)
