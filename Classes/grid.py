@@ -7,7 +7,7 @@ import copy
 from Classes.load_batteries import *
 
 from Classes.house import House
-from Classes.battery import Battery
+from Classes.battery import *
 
 import sys
 import termcolor
@@ -19,9 +19,9 @@ class Grid:
     - houses: dict containing: coordinate:House
     - batteries: dict containing: coordinate:Battery
 
-     '''
+    '''
 
-    def __init__(self, file1, file2, dimensions=(50, 50)):
+    def __init__(self, file1, file2, grid_number, dimensions=(50, 50)):
         ''' Constructor, needs a file with information about the houses and
             optional dimensions of the Grid (default islf.houses = {} 50x50).
 
@@ -33,6 +33,7 @@ class Grid:
                 dimensions (Tuple): A tuple containing the x- and y-coordinates
                 of the Grid, defaults to 50x50.
         '''
+        self.grid_number = grid_number
         self.grid_list = {}
         self.total_probability = 0
         self.total_sq_probability = 0
@@ -47,15 +48,23 @@ class Grid:
         self.initial_houses = copy.deepcopy(self.houses) ##recalc!!
         self.initial_batteries = copy.deepcopy(self.batteries)
 
-    def reset(self):
-        self.houses.clear()
-        self.batteries.clear()
-        self.houses = copy.deepcopy(self.initial_houses)
-        self.batteries = copy.deepcopy(self.initial_batteries)
-        for h in self.houses.values():
-            h.dists.clear()
-            for b in self.batteries.values():
-                h.dists[b] = self.distance(b.cord, h.cord)
+    def reset(self, return=True):
+        if return:
+            file_name = 'Data/Objects/grid_with_batteries_' +
+            self.grid_number + 'pkl'
+            with open(file_name, 'rb') as input:
+                grid = pickle.load(input)
+            return grid
+        else:
+            self.houses.clear()
+            self.batteries.clear()
+            self.houses = copy.deepcopy(self.initial_houses)
+            self.batteries = copy.deepcopy(self.initial_batteries)
+            for h in self.houses.values():
+                h.dists.clear()
+                for b in self.batteries.values():
+                    h.dists[b] = self.distance(b.cord, h.cord)
+
 
     def legal(self):
         if [h for h in self.houses.values() if h.free]:
