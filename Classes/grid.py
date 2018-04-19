@@ -155,10 +155,8 @@ class Grid:
     def score(self):
         score = 0
         for b in self.batteries.values():
-            print(b.color, b.links)
             for h in b.links:
                 score += h.dists[b]
-                print(score)
         return score
 
     def __str__(self):

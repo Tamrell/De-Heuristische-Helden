@@ -23,5 +23,6 @@ if __name__ == "__main__":
         file2 = 'Data/wijk3_batterijen.txt'
 
     grid = Grid(file1, file2)
-    random_sampler(grid)
+    solutions = input("How many sample solutions do you want to generate? (int)\n")
+    random_sampler(grid, sys.argv[1], solutions)
     print(grid)
