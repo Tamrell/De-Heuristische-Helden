@@ -3,12 +3,11 @@ from operator import itemgetter
 import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(__file__, '..', '..', 'Classes')))
+sys.path.insert(0, os.path.abspath(os.path.join(__file__, '..', '..')))
 print(sys.path)
 from grid import *
 from plots import *
-import imports
-import time
-import copy
+from imports import *
 
 best_case = None
 
