@@ -104,17 +104,7 @@ if __name__ == "__main__":
         grid = Grid(file1, file2)
         iterations += 1
 
-    # i = 0
-    # while best_c.rand_swapper(best_grid):
-    #         best_c.rand_swapper(best_grid)
 
     print(best_grid)
     print(best_grid.score())
-    # print(best_grid)
-
-    # print(best_score)
     hover_plot(best_grid)
-
-    # bat = grid.batteries[(3, 45)]
-    # house = bat.find_closest_house(grid, grid.houses)
-    # print(house)
