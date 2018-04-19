@@ -1,27 +1,13 @@
 # C:\Users\Eigenaar\Documents\school\Thema 2\De-Heuristische-Helden\De-Heuristische-Helden
-from operator import itemgetter
-import sys
-import os
-sys.path.insert(0, os.path.abspath(os.path.join(__file__, '..', '..', 'Classes')))
-sys.path.insert(0, os.path.abspath(os.path.join(__file__, '..', '..')))
 
+import sys
+import random
+import copy
+import time
+from operator import itemgetter
 from grid import *
-from plots import *
-from imports import *
 
 best_case = None
-
-def update_grid(main, connections):
-    for connection in connections:
-        house_, battery_ = connection
-        import house, battery
-        grid_house = house.House((house_.x, house_.y, house_.capacity),[])
-        grid_battery = battery.Battery((battery_.x, battery_.y), battery_.max_capacity)
-
-        grid_house.bat = grid_battery
-        grid_battery.links.add(grid_house)
-
-    return main
 
 def check(connections):
     batteries = {}
@@ -35,36 +21,32 @@ def check(connections):
             batteries[battery] = house.capacity
     return True
 
-class LocalHouse:
+class House:
     def __init__(self, x, y, capacity):
         self.x, self.y = int(x), int(y)
         self.capacity = capacity
 
-class LocalBattery:
+class Battery:
     def __init__(self, x, y, current_capacity, max_capacity = 0):
         self.x, self.y = x, y
         if max_capacity != 0:
             self.max_capacity = max_capacity
         self.current_capacity = current_capacity
 
-#sys.path.insert(0, os.path.abspath(os.path.join(__file__, '..', '..', 'Classes')))
-fileDir = os.path.abspath(os.path.join(__file__, '..', '..', 'Data'))
-filename1 = os.path.join(fileDir, 'wijk1_huizen.csv')
-filename2 = os.path.join(fileDir, 'wijk1_batterijen.txt')
-print(filename1, filename2)
-main = Grid(filename1, filename2)
-batteries = [LocalBattery(battery.cord[0], battery.cord[1], 0, battery.max_load) for battery in main.batteries.values()]
+
+main = Grid("wijk1_huizen.csv", "wijk1_batterijen.txt")
+batteries = [Battery(battery.cord[0], battery.cord[1], 0, battery.max_load) for battery in main.batteries.values()]
 number_of_batteries = len(batteries)
 
 house_sort = True
 if house_sort:
     # betere oplossing met cord[1]
-    houses = [(house.cord[1], house.cord[0], LocalHouse(house.cord[0], house.cord[1], house.output)) for house in main.houses.values()]
+    houses = [(house.cord[1], house.cord[0], House(house.cord[0], house.cord[1], house.output)) for house in main.houses.values()]
     houses = sorted(houses, key=itemgetter(0), reverse=True)
     houses = [house_combi[2] for house_combi in houses]
 
 else:
-    houses = [LocalHouse(house.cord[0], house.cord[1], house.output) for house in main.houses.values()]
+    houses = [House(house.cord[0], house.cord[1], house.output) for house in main.houses.values()]
 
 class case:
     def distance(self, house, battery):
@@ -88,9 +70,9 @@ class case:
 
     def __init__(self, houses, batteries, connections, value):
         self.value = value
-        self.houses = [LocalHouse(house.x, house.y, house.capacity) for house in houses]
+        self.houses = [House(house.x, house.y, house.capacity) for house in houses]
 
-        self.batteries = [LocalBattery(battery.x, battery.y, battery.current_capacity, battery.max_capacity) for battery in batteries]
+        self.batteries = [Battery(battery.x, battery.y, battery.current_capacity, battery.max_capacity) for battery in batteries]
         self.connections = copy.deepcopy(connections)
 
     def apply_change(self, battery_n):
@@ -124,6 +106,7 @@ for house in greedy_case.houses:
 stack.append((greedy_case.value, greedy_case))
 """
 #print("greedy opening:\t", greedy_case.value, len(greedy_case.connections))
+
 
 bound = 10000#3800#3517
 iter = 0
@@ -161,8 +144,6 @@ try:
 
             (value, current_case) = stack.pop()
             if len(current_case.houses) == 0:
-                main = update_grid(current_case, current_case.connections)
-                plot(main)
                 if value < bound:
                     best_case = current_case
                     bound = value
