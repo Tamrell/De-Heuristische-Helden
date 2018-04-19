@@ -49,8 +49,8 @@ class Grid:
         self.initial_batteries = copy.deepcopy(self.batteries)
 
     def reset(self):
-        file_name = 'Data/Objects/grid_with_batteries_' +
-        self.grid_number + 'pkl'
+        file_name = 'Data/Objects/grid_with_batteries_'
+        + self.grid_number + 'pkl'
         with open(file_name, 'rb') as input:
             grid = pickle.load(input)
         return grid
