@@ -13,9 +13,9 @@ def random_connect(grid):
         else:
             return False
     if grid.legal():
-        print("before greedy climber:", grid.score())
+        #print("before greedy climber:", grid.score())
         #ex_swapper(grid)
-        print("after greedy climber:", grid.score())
+        #print("after greedy climber:", grid.score())
         #while hillskipper(grid):
         #    print("after skipper:", grid.score())
         return True
@@ -34,6 +34,7 @@ def random_sampler(grid, nbh, solutions=10):
     print(best[1])
     print(best[0])
     hover_plot(best[1])
+    best[1].stats()
 
 def add_data(score, nbh):
     filename =  os.path.abspath('Results/Solspaces/SS'

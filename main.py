@@ -24,5 +24,5 @@ if __name__ == "__main__":
 
     grid = Grid(file1, file2)
     solutions = input("How many sample solutions do you want to generate? (int)\n")
-    random_sampler(grid, sys.argv[1], solutions)
+    random_sampler(grid, sys.argv[1], int(solutions))
     print(grid)

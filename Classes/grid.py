@@ -48,12 +48,14 @@ class Grid:
         self.initial_batteries = copy.deepcopy(self.batteries)
 
     def reset(self):
+        self.houses.clear()
+        self.batteries.clear()
         self.houses = copy.deepcopy(self.initial_houses)
         self.batteries = copy.deepcopy(self.initial_batteries)
         for h in self.houses.values():
+            h.dists.clear()
             for b in self.batteries.values():
                 h.dists[b] = self.distance(b.cord, h.cord)
-
 
     def legal(self):
         if [h for h in self.houses.values() if h.free]:
@@ -62,6 +64,22 @@ class Grid:
             if b.load > b.max_load:
                 return False
         return True
+
+    def stats(self):
+        b_count = 0
+        for b in self.batteries.values():
+            b_count += b.max_load
+            print(b.color, ":", b.load, "of", b.max_load)
+        count = 0
+        h_count = 0
+        for h in self.houses.values():
+            count += h.output
+            h_count += 1
+        print("score:", self.score())
+        print("total houses:", h_count)
+        print("total output:", count)
+        print("average output:", count/h_count)
+        print("total capacity:", b_count)
 
     def set_grid_points(self):
         ''' Initiates all the Grid_Points for the Grid. '''
