@@ -1,10 +1,10 @@
 # C:\Users\Eigenaar\Documents\school\Thema 2\De-Heuristische-Helden\De-Heuristische-Helden
+
 import sys
 import random
 import copy
 import time
 from operator import itemgetter
-
 from grid import *
 
 best_case = None
@@ -27,7 +27,6 @@ class House:
         self.capacity = capacity
 
 class Battery:
-    # hier zit iets fout:
     def __init__(self, x, y, current_capacity, max_capacity = 0):
         self.x, self.y = x, y
         if max_capacity != 0:
@@ -38,7 +37,16 @@ class Battery:
 main = Grid("wijk1_huizen.csv", "wijk1_batterijen.txt")
 batteries = [Battery(battery.cord[0], battery.cord[1], 0, battery.max_load) for battery in main.batteries.values()]
 number_of_batteries = len(batteries)
-houses = [House(house.cord[0], house.cord[1], house.output) for house in main.houses.values()]
+
+house_sort = True
+if house_sort:
+    # betere oplossing met cord[1]
+    houses = [(house.cord[1], house.cord[0], House(house.cord[0], house.cord[1], house.output)) for house in main.houses.values()]
+    houses = sorted(houses, key=itemgetter(0), reverse=True)
+    houses = [house_combi[2] for house_combi in houses]
+
+else:
+    houses = [House(house.cord[0], house.cord[1], house.output) for house in main.houses.values()]
 
 class case:
     def distance(self, house, battery):
@@ -48,7 +56,7 @@ class case:
         if battery.current_capacity + house.capacity > battery.max_capacity:
             return False
 
-        self.houses.remove(house)
+        #self.houses.remove(house)
         battery.current_capacity += house.capacity
         self.connections.append((house, battery))
         return True
@@ -65,11 +73,12 @@ class case:
         self.houses = [House(house.x, house.y, house.capacity) for house in houses]
 
         self.batteries = [Battery(battery.x, battery.y, battery.current_capacity, battery.max_capacity) for battery in batteries]
-
         self.connections = copy.deepcopy(connections)
 
     def apply_change(self, battery_n):
-        house = self.houses[0]
+        # idee: houses[0]
+        house = self.houses.pop(0)
+        #house = self.houses[0]
         battery = self.batteries[battery_n]
         if self.connect(house, battery):
             self.value += self.distance(house, battery)
@@ -77,12 +86,31 @@ class case:
         return False
 
 stack = []
-current_case = case(houses, batteries, [], 0)
-stack.append((current_case.value, current_case))
 
-bound = 10000# 3517
+root = case(houses, batteries, [], 0)
+stack.append((root.value, root))
+
+"""
+greedy_case = case(houses, batteries, [], 0)
+for house in greedy_case.houses:
+    best_distance = 10000
+    best_battery = None
+    for battery in greedy_case.batteries:
+        dist = greedy_case.distance(house, battery)
+        if dist < best_distance:
+            best_battery = battery
+            best_distance = dist
+    if not greedy_case.connect(house, battery):
+        break
+    greedy_case.value += dist
+stack.append((greedy_case.value, greedy_case))
+"""
+#print("greedy opening:\t", greedy_case.value, len(greedy_case.connections))
+
+
+bound = 10000#3800#3517
 iter = 0
-scale = 1000
+scale = 100
 
 start_time = time.time()
 if len(sys.argv) == 1:
@@ -116,14 +144,10 @@ try:
 
             (value, current_case) = stack.pop()
             if len(current_case.houses) == 0:
-                if best_case == None:
+                if value < bound:
                     best_case = current_case
-                    #print(best_case.calc_value())
-                else:
-                    if value < bound:
-                        best_case = current_case
-                        bound = value
-                print("solution\t", best_case, "\tvalue\t", value, "\ttime\t", time.time() - start_time , "\titer\t", iter)
+                    bound = value
+                    print("solution\t", best_case, "\tvalue\t", value, "\ttime\t", time.time() - start_time , "\titer\t", iter)
             else:
                 """
                     tot nu toe beste score: wel batterijen sorteren, maar niet schrappen
