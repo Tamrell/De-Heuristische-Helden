@@ -29,8 +29,10 @@ class Battery:
             self.max_capacity = max_capacity
         self.current_capacity = current_capacity
 
-
+#main = Grid("wijk1_huizen.csv", "wijk1_batterijen.txt")
+#main = Grid("wijk2_huizen.csv", "wijk2_batterijen.txt")
 main = Grid("wijk1_huizen.csv", "wijk1_batterijen.txt")
+
 batteries = [Battery(battery.cord[0], battery.cord[1], 0, battery.max_load) for battery in main.batteries.values()]
 number_of_batteries = len(batteries)
 houses = [House(house.cord[0], house.cord[1], house.output) for house in main.houses.values()]
@@ -39,12 +41,11 @@ class case:
     def distance(self, house, battery):
         return abs(house.x - battery.x) + abs(house.y - battery.y)
 
-    def connect(self, house, battery):
-        if battery.current_capacity + house.capacity > battery.max_capacity:
+    def connect(self, house, battery, test = True):
+        if (battery.current_capacity + house.capacity > battery.max_capacity) and test:
             return False
 
         self.houses.remove(house)
-
         battery.current_capacity += house.capacity
         self.connections.append((house, battery))
         return True
@@ -80,7 +81,64 @@ class case:
 
 scene = case(houses, batteries, [])
 
-
+# stap 1: greedy
 iter = 0
-iterations = 10000
-scale = 10
+
+while(len(scene.houses) > 0):
+    house = scene.houses.pop()
+
+    best_battery = None
+    dist = 10000
+
+    for battery in scene.batteries:
+        current_distance = scene.distance(house, battery)
+        if current_distance < dist:
+            best_battery = battery
+            dist = current_distance
+        iter += 1
+
+    scene.connections.append((house, best_battery))
+    best_battery.current_capacity += house.capacity
+
+print("case klopt: ", check(scene.connections))
+print(scene.value())
+# stap 2: optimize for \Theta
+class bfs_case:
+    def value(self, batteries):
+        score = 0
+        for battery in batteries:
+            if battery.max_capacity - battery.current_capacity < 0:
+                score += battery.max_capacity - battery.current_capacity
+        return score
+
+    def normalise(self, batteries):
+        for battery in batteries:
+            battery.current_capacity = 0
+
+        for i in range(len(houses)):
+            batteries[i].current_capacity += houses[i].capacity
+        return(batteries)
+
+    def __init__(self, houses, batteries):
+        self.houses = houses
+        self.batteries = self.normalise(copy.copy(batteries))
+        self.Theta = self.value(self.batteries)
+
+    def swap(self, houses, batteries):
+        n1, n2 = 0, 0
+        while(n1 == n2):
+            while(batteries[n1] == batteries[n2]):
+                n1 = random.randint(0, len(houses) - 1)
+                n2 = random.randint(0, len(houses) - 1)
+
+        houses[n1], houses[n2] = houses[n2], houses[n1]
+        return(houses, self.normalise(batteries))
+
+stack = []
+houses = []
+batteries = []
+for connection in scene.connections:
+    house, battery = connection
+    houses.append(house)
+    batteries.append(battery)
+current_case = bfs_case(scene.houses, scene.batteries)

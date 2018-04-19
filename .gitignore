@@ -2,3 +2,9 @@
 test.py
 __pycache__/
 *.pyc
+*.pptx
+*.xlsx
+*.png
+*.txt
+*.csv
+*.jpg
