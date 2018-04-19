@@ -25,7 +25,7 @@ def random_connect(grid):
 def random_sampler(grid, nbh, solutions=10):
     best = (float('inf'), None)
     while solutions > 0:
-        grid.reset(False)
+        grid = grid.reset()
         if random_connect(grid):
             add_data(grid.score(), nbh)
             solutions -= 1
