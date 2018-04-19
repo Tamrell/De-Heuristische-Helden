@@ -4,7 +4,7 @@ import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(__file__, '..', '..', 'Classes')))
 sys.path.insert(0, os.path.abspath(os.path.join(__file__, '..', '..')))
-print(sys.path)
+
 from grid import *
 from plots import *
 from imports import *
@@ -12,12 +12,11 @@ from imports import *
 best_case = None
 
 def update_grid(main, connections):
-    import house
-    import battery
     for connection in connections:
-        house, battery = connection
-        grid_house = house.House((house.x, house.y),[])
-        grid_battery = battery.Battery((battery.x, battery.y), battery.max_capacity)
+        house_, battery_ = connection
+        import house, battery
+        grid_house = house.House((house_.x, house_.y, house_.capacity),[])
+        grid_battery = battery.Battery((battery_.x, battery_.y), battery_.max_capacity)
 
         grid_house.bat = grid_battery
         grid_battery.links.add(grid_house)
@@ -36,12 +35,12 @@ def check(connections):
             batteries[battery] = house.capacity
     return True
 
-class House:
+class LocalHouse:
     def __init__(self, x, y, capacity):
         self.x, self.y = int(x), int(y)
         self.capacity = capacity
 
-class Battery:
+class LocalBattery:
     def __init__(self, x, y, current_capacity, max_capacity = 0):
         self.x, self.y = x, y
         if max_capacity != 0:
@@ -54,18 +53,18 @@ filename1 = os.path.join(fileDir, 'wijk1_huizen.csv')
 filename2 = os.path.join(fileDir, 'wijk1_batterijen.txt')
 print(filename1, filename2)
 main = Grid(filename1, filename2)
-batteries = [Battery(battery.cord[0], battery.cord[1], 0, battery.max_load) for battery in main.batteries.values()]
+batteries = [LocalBattery(battery.cord[0], battery.cord[1], 0, battery.max_load) for battery in main.batteries.values()]
 number_of_batteries = len(batteries)
 
 house_sort = True
 if house_sort:
     # betere oplossing met cord[1]
-    houses = [(house.cord[1], house.cord[0], House(house.cord[0], house.cord[1], house.output)) for house in main.houses.values()]
+    houses = [(house.cord[1], house.cord[0], LocalHouse(house.cord[0], house.cord[1], house.output)) for house in main.houses.values()]
     houses = sorted(houses, key=itemgetter(0), reverse=True)
     houses = [house_combi[2] for house_combi in houses]
 
 else:
-    houses = [House(house.cord[0], house.cord[1], house.output) for house in main.houses.values()]
+    houses = [LocalHouse(house.cord[0], house.cord[1], house.output) for house in main.houses.values()]
 
 class case:
     def distance(self, house, battery):
@@ -89,9 +88,9 @@ class case:
 
     def __init__(self, houses, batteries, connections, value):
         self.value = value
-        self.houses = [House(house.x, house.y, house.capacity) for house in houses]
+        self.houses = [LocalHouse(house.x, house.y, house.capacity) for house in houses]
 
-        self.batteries = [Battery(battery.x, battery.y, battery.current_capacity, battery.max_capacity) for battery in batteries]
+        self.batteries = [LocalBattery(battery.x, battery.y, battery.current_capacity, battery.max_capacity) for battery in batteries]
         self.connections = copy.deepcopy(connections)
 
     def apply_change(self, battery_n):
