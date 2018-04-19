@@ -48,10 +48,9 @@ class Grid:
         self.initial_houses = copy.deepcopy(self.houses) ##recalc!!
         self.initial_batteries = copy.deepcopy(self.batteries)
 
-    def reset(self, return=True):
-        if return:
-            file_name = 'Data/Objects/grid_with_batteries_' +
-            self.grid_number + 'pkl'
+    def reset(self, report=True):
+        if report:
+            file_name = 'Data/Objects/grid_with_batteries_' + self.grid_number + 'pkl'
             with open(file_name, 'rb') as input:
                 grid = pickle.load(input)
             return grid

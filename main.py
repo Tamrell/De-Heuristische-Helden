@@ -23,6 +23,8 @@ if __name__ == "__main__":
         file2 = 'Data/wijk3_batterijen.txt'
 
     grid = Grid(file1, file2)
-    solutions = input("How many sample solutions do you want to generate? (int)\n")
-    random_sampler(grid, sys.argv[1], int(solutions))
+    alg = input("Which algorithm do you want to run?\n  s: Solspace\n <key>: <algorithm>\n")
+    if alg == 's':
+        solutions = input("How many sample solutions do you want to generate? (int)\n")
+        random_sampler(grid, sys.argv[1], int(solutions))
     print(grid)
