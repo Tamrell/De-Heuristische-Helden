@@ -7,7 +7,8 @@ from Results.Solspaces.plotter import plotter
 
 if __name__ == "__main__":
 
-    nbh = input("for which neighbourhood do you want to run an algorithm?: (int) ")
+    print("\nfor which neighbourhood do you want to run an algorithm?:")
+    nbh = input("\n(int): ")
 
     file1 = nbh
     if file1 == '1':
@@ -29,7 +30,7 @@ if __name__ == "__main__":
     print("Which algorithm do you want to run?")
     print("\n <key>: <algorithm>\n\n s: Solspace\n")
     print(" n: plot aprox. normal distribution of the solution space\n")
-    alg = input()
+    alg = input("(alpha): ")
     if alg == 's':
         solutions = input("How many sample solutions do you want to generate? (int)\n")
         random_sampler(grid, fil, int(solutions))
