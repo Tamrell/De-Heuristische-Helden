@@ -3,7 +3,7 @@ from Classes.grid import Grid
 from Algorithms.hillskipper import *
 from Algorithms.greedy_hillclimber import *
 from Algorithms.solspace import *
-from Results.Solspaces.plotter import plotter
+from Results.Solspaces.plotter import *
 
 if __name__ == "__main__":
 
@@ -32,7 +32,10 @@ if __name__ == "__main__":
     print(" n: plot aprox. normal distribution of the solution space\n")
     alg = input("(alpha): ")
     if alg == 's':
-        solutions = input("How many sample solutions do you want to generate? (int)\n")
+        print("How many sample solutions do you want to generate?")
+        print("(there are currently", count_data(nbh),
+              "data points for this neighbourhood)\n")
+        solutions = input("(int): ")
         random_sampler(grid, fil, int(solutions))
     elif alg == 'n':
         plotter(nbh)
