@@ -36,7 +36,7 @@ if __name__ == "__main__":
         print("(there are currently", count_data(nbh),
               "data points for this neighbourhood)\n")
         solutions = input("(int): ")
-        random_sampler(grid, fil, int(solutions))
+        random_sampler(grid, nbh, int(solutions))
     elif alg == 'n':
         plotter(nbh)
     #print(grid)
