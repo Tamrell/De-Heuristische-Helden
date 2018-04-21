@@ -10,21 +10,11 @@ if __name__ == "__main__":
     print("\nfor which neighbourhood do you want to run an algorithm?:")
     nbh = input("\n(int): ")
 
-    file1 = nbh
-    if file1 == '1':
-        file1 = 'Data/wijk1_huizen.csv'
-    elif file1 == '2':
-        file1 = 'Data/wijk2_huizen.csv'
-    elif file1 == '3':
-        file1 = 'Data/wijk3_huizen.csv'
-
-    file2 = nbh
-    if file2 == '1':
-        file2 = 'Data/wijk1_batterijen.txt'
-    elif file2 == '2':
-        file2 = 'Data/wijk2_batterijen.txt'
-    elif file2 == '3':
-        file2 = 'Data/wijk3_batterijen.txt'
+    while not nbh in {'1', '2', '3'}:
+        print(nbh, "is an invalid choice, please choose 1, 2 or 3")
+        nbh = input("\n(int): ")
+    file1 = 'Data/wijk' + nbh + '_huizen.csv'
+    file2 = 'Data/wijk' + nbh + '_batterijen.txt'
 
     grid = Grid(file1, file2, nbh)
     print("Which algorithm do you want to run?")
