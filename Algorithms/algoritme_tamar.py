@@ -12,9 +12,11 @@ from imports import *
 best_case = None
 
 def update_grid(main, connections):
+    import house, battery
+    Battery.color_generator = assign_color()
     for connection in connections:
+        # eerst batterijen aanmaken, dan huizen verbinden!
         house_, battery_ = connection
-        import house, battery
         grid_house = house.House((house_.x, house_.y, house_.capacity),[])
         grid_battery = battery.Battery((battery_.x, battery_.y), battery_.max_capacity)
 
