@@ -25,9 +25,8 @@ python main.py
 
 ## Auteurs (Authors)
 
-* Ik
+* Joeri Freesen, Tamar Vis, Angelo Groot
 
 ## Dankwoord (Acknowledgments)
 
-* StackOverflow
-* minor programmeren van de UvA
+*...?

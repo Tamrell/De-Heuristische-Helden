@@ -1,6 +1,7 @@
 from Algorithms.contest import hard_swap
 
 def hillskipper(grid):
+    '''Hillskipper looks at '''
     houses = [h for h in grid.houses.values()]
     best = (grid.score(), [])
     for h1 in houses:

@@ -1,25 +1,25 @@
-from imports import *
-from connections import *
+from contest import *
 from plots import *
-from random import choice
 
-def overload_them_bitches(grid):
-    c = Connections()
+def procrastinate(grid):
     for h in grid.houses.values():
         b = h.find_closest_battery(grid, True)
-        if not b:
-            input(grid)
-        c.connect(h, b, True)
-    print(c.calculate_score())
+        connect(h, b, True)
 
-def correct_them_overloaded_bitches(grid):
-    # for each underloaded battery, search for the most profitable switch in  house
-    # connected to an overloaded battery, and switch the connection
-    # most profitable: maybe closest house of an overloaded battery, maybe least increasement of length.
-    b = max([(b.load, b) for b in grid.batteries.values()])
-    while not b.fits():
-        pass
+def reluctantly_sort_it_out(grid):
+    pass
 
+def best_fit(grid):
+    # for all connections, connect the one with the least cost that causes the
+    # deficiency score to go down until the grid is legal.
+    pass
+
+def defficiency_score(grid):
+    # calculates how inefficient all the batteries are used.
+    deff = 0
+    for b in grid.values():
+        deff += abs(b.max_load - b.load)
+    return deff
 
 if __name__ == "__main__":
 
@@ -41,8 +41,7 @@ if __name__ == "__main__":
 
     grid = Grid(file1, file2)
     overload_them_bitches(grid)
-    c = Connections()
-    c.ex_swapper(grid)
+    ex_swapper(grid)
 
     print(grid)
     b_count = 0
