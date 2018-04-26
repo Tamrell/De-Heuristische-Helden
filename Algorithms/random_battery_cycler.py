@@ -2,28 +2,6 @@ from random import shuffle, choice, sample
 from copy import deepcopy
 from Algorithms.contest import *
 
-def connect_dem_classy_ladies(grid):
-
-    houses = grid.houses
-    house_list = [cord for cord in houses]
-    batteries = grid.batteries
-    battery_list = [cord for cord in batteries]
-
-    while house_list:
-        if not battery_list:
-            return False
-        shuffle(battery_list)
-        for b in battery_list:
-            if house_list is []:
-                return True
-            h = batteries[b].find_closest_house(grid, house_list)
-            if h == ():
-                battery_list.remove(b)
-                break
-            if not connect(houses[h], batteries[b]):
-                return False
-            house_list.remove(h)
-
 
 def random_battery_cycler(grid, max_it):
 
