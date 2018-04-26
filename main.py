@@ -23,14 +23,14 @@ if __name__ == "__main__":
 
     grid = Grid(file1, file2, nbh)
     print("Which algorithm do you want to run?")
-    print("\n <key>: <algorithm>\n\n s: Solspace\n p: procrastinator")
+    print("\n <key>: <algorithm>\n\n s: Solspace\n p: Procrastinator")
     print(" b: Battery Cycler")
-    print(" c: plot aprox. normal distribution of the solution space\n")
+    print(" n: Plot the distribution of the random solution space\n")
     alg = input("(alpha): ")
 
     if alg == 's':
         print("How many sample solutions do you want to generate?")
-        print("(there are currently", count_data(nbh),
+        print("(There are currently", count_data(nbh),
               "data points for this neighbourhood)\n")
         solutions = input("(int): ")
         random_sampler(grid, int(solutions))
@@ -49,7 +49,7 @@ if __name__ == "__main__":
         i = input("(int): ")
         grid = random_battery_cycler(grid, i)
 
-    print('do you want to print the resulting grid?')
+    print('Do you want to print the resulting grid?')
     option = input("y/n\n")
     if option == 'y':
         print(grid)
