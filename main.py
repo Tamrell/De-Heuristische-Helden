@@ -1,8 +1,9 @@
 import sys
 from Classes.grid import Grid
-from Algorithms.hillskipper import *
-from Algorithms.greedy_hillclimber import *
-from Algorithms.solspace import *
+from Algorithms.hillskipper import hillskipper
+from Algorithms.procrastinator import procrastinator
+from Algorithms.greedy_hillclimber import greedy_hillclimber
+from Algorithms.solspace import random_sampler
 from Results.Solspaces.plotter import *
 
 # neighbourhoods used
@@ -21,8 +22,8 @@ if __name__ == "__main__":
 
     grid = Grid(file1, file2, nbh)
     print("Which algorithm do you want to run?")
-    print("\n <key>: <algorithm>\n\n s: Solspace\n")
-    print(" p: plot aprox. normal distribution of the solution space\n")
+    print("\n <key>: <algorithm>\n\n s: Solspace\n p: procrastinator")
+    print(" c: plot aprox. normal distribution of the solution space\n")
     alg = input("(alpha): ")
 
     if alg == 's':
@@ -30,15 +31,18 @@ if __name__ == "__main__":
         print("(there are currently", count_data(nbh),
               "data points for this neighbourhood)\n")
         solutions = input("(int): ")
-        random_sampler(grid, nbh, int(solutions))
+        random_sampler(grid, int(solutions))
+
+    elif alg == 'c':
+        plotter(nbh)
 
     elif alg == 'p':
-        plotter(nbh)
+        procrastinator(grid)
 
     elif alg == 'h':
         hillskipper(grid)
 
-    print('do you want a visual representation?')
+    print('do you want to print the resulting grid?')
     option = input("y/n")
     if option == 'y':
         print(grid)

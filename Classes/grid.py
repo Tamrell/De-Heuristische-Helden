@@ -22,7 +22,7 @@ class Grid:
 
      '''
 
-    def __init__(self, file1, file2, grid_number, dimensions=(50, 50)):
+    def __init__(self, file1, file2, nbh, dimensions=(50, 50)):
         ''' Constructor, needs a file with information about the houses and
             optional dimensions of the Grid (default islf.houses = {} 50x50).
 
@@ -34,7 +34,7 @@ class Grid:
                 dimensions (Tuple): A tuple containing the x- and y-coordinates
                 of the Grid, defaults to 50x50.
         '''
-        self.grid_number = grid_number
+        self.nbh = nbh
         self.grid_list = {}
         self.total_probability = 0
         self.total_sq_probability = 0
@@ -51,7 +51,7 @@ class Grid:
 
     def reset(self, report=True):
         if report:
-            file_name = 'Data/Objects/grid_with_batteries_' + str(self.grid_number) + '.pkl'
+            file_name = 'Data/Objects/grid_with_batteries_' + str(self.nbh) + '.pkl'
             with open(file_name, 'rb') as input:
                 grid = pickle.load(input)
             return grid
@@ -168,6 +168,22 @@ class Grid:
             for h in b.links:
                 score += h.dists[b]
         return score
+
+    def print_stats(self):
+        b_count = 0
+        for b in self.batteries.values():
+            b_count += b.max_load
+            print(b.color, ":", b.load, "of", b.max_load)
+        count = 0
+        h_count = 0
+        for h in self.houses.values():
+            count += h.output
+            h_count += 1
+        print(self.score())
+        print("total houses:", h_count)
+        print("total output:", count)
+        print("average output:", count/h_count)
+        print("total capacity:", b_count)
 
     def __str__(self):
         ''' Returns a string that represents the Grid. Each '_' represents an

@@ -1,5 +1,5 @@
-from contest import *
-from plots import *
+from Algorithms.contest import *
+from Algorithms.plots import *
 
 def procrastinate(grid):
     for h in grid.houses.values():
@@ -7,12 +7,38 @@ def procrastinate(grid):
         connect(h, b, True)
 
 def reluctantly_sort_it_out(grid):
-    pass
-
-def best_fit(grid):
     # for all connections, connect the one with the least cost that causes the
     # deficiency score to go down until the grid is legal.
-    pass
+    while not grid.legal():
+        best_fit(grid)
+        print(grid)
+
+def best_fit(grid):
+    best = (0, None, None)
+    for h1 in grid.houses.values():
+        for h2 in grid.houses.values():
+            if h1 != h2 and h1.bat != h2.bat:
+                if deff_diff(h1, h2) > best[0]:
+                    best = (deff_diff(h1, h2), h1, h2)
+    if best[1] = print('swapping!')
+    hard_swap(h1, h2, True)
+
+
+def least_worsening(grid):
+    #### to be finished
+    best = (0, None, None)
+    for h1 in grid.houses():
+        for h2 in grid.houses():
+            if h1 != h2:
+                pass
+
+
+def deff_diff(h1, h2):
+    deff1 = abs(h1.bat.load - h1.bat.max_load)#**2?
+    deff2 = abs((h1.bat.load - h1.output + h2.output) -
+                (h2.bat.load - h2.output + h1.output))
+    return deff1 - deff2
+
 
 def defficiency_score(grid):
     # calculates how inefficient all the batteries are used.
@@ -21,29 +47,12 @@ def defficiency_score(grid):
         deff += abs(b.max_load - b.load)
     return deff
 
+def procrastinator(grid):
+    procrastinate(grid)
+    reluctantly_sort_it_out(grid)
+    print(grid, 'Done!')
+
 if __name__ == "__main__":
-
-    file1 = sys.argv[1]
-    if file1 == '1':
-        file1 = 'Data/wijk1_huizen.csv'
-    elif file1 == '2':
-        file1 = 'Data/wijk2_huizen.csv'
-    elif file1 == '3':
-        file1 = 'Data/wijk3_huizen.csv'
-
-    file2 = sys.argv[1]
-    if file2 == '1':
-        file2 = 'Data/wijk1_batterijen.txt'
-    elif file2 == '2':
-        file2 = 'Data/wijk2_batterijen.txt'
-    elif file2 == '3':
-        file2 = 'Data/wijk3_batterijen.txt'
-
-    grid = Grid(file1, file2)
-    overload_them_bitches(grid)
-    ex_swapper(grid)
-
-    print(grid)
     b_count = 0
     for b in grid.batteries.values():
         b_count += b.max_load
@@ -58,4 +67,3 @@ if __name__ == "__main__":
     print("total output:", count)
     print("average output:", count/h_count)
     print("total capacity:", b_count)
-    hover_plot(grid)
