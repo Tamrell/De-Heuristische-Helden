@@ -25,7 +25,7 @@ if __name__ == "__main__":
     print("Which algorithm do you want to run?")
     print("\n <key>: <algorithm>\n\n s: Solspace\n p: procrastinator")
     print(" b: Battery Cycler")
-    print(" c: plot aprox. normal distribution of the solution space\n")
+    print(" n: plot aprox. normal distribution of the solution space\n")
     alg = input("(alpha): ")
 
     if alg == 's':
@@ -35,7 +35,7 @@ if __name__ == "__main__":
         solutions = input("(int): ")
         random_sampler(grid, int(solutions))
 
-    elif alg == 'c':
+    elif alg == 'n':
         plotter(nbh)
 
     elif alg == 'p':

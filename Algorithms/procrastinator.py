@@ -11,22 +11,19 @@ def reluctantly_sort_it_out(grid):
     # deficiency score to go down until the grid is legal.
     while not grid.legal():
         best_fit(grid)
+        print(grid)
         print(defficiency_score(grid))
+        input(grid.print_stats())
 
 def best_fit(grid):
     best = (0, None, None)
-    for h1 in grid.houses.values():
-        for h2 in grid.houses.values():
-            if h1 != h2 and h1.bat != h2.bat:
-                if deff_diff(h1, h2) < best[0]:
-                    print('cur_', best[0])
-                    input(grid.print_stats())
-                    best = (deff_diff(h1, h2), h1, h2)
-    if best[1] and best[2]:
-        print(grid)
-        if hard_swap(best[1], best[2], True):
-            print('swapping!')
-            print(grid)
+    for h in grid.houses.values():
+        for b in grid.batteries.values():
+            if deff_diff(h, b) > best[0]:
+                best = (deff_diff(h, b), h, b)
+    if best[1]:
+        unconnect(best[1])
+        connect(best[1], best[2], True)
 
 
 def least_worsening(grid):
@@ -38,12 +35,10 @@ def least_worsening(grid):
                 pass
 
 
-def deff_diff(h1, h2):
-    pre_deff = abs((h1.bat.load - h1.bat.max_load) +
-                   (h2.bat.load - h2.bat.max_load))#**2?
-
-    post_deff = abs((h1.bat.load - h1.output + h2.output) - h1.bat.max_load) +\
-                abs((h2.bat.load - h2.output + h1.output) - h2.bat.max_load)
+def deff_diff(h, b):
+    pre_deff = abs(h.bat.load - h.bat.max_load) + abs(b.load - b.max_load)
+    post_deff = abs(h.bat.load - h.output - h.bat.max_load) + \
+                abs(b.load + h.output - b.max_load)
     return pre_deff - post_deff
 
 
