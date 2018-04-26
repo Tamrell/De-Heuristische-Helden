@@ -5,8 +5,7 @@ from Algorithms.procrastinator import procrastinator
 from Algorithms.upper_bound import find_worst
 from Algorithms.greedy_hillclimber import greedy_hillclimber
 from Algorithms.solspace import random_sampler
-from Algorithms.random_battery_cycler import random_battery_cycler
-
+from Algorithms.random_battery_cycler import *
 from Results.Solspaces.plotter import *
 
 # neighbourhoods used
@@ -51,9 +50,14 @@ if __name__ == "__main__":
         hillskipper(grid)
 
     elif alg == 'b':
+        print("Press 'f' for fully random, 's' for semi-random")
+        rd = input("'s'/'f'\n")
         print("How many iterations do you want to run?")
         i = input("(int): ")
-        grid = random_battery_cycler(grid, i)
+        if rd == 's':
+            grid = semi_random_battery_cycler(grid, i)
+        elif rd == 'f':
+            grid = random_battery_cycler(grid, i)
 
     print('Do you want to print the resulting grid?')
     option = input("y/n\n")
