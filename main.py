@@ -47,7 +47,7 @@ if __name__ == "__main__":
     elif alg == 'b':
         print("How many iterations do you want to run?")
         i = input("(int): ")
-        grid = connect_dem_random_ladies(grid, i)
+        grid = random_battery_cycler(grid, i)
 
     print('do you want to print the resulting grid?')
     option = input("y/n\n")
