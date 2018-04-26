@@ -12,7 +12,7 @@ NBHS = {'1', '2', '3'}
 
 if __name__ == "__main__":
 
-    print("\nfor which neighbourhood do you want to run an algorithm?:")
+    print("\nFor which neighbourhood do you want to run an algorithm?:")
     nbh = input("\n(int): ")
 
     while not nbh in NBHS:
