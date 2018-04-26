@@ -19,7 +19,7 @@ def connect(house, battery, overload=False):
     battery.links.add(house) ##doesnot happen
     return True
 
-def unconnect(self, house):
+def unconnect(house):
     """Disconnects the house from its battery"""
     try:
         house.bat.load -= house.output
@@ -41,8 +41,8 @@ def hard_swap(h1, h2, overload=False):
         return False
     b1 = h1.bat
     b2 = h2.bat
-    if b1.max_load >= b1.load - h1.output + h2.output or overload:
-        if b2.max_load >= b2.load - h2.output + h1.output or overload:
+    if overload or b1.max_load >= b1.load - h1.output + h2.output:
+        if overload or b2.max_load >= b2.load - h2.output + h1.output:
             unconnect(h1)
             unconnect(h2)
             connect(h1, b2)
