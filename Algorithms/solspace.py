@@ -13,11 +13,6 @@ def random_connect(grid):
         else:
             return False
     if grid.legal():
-        #print("before greedy climber:", grid.score())
-        #ex_swapper(grid)
-        #print("after greedy climber:", grid.score())
-        #while hillskipper(grid):
-        #    print("after skipper:", grid.score())
         return True
     else:
         return False
