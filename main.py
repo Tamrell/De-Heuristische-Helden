@@ -50,7 +50,7 @@ if __name__ == "__main__":
         grid = connect_dem_random_ladies(grid, i)
 
     print('do you want to print the resulting grid?')
-    option = input("y/n")
+    option = input("y/n\n")
     if option == 'y':
         print(grid)
         grid.print_stats()
