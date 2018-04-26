@@ -35,7 +35,7 @@ if __name__ == "__main__":
         solutions = input("(int): ")
         random_sampler(grid, int(solutions))
 
-    elif alg == 'c':
+    elif alg == 'n':
         plotter(nbh)
 
     elif alg == 'p':
