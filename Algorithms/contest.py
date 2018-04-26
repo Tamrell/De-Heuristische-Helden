@@ -45,8 +45,8 @@ def hard_swap(h1, h2, overload=False):
         if overload or b2.max_load >= b2.load - h2.output + h1.output:
             unconnect(h1)
             unconnect(h2)
-            connect(h1, b2)
-            connect(h2, b1)
+            connect(h1, b2, overload)
+            connect(h2, b1, overload)
             return True
     else:
         return False

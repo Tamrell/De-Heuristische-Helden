@@ -20,10 +20,13 @@ def best_fit(grid):
             if h1 != h2 and h1.bat != h2.bat:
                 if deff_diff(h1, h2) < best[0]:
                     print('cur_', best[0])
+                    input(grid.print_stats())
                     best = (deff_diff(h1, h2), h1, h2)
     if best[1] and best[2]:
+        print(grid)
         if hard_swap(best[1], best[2], True):
             print('swapping!')
+            print(grid)
 
 
 def least_worsening(grid):

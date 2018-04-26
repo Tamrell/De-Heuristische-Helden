@@ -49,7 +49,7 @@ class Grid:
         self.initial_houses = copy.deepcopy(self.houses) ##recalc!!
         self.initial_batteries = copy.deepcopy(self.batteries)
 
-    def reset(self, report=True):
+    def reset(self, report=False):
         if report:
             file_name = 'Data/Objects/grid_with_batteries_' + str(self.nbh) + '.pkl'
             with open(file_name, 'rb') as input:
