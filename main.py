@@ -2,9 +2,11 @@ import sys
 from Classes.grid import Grid
 from Algorithms.hillskipper import hillskipper
 from Algorithms.procrastinator import procrastinator
+from Algorithms.upper_bound import find_worst
 from Algorithms.greedy_hillclimber import greedy_hillclimber
 from Algorithms.solspace import random_sampler
 from Algorithms.random_battery_cycler import random_battery_cycler
+
 from Results.Solspaces.plotter import *
 
 # neighbourhoods used
@@ -24,6 +26,7 @@ if __name__ == "__main__":
     grid = Grid(file1, file2, nbh)
     print("Which algorithm do you want to run?")
     print("\n <key>: <algorithm>\n\n s: Solspace\n p: Procrastinator")
+    print(" w: Worst Config Finder\n")
     print(" b: Battery Cycler")
     print(" n: Plot the distribution of the random solution space\n")
     alg = input("(alpha): ")
@@ -34,6 +37,9 @@ if __name__ == "__main__":
               "data points for this neighbourhood)\n")
         solutions = input("(int): ")
         random_sampler(grid, int(solutions))
+
+    elif alg == 'w':
+        find_worst(grid)
 
     elif alg == 'n':
         plotter(nbh)

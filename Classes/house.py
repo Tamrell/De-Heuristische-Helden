@@ -45,3 +45,15 @@ class House:
         '''
         return min([(d, b) if (overload or b.fits(self.output))
                     else (100, None) for b, d in self.dists.items()])[1]
+
+    def find_furthest_battery(self, grid, overload=False):
+        ''' Returns the furthest battery object or None
+
+        Args:
+            Grid: grid that contains batteries
+            Bool(optional): True if the batteries may be overloaded
+
+        Returns:
+            Battery: closest battery
+        '''
+        return max([(d, b) for b, d in self.dists.items()])[1]
