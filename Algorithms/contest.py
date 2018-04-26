@@ -31,7 +31,7 @@ def unconnect(self, house):
         print("HAHA GETREKT unconnect")
         input(grid)
 
-def hard_swap(h1, h2):
+def hard_swap(h1, h2, overload=False):
     """This function swaps two houses from two seperate batteries
     Takes
         house1, house2: House instances from two seperate batteries
@@ -41,8 +41,8 @@ def hard_swap(h1, h2):
         return False
     b1 = h1.bat
     b2 = h2.bat
-    if b1.max_load >= b1.load - h1.output + h2.output:
-        if b2.max_load >= b2.load - h2.output + h1.output:
+    if b1.max_load >= b1.load - h1.output + h2.output or overload:
+        if b2.max_load >= b2.load - h2.output + h1.output or overload:
             unconnect(h1)
             unconnect(h2)
             connect(h1, b2)

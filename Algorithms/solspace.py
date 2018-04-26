@@ -17,12 +17,12 @@ def random_connect(grid):
     else:
         return False
 
-def random_sampler(grid, nbh, solutions=10):
+def random_sampler(grid, solutions=1):
     best = (float('inf'), None)
     while solutions > 0:
         grid.reset(False)
         if random_connect(grid):
-            add_data(grid.score(), nbh)
+            add_data(grid.score(), grid.nbh)
             solutions -= 1
             if grid.score() < best[0]:
                 best = (grid.score(), grid)
