@@ -4,6 +4,7 @@ from Algorithms.hillskipper import hillskipper
 from Algorithms.procrastinator import procrastinator
 from Algorithms.greedy_hillclimber import greedy_hillclimber
 from Algorithms.solspace import random_sampler
+from Algorithms.trysoft import *
 from Results.Solspaces.plotter import *
 
 # neighbourhoods used
@@ -23,6 +24,7 @@ if __name__ == "__main__":
     grid = Grid(file1, file2, nbh)
     print("Which algorithm do you want to run?")
     print("\n <key>: <algorithm>\n\n s: Solspace\n p: procrastinator")
+    print("\n b: Battery Cycler")
     print(" c: plot aprox. normal distribution of the solution space\n")
     alg = input("(alpha): ")
 
@@ -42,7 +44,13 @@ if __name__ == "__main__":
     elif alg == 'h':
         hillskipper(grid)
 
+    elif alg == 'b':
+        print("How many iterations do you want to run?")
+        i = input("(int): ")
+        grid = connect_dem_random_ladies(grid, i)
+
     print('do you want to print the resulting grid?')
     option = input("y/n")
     if option == 'y':
         print(grid)
+        grid.print_stats()
