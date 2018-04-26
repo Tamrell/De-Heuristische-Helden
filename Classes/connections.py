@@ -112,7 +112,7 @@ class Connections:
                     return False
 
         else:
-            raise Exception("unvalid input type")
+            raise Exception("unvalid input type:\t" + str(type(item)))
         return True
 
     def unconnect(self, house):
