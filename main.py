@@ -4,7 +4,7 @@ from Algorithms.hillskipper import hillskipper
 from Algorithms.procrastinator import procrastinator
 from Algorithms.greedy_hillclimber import greedy_hillclimber
 from Algorithms.solspace import random_sampler
-from Algorithms.trysoft import *
+from Algorithms.random_battery_cycler import random_battery_cycler
 from Results.Solspaces.plotter import *
 
 # neighbourhoods used
