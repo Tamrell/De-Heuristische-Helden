@@ -3,7 +3,7 @@ from Classes.grid import Grid
 from Algorithms.hillskipper import hillskipper
 from Algorithms.procrastinator import procrastinator
 from Algorithms.upper_bound import find_worst
-from Algorithms.greedy_hillclimber import greedy_hillclimber
+from Algorithms.greedy_hillclimber import *
 from Algorithms.solspace import random_sampler
 from Algorithms.random_battery_cycler import *
 from Results.Solspaces.plotter import *
@@ -25,10 +25,19 @@ if __name__ == "__main__":
     grid = Grid(file1, file2, nbh)
     print("Which algorithm do you want to run?")
     print("\n <key>: <algorithm>\n\n s: Solspace\n p: Procrastinator")
-    print(" w: Worst Config Finder\n")
+    print(" w: Worst (illegal) Config Finder")
+    print(" r: Random Connect")
     print(" b: Battery Cycler")
     print(" n: Plot the distribution of the random solution space\n")
     alg = input("(alpha): ")
+    print("\n Which iterative algorithm do you want to apply?\n\n")
+    print(" Press return for none\n")
+    print(" s: Stochastic Hillclimber")
+    print(" g: Greedy Hillclimber")
+    print(" l: Greedy Hilll Leaper")
+    print(" gl: Greedy Hill Climber + Greedy Hilll Leaper\n")
+
+    itt = input("(alpha): ")
 
     if alg == 's':
         print("How many sample solutions do you want to generate?")
@@ -36,6 +45,9 @@ if __name__ == "__main__":
               "data points for this neighbourhood)\n")
         solutions = input("(int): ")
         random_sampler(grid, int(solutions))
+
+    elif alg == 'r':
+        random_sampler(grid)
 
     elif alg == 'w':
         find_worst(grid)
@@ -46,9 +58,6 @@ if __name__ == "__main__":
     elif alg == 'p':
         procrastinator(grid)
 
-    elif alg == 'h':
-        hillskipper(grid)
-
     elif alg == 'b':
         print("Press 'f' for fully random, 's' for semi-random")
         rd = input("'s'/'f'\n")
@@ -58,6 +67,18 @@ if __name__ == "__main__":
             grid = semi_random_battery_cycler(grid, i)
         elif rd == 'f':
             grid = random_battery_cycler(grid, i)
+
+    if itt == 's':
+        pass
+    elif itt == 'g':
+        print(grid.score)
+        greedy_hillclimber(grid)
+        print(grid.score)
+    elif itt == 'l':
+        pass
+    elif itt == 'gl':
+        pass
+
 
     print('Do you want to print the resulting grid?')
     option = input("y/n\n")

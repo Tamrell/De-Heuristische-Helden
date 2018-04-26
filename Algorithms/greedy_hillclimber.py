@@ -16,7 +16,7 @@ def greedy_hillclimber(grid):
                         if diff < best[0]:
                             best = (diff, h1, h2)
         if best[1] and best[2]:
-            swap(best[1], best[2])
+            hard_swap(best[1], best[2])
             check = True
     print("tried it all...")
     return True

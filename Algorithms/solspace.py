@@ -3,6 +3,7 @@ from Algorithms.plots import *
 from random import shuffle, choice
 import os
 
+
 def random_connect(grid):
     houses = [h for h in grid.houses.values() if h.free]
     shuffle(houses)
@@ -18,17 +19,13 @@ def random_connect(grid):
         return False
 
 def random_sampler(grid, solutions=1):
-    best = (float('inf'), None)
     while solutions > 0:
-        grid.reset(False)
+        grid.reset()
         if random_connect(grid):
-            add_data(grid.score(), grid.nbh)
+            if solutions > 1:
+                add_data(grid.score(), grid.nbh)
             solutions -= 1
-            if grid.score() < best[0]:
-                best = (grid.score(), grid)
-    print(best[1])
-    print(best[0])
-    hover_plot(best[1])
+
 
 def add_data(score, nbh):
     filename =  os.path.abspath('Results/Solspaces/SS' + nbh +'.csv')

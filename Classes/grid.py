@@ -170,10 +170,13 @@ class Grid:
         return score
 
     def print_stats(self):
+        print("\---------------------------------------------/")
+        print("| Battery : load : maximum load:              |")
+        print("|---------------------------------------------|")
         b_count = 0
         for b in self.batteries.values():
             b_count += b.max_load
-            print(b.color, ":", b.load, "of", b.max_load)
+            print("|", b.color, ":", b.load, "of", b.max_load)
         count = 0
         h_count = 0
         for h in self.houses.values():
