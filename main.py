@@ -24,7 +24,7 @@ if __name__ == "__main__":
     grid = Grid(file1, file2, nbh)
     print("Which algorithm do you want to run?")
     print("\n <key>: <algorithm>\n\n s: Solspace\n p: procrastinator")
-    print("\n b: Battery Cycler")
+    print(" b: Battery Cycler")
     print(" c: plot aprox. normal distribution of the solution space\n")
     alg = input("(alpha): ")
 
