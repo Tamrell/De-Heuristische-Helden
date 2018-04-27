@@ -25,7 +25,7 @@ batteries = list(root.batteries)
 connections = connections.Connections()
 bound = 10000
 best_case = None
-
+import random
 stack = [(bound, root)]
 
 def sorted_list(grid, house, rev = True):
@@ -40,12 +40,14 @@ import time
 start_time = time.time()
 iter = 0
 
+mode = 1
 while True:#time.time() - start_time < 600:
     if len(stack) == 0:
         sys.exit()
-
-    if iter % 10 == 0:
-        print(iter, len(stack), bound)
+    elif len(stack) > 1000:
+        mode = 2
+    else:
+        mode = 1
         #stack.sort(key=operator.itemgetter(0), reverse = True)
 
     score, current_grid = stack.pop()
@@ -59,13 +61,22 @@ while True:#time.time() - start_time < 600:
         continue
 
     house = list(current_grid.houses).pop()
-    battery_list = load_list(current_grid, house)
+    if mode == 1:
+        battery_list = sorted_list(current_grid, house)
+    elif mode == 2:
+        battery_list = load_list(current_grid, house)
     for dist, battery in battery_list:
         if connections.connect(current_grid.houses[house], battery):
             if current_grid.score() < bound:
+
                 new_grid = copy.deepcopy(current_grid)
                 del new_grid.houses[house]
 
                 stack.append((new_grid.score(), new_grid))
                 connections.unconnect(current_grid.houses[house])
+
+    if iter % 100 == 0:
+        print(iter, len(stack), bound)
+        if mode == 1:
+            random.shuffle(stack)
     iter += 1
