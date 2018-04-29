@@ -13,7 +13,7 @@ def reluctantly_sort_it_out(grid):
         #best_fit(grid)
         best_score(grid)
         print(grid)
-        print(defficiency_score(grid))
+        print(grid.defficiency())
         input(grid.print_stats())
 
 def best_fit(grid):
@@ -46,13 +46,6 @@ def deff_diff(h, b):
 
 def dist_diff(h, b):
     return h.dists[h.bat] - h.dists[b]
-
-def defficiency_score(grid):
-    # calculates how inefficient all the batteries are used.
-    deff = 0
-    for b in grid.batteries.values():
-        deff += abs(b.max_load - b.load)
-    return deff
 
 def procrastinator(grid):
     procrastinate(grid)

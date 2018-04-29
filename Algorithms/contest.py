@@ -51,6 +51,30 @@ def hard_swap(h1, h2, overload=False):
     else:
         return False
 
+def swap_cost(h1, h2):
+    """This function calculates cost increase for a potential swap
+    Takes:
+        House: house object 1
+        House: house object 2
+    Returns:
+        Int: cost increase instigated by swap"""
+    return h1.dists[h2.bat] + h2.dists[h1.bat] - h1.dists[h1.bat] - \
+           h2.dists[h2.bat]
+
+
+def swappable(h1, h2):
+    """This function checks if 2 houses can be swapped
+    Takes:
+        House: house object 1
+        House: house object 2
+    Returns:
+        Bool: True if swappable, else false"""
+    if h1.bat.max_load >= h1.bat.load - h1.output + h2.output:
+        if h2.bat.max_load >= h2.bat.load - h2.output + h1.output:
+            return True
+    else:
+        return False
+
 def calculate_distance(battery, house): ## remove from grid and house
     """This function calculates the distance between a battery and a house
     Takes:

@@ -1,9 +1,7 @@
-from contest import *
-from plots import *
+from Algorithms.contest import *
 from random import choice
 
 def shortest_first(grid):
-
     nordered = []
     houses = [h for h in grid.houses.values() if h.free]
     for h in houses:
@@ -16,11 +14,11 @@ def shortest_first(grid):
             input('y u no work?')
     return [(con[1], con[2]) for con in sorted(nordered)]
 
-def remove_them_inneficient_bitches(grid):
+def remove_houses(grid):
     for battery in grid.batteries.values():
         unconnect(battery.find_furthest_house(grid))
 
-def connect_them_bitches(grid, swap=True):
+def connect_houses(grid, swap=True):
     cons = True
     while cons:
         cons = shortest_first(grid.houses, grid)

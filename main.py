@@ -2,8 +2,9 @@ import sys
 from Classes.grid import Grid
 from Algorithms.hillskipper import hillskipper
 from Algorithms.procrastinator import procrastinator
-from Algorithms.upper_bound import find_worst
+from Algorithms.Helpers.upper_bound import find_worst
 from Algorithms.greedy_hillclimber import *
+from Algorithms.stochastic_hillclimber import *
 from Algorithms.solspace import random_sampler
 from Algorithms.random_battery_cycler import *
 from Results.Solspaces.plotter import *
@@ -69,19 +70,24 @@ if __name__ == "__main__":
             grid = random_battery_cycler(grid, i)
 
     if itt == 's':
-        pass
+        pre_score = grid.score()
+        stochastic_hillclimber(grid)
     elif itt == 'g':
-        print(grid.score)
+        pre_score = grid.score()
         greedy_hillclimber(grid)
-        print(grid.score)
     elif itt == 'l':
-        pass
+        pre_score = grid.score()
+        hillskipper(grid)
     elif itt == 'gl':
-        pass
-
+        pre_score = grid.score()
+        greedy_hillclimber(grid)
+        print("score after greedy_hillclimber:", grid.score())
+        hillskipper(grid)
+    else:
+        pre_score = False
 
     print('Do you want to print the resulting grid?')
     option = input("y/n\n")
     if option == 'y':
         print(grid)
-        grid.print_stats()
+        grid.print_stats(pre_score)
