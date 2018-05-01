@@ -174,28 +174,28 @@ class Grid:
         return score
 
     def print_stats(self, pre=""):
-        print("\=======================================\ ")
-        print("| Battery\t: load\t\t: max\t|")
-        print("|---------------------------------------|")
+        print("\===============================================\ ")
+        print("| Battery\t: load\t\t: max\t\t|")
+        print("|-----------------------------------------------|")
         b_count = 0
         for b in self.batteries.values():
             b_count += b.max_load
             print("|", b.color[3:] + '  ', "\t:", round(b.load, 4),
                   "\t:", b.max_load, "\t|")
-        print("|---------------------------------------|")
+        print("|-----------------------------------------------|")
         print("| total capacity:", b_count, "\t\t\t|")
         count = 0
         for h in self.houses.values():
             count += h.output
-        print("| total output  :", round(count), "\t\t\t|")
-        print("| total deff.   :", int(self.defficiency()), "\t\t\t|")
-        print("|=======================================|")
-        print("| total houses  :", len(self.houses), "\t\t\t|")
-        print("| average output:", int(count/len(self.houses)), "\t\t\t|")
+        print("| total output  :", round(count), "\t\t\t\t|")
+        print("| total deff.   :", int(self.defficiency()), "\t\t\t\t|")
+        print("|===============================================|")
+        print("| total houses  :", len(self.houses), "\t\t\t\t|")
+        print("| average output:", int(count/len(self.houses)), "\t\t\t\t|")
         if pre:
-            print("| vanilla-cost\t:", pre, "\t\t\t|")
-        print("| final-cost\t:", self.score(), "\t\t\t|")
-        print("\=======================================\ ")
+            print("| vanilla-cost\t:", pre, "\t\t\t\t|")
+        print("| final-cost\t:", self.score(), "\t\t\t\t|")
+        print("\===============================================\ ")
 
     def defficiency(self):
         # calculates how inefficient all the batteries are used.
