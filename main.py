@@ -29,14 +29,15 @@ if __name__ == "__main__":
     print(" w: Worst (illegal) Config Finder")
     print(" r: Random Connect")
     print(" b: Battery Cycler")
-    print(" n: Plot the distribution of the random solution space\n")
+    print(" n: Plot the distribution of the random solution space")
+    print(" h: Print Heatmap\n")
     alg = input("(alpha): ")
     print("\n Which iterative algorithm do you want to apply?\n\n")
     print(" Press return for none\n")
     print(" s: Stochastic Hillclimber")
     print(" g: Greedy Hillclimber")
     print(" l: Greedy Hilll Leaper")
-    print(" gl: Greedy Hill Climber + Greedy Hilll Leaper\n")
+    print(" gl: Greedy Hill Climber + Greedy Hilll Leaper")
 
     itt = input("(alpha): ")
 
@@ -68,6 +69,14 @@ if __name__ == "__main__":
             grid = semi_random_battery_cycler(grid, i)
         elif rd == 'f':
             grid = random_battery_cycler(grid, i)
+
+    elif alg == 'h':
+        print("Press 'g' for global, 'r' for relative")
+        rd = input("'g'/'r'\n")
+        if rd == 'g':
+            grid.print_heatmap(0)
+        elif rd == 'r':
+            grid.print_heatmap(1)
 
     if itt == 's':
         pre_score = grid.score()

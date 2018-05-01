@@ -94,6 +94,10 @@ class Grid:
             self.total_probability += (1 / self.grid_list[point].distance)
             self.total_sq_probability += self.grid_list[point].rel_distance
         for point in self.grid_list:
+            if point in self.houses:
+                self.grid_list[point].probability = 0
+                self.grid_list[point].rel_probability = 0
+                continue
             self.grid_list[point].probability = (1
                 / self.grid_list[point].distance) / self.total_probability
             self.grid_list[point].rel_probability = (
