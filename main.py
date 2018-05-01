@@ -74,8 +74,8 @@ if __name__ == "__main__":
             grid = random_battery_cycler(grid, i)
 
     elif alg == 'h':
-        print("Press 'g' for global, 'r' for relative")
-        rd = input("'g'/'r'\n")
+        print(" Press 'g' for global, 'r' for relative")
+        rd = input(" 'g'/'r'\n")
         if rd == 'g':
             grid.print_heatmap(0)
         elif rd == 'r':

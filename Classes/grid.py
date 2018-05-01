@@ -118,7 +118,7 @@ class Grid:
             reader = csv.reader(csvfile, delimiter=',')
             next(reader)
             for row in reader:
-                self.houses[(int(row[0]), int(row[1]))] = House(row, batteries)
+                self.houses[(int(row[0]), float(row[1]))] = House(row, batteries)
 
     def set_batteries(self, filename):
 
@@ -132,7 +132,7 @@ class Grid:
 
             for line in lines:
                 location, capacity = process_line(line)
-                capacity = int(capacity)
+                capacity = float(capacity)
 
                 # place batteries in a grid
                 self.batteries[location] = Battery(location, capacity)
