@@ -14,30 +14,33 @@ NBHS = {'1', '2', '3'}
 
 if __name__ == "__main__":
 
-    print("\nFor which neighbourhood do you want to run an algorithm?:")
+    print("\n For which neighbourhood do you want to run an algorithm?")
     nbh = input("\n(int): ")
 
     while not nbh in NBHS:
         print(nbh, "is an invalid choice, please choose 1, 2 or 3")
         nbh = input("\n(int): ")
+
     file1 = 'Data/wijk' + nbh + '_huizen.csv'
     file2 = 'Data/wijk' + nbh + '_batterijen.txt'
-
     grid = Grid(file1, file2, nbh)
-    print("Which algorithm do you want to run?")
+
+    print("\n Which algorithm do you want to run?")
     print("\n <key>: <algorithm>\n\n s: Solspace\n p: Procrastinator")
     print(" w: Worst (illegal) Config Finder")
     print(" r: Random Connect")
     print(" b: Battery Cycler")
     print(" n: Plot the distribution of the random solution space")
     print(" h: Print Heatmap\n")
+
     alg = input("(alpha): ")
-    print("\n Which iterative algorithm do you want to apply?\n\n")
+
+    print("\n Which iterative algorithm do you want to apply?\n")
     print(" Press return for none\n")
     print(" s: Stochastic Hillclimber")
     print(" g: Greedy Hillclimber")
     print(" l: Greedy Hilll Leaper")
-    print(" gl: Greedy Hill Climber + Greedy Hilll Leaper")
+    print(" gl: Greedy Hill Climber + Greedy Hilll Leaper\n")
 
     itt = input("(alpha): ")
 
