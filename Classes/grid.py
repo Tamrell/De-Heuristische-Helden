@@ -97,6 +97,10 @@ class Grid:
             self.total_probability += (1 / self.grid_list[point].distance)
             self.total_sq_probability += self.grid_list[point].rel_distance
         for point in self.grid_list:
+            if point in self.houses:
+                self.grid_list[point].probability = 0
+                self.grid_list[point].rel_probability = 0
+                continue
             self.grid_list[point].probability = (1
                 / self.grid_list[point].distance) / self.total_probability
             self.grid_list[point].rel_probability = (
@@ -131,7 +135,7 @@ class Grid:
 
             for line in lines:
                 location, capacity = process_line(line)
-                capacity = int(capacity)
+                capacity = float(capacity)
 
                 # place batteries in a grid
                 self.batteries[location] = Battery(location, capacity)
@@ -184,20 +188,20 @@ class Grid:
             b_count += b.max_load
             print("|", b.color[3:] + '  ', "\t:", round(b.load, 4),
                   "\t:", b.max_load, "\t|")
-        print("|---------------------------------------|")
+        print("|-----------------------------------------------|")
         print("| total capacity:", b_count, "\t\t\t|")
         count = 0
         for h in self.houses.values():
             count += h.output
-        print("| total output  :", round(count), "\t\t\t|")
-        print("| total deff.   :", int(self.defficiency()), "\t\t\t|")
-        print("|=======================================|")
-        print("| total houses  :", len(self.houses), "\t\t\t|")
-        print("| average output:", int(count/len(self.houses)), "\t\t\t|")
+        print("| total output  :", round(count), "\t\t\t\t|")
+        print("| total deff.   :", int(self.defficiency()), "\t\t\t\t|")
+        print("|===============================================|")
+        print("| total houses  :", len(self.houses), "\t\t\t\t|")
+        print("| average output:", int(count/len(self.houses)), "\t\t\t\t|")
         if pre:
-            print("| vanilla-cost\t:", pre, "\t\t\t|")
-        print("| final-cost\t:", self.score(), "\t\t\t|")
-        print("\=======================================\ ")
+            print("| vanilla-cost\t:", pre, "\t\t\t\t|")
+        print("| final-cost\t:", self.score(), "\t\t\t\t|")
+        print("\===============================================\ ")
 
     def defficiency(self):
         # calculates how inefficient all the batteries are used.
