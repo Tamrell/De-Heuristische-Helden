@@ -4,6 +4,8 @@ from Algorithms.hillskipper import hillskipper
 from Algorithms.procrastinator import procrastinator
 from Algorithms.Helpers.upper_bound import find_worst
 from Algorithms.greedy_hillclimber import *
+from Algorithms.astarry import *
+from Algorithms.shortest_depth_first import *
 from Algorithms.stochastic_hillclimber import *
 from Algorithms.solspace import random_sampler
 from Algorithms.random_battery_cycler import *
@@ -27,10 +29,15 @@ if __name__ == "__main__":
     print("Which algorithm do you want to run?")
     print("\n <key>: <algorithm>\n\n s: Solspace\n p: Procrastinator")
     print(" w: Worst (illegal) Config Finder")
+    print(" d: Shortest Depthest First")
     print(" r: Random Connect")
+    print(" a: Astarry")
     print(" b: Battery Cycler")
     print(" n: Plot the distribution of the random solution space\n")
     alg = input("(alpha): ")
+    if alg == 'n':
+        plotter(nbh)
+        exit(1)
     print("\n Which iterative algorithm do you want to apply?\n\n")
     print(" Press return for none\n")
     print(" s: Stochastic Hillclimber")
@@ -40,6 +47,11 @@ if __name__ == "__main__":
 
     itt = input("(alpha): ")
 
+    if alg == 'a':
+        A_smart(grid)
+
+    if alg == 'd':
+        shortest_depthest_first(grid)
     if alg == 's':
         print("How many sample solutions do you want to generate?")
         print("(There are currently", count_data(nbh),
@@ -52,9 +64,6 @@ if __name__ == "__main__":
 
     elif alg == 'w':
         find_worst(grid)
-
-    elif alg == 'n':
-        plotter(nbh)
 
     elif alg == 'p':
         procrastinator(grid)
@@ -85,9 +94,12 @@ if __name__ == "__main__":
         hillskipper(grid)
     else:
         pre_score = False
-
+    if itt:
+        grid.print_stats(alg, pre_score, itt)
+    else:
+        grid.print_stats(alg)
     print('Do you want to print the resulting grid?')
     option = input("y/n\n")
     if option == 'y':
         print(grid)
-        grid.print_stats(pre_score)
+        grid.print_stats(alg, pre_score)

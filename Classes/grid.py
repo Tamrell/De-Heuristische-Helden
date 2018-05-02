@@ -49,6 +49,9 @@ class Grid:
         self.initial_houses = copy.deepcopy(self.houses) ##recalc!!
         self.initial_batteries = copy.deepcopy(self.batteries)
 
+    def __lt__(self, other):
+        return True
+
     def reset(self, report=False):
         if report:
             file_name = 'Data/Objects/grid_with_batteries_' + str(self.nbh) + '.pkl'
@@ -169,8 +172,11 @@ class Grid:
                 score += h.dists[b]
         return score
 
-    def print_stats(self, pre=""):
+    def print_stats(self, alg, pre="", alg2=""):
         print("\=======================================\ ")
+        print("| Neighbourhood:", self.nbh, "\t\t\t|")
+        print("| Algorithms:", alg, alg2, "\t\t\t|")
+        print("|=======================================|")
         print("| Battery\t: load\t\t: max\t|")
         print("|---------------------------------------|")
         b_count = 0
