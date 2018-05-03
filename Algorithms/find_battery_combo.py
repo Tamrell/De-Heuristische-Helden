@@ -4,4 +4,4 @@ combos = []
 
 def find_battery_combo(percentage)
 
-
+    while not (output > total_cap and output < (output * percentage):
