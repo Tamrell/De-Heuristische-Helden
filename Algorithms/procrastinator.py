@@ -17,7 +17,7 @@ def reluctantly_sort_it_out(grid):
 def A_fit(grid):
     swaps = [(deff_diff(h, b), h, b) for h in grid.houses.values()
              for b in grid.batteries.values() if b.load > b.max_load]
-                best = (deff_diff(h, b), h, b)
+    best = (deff_diff(h, b), h, b)
     if best[1]:
         unconnect(best[1])
         connect(best[1], best[2], True)
