@@ -83,7 +83,7 @@ if __name__ == "__main__":
         if rd == 's':
             grid = semi_random_battery_cycler(grid, i)
         elif rd == 'f':
-            random_battery_cycler(grid, i)
+            grid = random_battery_cycler(grid, i)
 
     elif alg == 'h':
         print(" Press 'g' for global, 'r' for relative")
