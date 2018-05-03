@@ -22,7 +22,6 @@ filename2 = os.path.join(fileDir, 'wijk1_batterijen.txt')
 def obese_grid(lightweight_grid, root):
     root.reset()
     for connection in lightweight_grid.connections:
-        print(len(lightweight_grid.connections))
         (house_c, battery_c) = connection
         root_house, root_battery = root.houses[house_c], root.batteries[battery_c]
 
@@ -31,6 +30,7 @@ def obese_grid(lightweight_grid, root):
         root_house.color = root_battery.color
         root_house.free = False
         root_battery.links.add(root_house)
+
     return root
 
 def check_feasability(grid, bound):
@@ -50,10 +50,12 @@ def make_cases(grid, bound):
         new_case.houses = copy.deepcopy(grid.houses)
         new_case.batteries = copy.deepcopy(grid.batteries)
 
+        new_case.connections = copy.deepcopy(grid.connections)
+
         house_c = list(new_case.houses.keys()).pop()
         house = new_case.houses.pop(house_c)
 
-        if new_case.connect(house, new_case.batteries[battery]):
+        if new_case.connect(house, new_case.batteries[battery_c]):
             if check_feasability(new_case, bound):
                 cases.append(new_case)
     return cases
@@ -63,10 +65,10 @@ def running(iter):
 
 def search(grid):
     old_grid = grid
-    print("Welcome to Branch and Bound Solutions. We offer solutions to any problem. We begin searching right away.")
+    print("Welcome to Branch and Bound Solutions. We offer solutions to any problem, as long as it contains houses and batteries. We begin searching right away.")
 
-    start_time, iter, count, bound, best_case = time.time(), 0, 0, 10000, None
-
+    start_time, iter, count, best_case = time.time(), 0, 0, None
+    bound = int(input("Bound: "))
     n_houses = len(grid.houses)
 
     root = Lightweight_grid()
