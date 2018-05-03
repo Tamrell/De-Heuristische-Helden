@@ -35,23 +35,25 @@ def obese_grid(lightweight_grid, root):
 
 def check_feasability(grid, bound):
     min_dist = 0
-    for house in grid.houses.values():
-        try:
-            min_dist += house.dists[house.find_closest_battery(grid)]
-        except:
-            return False
+    for house_c in grid.houses.keys():
+        distances = []
+        for battery_c in grid.batteries.keys():
+            distances.append(abs(house_c[0] - battery_c[0]) + abs(house_c[1] - battery_c[1]))
+        min_dist += min(distances)
     return min_dist + grid.score < bound
 
 def make_cases(grid, bound):
     cases = []
-    for battery in grid.batteries.values():
+    for battery_c in grid.batteries.keys():
 
         new_case = Lightweight_grid()
         new_case.houses = copy.deepcopy(grid.houses)
         new_case.batteries = copy.deepcopy(grid.batteries)
 
-        house = list(new_case.houses.values()).pop()
-        if new_case.connect(house, battery):
+        house_c = list(new_case.houses.keys()).pop()
+        house = new_case.houses.pop(house_c)
+
+        if new_case.connect(house, new_case.batteries[battery]):
             if check_feasability(new_case, bound):
                 cases.append(new_case)
     return cases
@@ -74,7 +76,6 @@ def search(grid):
     for house in grid.houses.keys():
         old_house = grid.houses[house]
         root.houses[house] = Lightweight_house(old_house.cord, old_house.output)
-    root.houses = grid.houses
 
     stack = [(bound, root)]
 
@@ -85,6 +86,7 @@ def search(grid):
 
         # get case
         score, current_grid = stack.pop()
+
         if len(current_grid.houses) == 0:
             print("Branch and Bound found a solution!")
             return obese_grid(current_grid, grid)
