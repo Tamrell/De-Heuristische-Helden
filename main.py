@@ -10,7 +10,8 @@ from Algorithms.stochastic_hillclimber import *
 from Algorithms.solspace import random_sampler
 from Algorithms.random_battery_cycler import *
 from Results.Solspaces.plotter import *
-
+from Algorithms.branch_and_bound import *
+from copy import *
 # neighbourhoods used
 NBHS = {'1', '2', '3'}
 
@@ -35,7 +36,8 @@ if __name__ == "__main__":
     print(" a: Astarry")
     print(" b: Battery Cycler")
     print(" n: Plot the distribution of the random solution space")
-    print(" h: Print Heatmap\n")
+    print(" h: Print Heatmap")
+    print(" bb: Branch and bound\n")
 
     alg = input("(alpha): ")
     if alg == 'n':
@@ -89,6 +91,9 @@ if __name__ == "__main__":
             grid.print_heatmap(0)
         elif rd == 'r':
             grid.print_heatmap(1)
+
+    elif alg == 'bb':
+        branch_and_bound(grid)
 
     if itt == 's':
         pre_score = grid.score()
