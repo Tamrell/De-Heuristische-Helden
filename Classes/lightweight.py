@@ -1,7 +1,12 @@
 class Lightweight_house:
     def __init__(self, cord, capacity):
         self.cord = cord
-        self.capacity = capacity
+        self.output = capacity
+
+    def distance(self, battery):
+        (x1, y1) = battery.cord
+        (x2, y2) = self.cord
+        return (abs(int(x1) - int(x2)) + abs(int(y2) - int(y1)))
 
 class Lightweight_battery:
     def __init__(self, cord, load, max_load):
@@ -25,9 +30,7 @@ class Lightweight_grid:
         battery.load += house.output
         battery.links.add(house)
         house.bat = battery
-        
-        self.houses.pop((int(house.cord[0]), int(house.cord[1])))
 
         self.connections.append((house.cord, battery.cord))
-        self.score += house.distance(house.cord, battery.cord)
+        self.score += house.distance(battery)
         return True

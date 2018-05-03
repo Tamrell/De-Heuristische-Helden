@@ -48,7 +48,7 @@ if __name__ == "__main__":
     print(" Press return for none\n")
     print(" s: Stochastic Hillclimber")
     print(" g: Greedy Hillclimber")
-    print(" l: Hilll Leaper\n")
+    print(" l: Hill Leaper\n")
 
     itt = input("(alpha): ")
 
