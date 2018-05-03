@@ -35,7 +35,7 @@ class Battery:
             return True
         return False
 
-    def find_closest_house(self, grid, house_list):
+    def find_closest_house(self, grid, houses):
         ''' Returns the closest House object
 
         Args:
@@ -45,17 +45,21 @@ class Battery:
         Returns:
             House: closest House
         '''
-        best = grid.x_dim + grid.y_dim
-        best_cord = ()
-
-        for h in house_list:
-            housyboi = grid.houses[h]
-            if self.max_load >= self.load + housyboi.output:
-                dist = grid.distance(self.cord, h)
-                if best > dist:
-                    best = dist
-                    best_cord = h
-        return best_cord
+        options = [(h.dists[self], h) for h in houses if self.fits(h.output)]
+        if options:
+            return min(options)[1]
+        #
+        # best = grid.x_dim + grid.y_dim
+        # best_cord = ()
+        #
+        # for h in house_list:
+        #     housyboi = grid.houses[h]
+        #     if self.max_load >= self.load + housyboi.output:
+        #         dist = grid.distance(self.cord, h)
+        #         if best > dist:
+        #             best = dist
+        #             best_cord = h
+        # return best_cord
 
     def find_cheapest_house(self):
         ''' Returns the House object with the lowest output in self.links.
