@@ -22,8 +22,9 @@ def plotter(nbh):
         print('p-value on normality test:', p)
         fig = sns.distplot(data)
         plt.axvline(x=nbh_best[int(nbh) - 1], color='green')
-        plt.axvline(x=nbh_min[int(nbh) - 1], color='red')
-        plt.axvline(x=nbh_max[int(nbh) - 1], color='red')
+        plt.axvspan(0, nbh_min[int(nbh) - 1], alpha=0.5, color='red')
+        plt.axvspan(nbh_max[int(nbh) - 1], nbh_max[int(nbh) - 1] + 1000,
+                    alpha=0.5, color='red')
         plt.show()
         print('done!')
     return
