@@ -66,24 +66,19 @@ if __name__ == "__main__":
         random_sampler(grid, int(solutions))
 
     elif alg == 'r':
+        alg = 'Random Connect'
         random_sampler(grid)
 
     elif alg == 'w':
         find_worst(grid)
 
     elif alg == 'p':
+        alg = 'procrastinator'
         procrastinator(grid)
 
     elif alg == 'b':
-        ## zet dit in de functie die random_battery_cycler runt pls
-        print("Press 'f' for fully random, 's' for semi-random")
-        rd = input("'s'/'f'\n")
-        print("How many iterations do you want to run?")
-        i = input("(int): ")
-        if rd == 's':
-            grid = semi_random_battery_cycler(grid, i)
-        elif rd == 'f':
-            random_battery_cycler(grid, i)
+        alg = 'battery cycler'
+        random_battery_cycler(grid)
 
     elif alg == 'h':
         print(" Press 'g' for global, 'r' for relative")
@@ -94,15 +89,19 @@ if __name__ == "__main__":
             grid.print_heatmap(1)
 
     elif alg == 'bb':
+        alg = 'branch & bound'
         grid = branch_and_bound(grid)
 
     if itt == 's':
+        itt = 'stochastic climber'
         pre_score = grid.score()
         stochastic_hillclimber(grid)
     elif itt == 'g':
+        itt = 'greedy climber'
         pre_score = grid.score()
         greedy_hillclimber(grid)
     elif itt == 'l':
+        itt = 'hill leaper'
         pre_score = grid.score()
         hill_leaper(grid)
     else:
