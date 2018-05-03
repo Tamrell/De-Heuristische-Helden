@@ -177,12 +177,12 @@ class Grid:
         return score
 
     def print_stats(self, alg, pre="", alg2=""):
-        print("\=======================================\ ")
-        print("| Neighbourhood:", self.nbh, "\t\t\t|")
-        print("| Algorithms:", alg, alg2, "\t\t\t|")
-        print("|=======================================|")
-        print("| Battery\t: load\t\t: max\t|")
-        print("|---------------------------------------|")
+        print("\===============================================\ ")
+        print("| Neighbourhood:", self.nbh, "\t\t\t\t|")
+        print("| Algorithms:", alg, alg2, "\t\t\t\t|")
+        print("|===============================================|")
+        print("| Battery\t: load\t\t: max\t\t|")
+        print("|-----------------------------------------------|")
         b_count = 0
         for b in self.batteries.values():
             b_count += b.max_load
