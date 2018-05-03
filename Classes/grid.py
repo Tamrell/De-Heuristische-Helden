@@ -55,22 +55,21 @@ class Grid:
     def __lt__(self, other):
         return True
 
-    def reset(self, report=False):
-        if report:
-            file_name = 'Data/Objects/grid_with_batteries_' + str(self.nbh) + '.pkl'
-            with open(file_name, 'rb') as input:
-                grid = pickle.load(input)
-            return grid
-        else:
-            self.houses.clear()
-            self.batteries.clear()
-            self.houses = copy.deepcopy(self.initial_houses)
-            self.batteries = copy.deepcopy(self.initial_batteries)
-            for h in self.houses.values():
-                h.dists.clear()
-                for b in self.batteries.values():
-                    h.dists[b] = self.distance(b.cord, h.cord)
+    def reset(self):
+        self.houses.clear()
+        self.batteries.clear()
+        self.houses = copy.deepcopy(self.initial_houses)
+        self.batteries = copy.deepcopy(self.initial_batteries)
+        for h in self.houses.values():
+            h.dists.clear()
+            for b in self.batteries.values():
+                h.dists[b] = self.distance(b.cord, h.cord)
 
+    def update(self, other):
+        self.houses.clear()
+        self.batteries.clear()
+        self.houses = copy.deepcopy(other.houses)
+        self.batteries = copy.deepcopy(other.batteries)
 
     def legal(self):
         if [h for h in self.houses.values() if h.free]:
@@ -182,7 +181,10 @@ class Grid:
     def print_stats(self, alg, pre="", alg2=""):
         print("\===============================================\ ")
         print("| Neighbourhood:", self.nbh, "\t\t\t\t|")
-        print("| Algorithms:", alg, alg2, "\t\t\t\t|")
+        print("| Algorithm:", alg, "\t\t\t\t|")
+        if alg2:
+            print("| Iterative:", alg2, "\t\t\t\t|")
+
         print("|===============================================|")
         print("| Battery\t: load\t\t: max\t\t|")
         print("|-----------------------------------------------|")
