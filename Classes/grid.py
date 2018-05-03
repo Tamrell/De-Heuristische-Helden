@@ -6,6 +6,7 @@ import csv
 import copy
 import pickle
 from Classes.load_batteries import *
+import colorama
 
 from Classes.house import House
 from Classes.battery import Battery

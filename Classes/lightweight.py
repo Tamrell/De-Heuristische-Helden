@@ -25,7 +25,7 @@ class Lightweight_grid:
         battery.load += house.output
         battery.links.add(house)
         house.bat = battery
-
+        
         self.houses.pop((int(house.cord[0]), int(house.cord[1])))
 
         self.connections.append((house.cord, battery.cord))
