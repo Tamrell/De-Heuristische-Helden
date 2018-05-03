@@ -31,9 +31,10 @@ def random_battery_cycler(grid, max_it):
                 best_score = score
         i += 1
         grid.reset(report=False)
-    if best_grid:
-        grid = deepcopy(best_grid)
-    return grid
+    # if best_grid:
+    #     grid = deepcopy(best_grid)
+    return best_grid
+
 
 
 def semi_random_battery_cycler(grid, max_it):
