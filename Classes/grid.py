@@ -31,6 +31,8 @@ class Grid:
                 one house per row. Each row contains (in order): x-coordinate,
                 y-coordinate, maximum capacity.
 
+                nbh: Neighbourhood number (can be 1, 2 or 3 for the case)
+
                 dimensions (Tuple): A tuple containing the x- and y-coordinates
                 of the Grid, defaults to 50x50.
         '''
