@@ -1,6 +1,6 @@
 import sys
 from Classes.grid import Grid
-from Algorithms.hillskipper import hillskipper
+from Algorithms.hill_leaper import hill_leaper
 from Algorithms.procrastinator import procrastinator
 from Algorithms.Helpers.upper_bound import find_worst
 from Algorithms.greedy_hillclimber import *
@@ -48,8 +48,7 @@ if __name__ == "__main__":
     print(" Press return for none\n")
     print(" s: Stochastic Hillclimber")
     print(" g: Greedy Hillclimber")
-    print(" l: Greedy Hilll Leaper")
-    print(" gl: Greedy Hill Climber + Greedy Hilll Leaper\n")
+    print(" l: Hilll Leaper\n")
 
     itt = input("(alpha): ")
 
@@ -58,6 +57,7 @@ if __name__ == "__main__":
 
     if alg == 'd':
         shortest_depthest_first(grid)
+
     if alg == 's':
         print("How many sample solutions do you want to generate?")
         print("(There are currently", count_data(nbh),
@@ -75,6 +75,7 @@ if __name__ == "__main__":
         procrastinator(grid)
 
     elif alg == 'b':
+        ## zet dit in de functie die random_battery_cycler runt pls
         print("Press 'f' for fully random, 's' for semi-random")
         rd = input("'s'/'f'\n")
         print("How many iterations do you want to run?")
@@ -103,12 +104,7 @@ if __name__ == "__main__":
         greedy_hillclimber(grid)
     elif itt == 'l':
         pre_score = grid.score()
-        hillskipper(grid)
-    elif itt == 'gl':
-        pre_score = grid.score()
-        greedy_hillclimber(grid)
-        print("score after greedy_hillclimber:", grid.score())
-        hillskipper(grid)
+        hill_leaper(grid)
     else:
         pre_score = False
     if itt:

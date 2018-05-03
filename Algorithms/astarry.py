@@ -52,15 +52,15 @@ def A_smart(grid): #A-smartGrid!!!!! ha!
     start = Route(grid)
     visited = set()
     filtered = 0
-    it = 0
+    best = 0
     pq = Q.PriorityQueue()
     pq.put((start.cost, start))
-    while len(pq.queue[0][1].moves) < 150:
+    while len(pq.queue[0][1].moves) < 149:
         astepper(pq.get()[1], visited, pq, grid, filtered)
-        it += 1
-        if it % 1000 == 0:
+        if len(pq.queue[0][1].moves) >= best:
+            best = len(pq.queue[0][1].moves)
             print('--------')
-            print(len(pq.queue[0][1].moves), pq.queue[0][1].cost, pq.qsize())
+            print(best, pq.queue[0][1].cost, pq.qsize())
     best = pq.get()
     for pair in best.moves:
         connect(grid.houses[pair[0]], grid.batteries[pair[1]])
