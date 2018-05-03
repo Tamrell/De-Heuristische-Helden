@@ -12,6 +12,7 @@ from Algorithms.random_battery_cycler import *
 from Results.Solspaces.plotter import *
 from Algorithms.branch_and_bound import *
 from copy import *
+
 # neighbourhoods used
 NBHS = {'1', '2', '3'}
 

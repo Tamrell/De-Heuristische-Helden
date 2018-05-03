@@ -10,6 +10,7 @@ import copy
 sys.path.insert(0, os.path.abspath(os.path.join(__file__, '..', '..', 'Classes')))
 sys.path.insert(0, os.path.abspath(os.path.join(__file__, '..', '..')))
 
+from lightweigth import *
 import connections
 import time
 import random
@@ -21,10 +22,11 @@ filename2 = os.path.join(fileDir, 'wijk1_batterijen.txt')
 
 def obese_grid(lightweight_grid, root):
     root.reset()
-
     for connection in lightweight_grid.connections:
         house, battery = connection
-        house_c, battery_c = house.cord, battery.cord
+        print(lightweigth_grid.houses[house])
+        print(lightweigth_grid.batteries[battery])
+        house_c, battery_c = lightweight_grid.houses[house].cord, lightweight_grid.batteries[battery].cord
         root_house, root_battery = root.houses[house_c], root.batteries[battery_c]
 
         root_battery.load += root_house.output
@@ -41,62 +43,19 @@ def check_feasability(grid, bound):
             min_dist += house.dists[house.find_closest_battery(grid)]
         except:
             return False
-    return min_dist + grid.score() < bound
-
-class Lightweight_house:
-    def __init__(self, cord, capacity):
-        self.cord = cord
-        self.capacity = capacity
-
-class Lightweight_battery:
-    def __init__(self, cord, load, max_load):
-        self.cord = cord
-        self.load = load
-        self.max_load = max_load
-        self.links = set()
-
-class lightweight_grid:
-    def __init__(self):
-        #cord, battery
-        self.score = 0
-        self.batteries = {}
-        self.houses = {}
-        self.connections = []
-
-    def connect(self, house, battery):
-        if battery.load + house.output > battery.max_load:
-            return False
-
-        battery.load += house.output
-        battery.links.add(house)
-        house.bat = battery
-
-        self.houses.pop((int(house.cord[0]), int(house.cord[1])))
-
-        self.connections.append((house.cord, battery.cord))
-        self.score += house.distance(house.cord, battery.cord)
-        return True
-
-    def check_feasability(self, bound):
-        min_dist = 0
-        for house in self.houses.values():
-            try:
-                min_dist += house.dists[house.find_closest_battery(self)]
-            except:
-                return False
-        return min_dist + self.score < bound
+    return min_dist + grid.score < bound
 
 def make_cases(grid, bound):
     cases = []
     for battery in grid.batteries.values():
 
-        new_case = lightweight_grid()
+        new_case = Lightweight_grid()
         new_case.houses = copy.deepcopy(grid.houses)
         new_case.batteries = copy.deepcopy(grid.batteries)
 
         house = list(new_case.houses.values()).pop()
         if new_case.connect(house, battery):
-            if new_case.check_feasability(bound):
+            if check_feasability(new_case, bound):
                 cases.append(new_case)
     return cases
 
@@ -111,7 +70,7 @@ def search(grid):
 
     n_houses = len(grid.houses)
 
-    root = lightweight_grid()
+    root = Lightweight_grid()
     for battery in grid.batteries.keys():
         old_battery = grid.batteries[battery]
         root.batteries[battery] = Lightweight_battery(old_battery.cord, old_battery.load, old_battery.max_load)
