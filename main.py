@@ -54,6 +54,7 @@ if __name__ == "__main__":
 
     if alg == 'd':
         shortest_depthest_first(grid)
+
     if alg == 's':
         print("How many sample solutions do you want to generate?")
         print("(There are currently", count_data(nbh),

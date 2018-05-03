@@ -13,14 +13,10 @@ def reluctantly_sort_it_out(grid):
         #best_fit(grid)
         best_score(grid)
         print(grid)
-        print(grid.defficiency())
-        input(grid.print_stats())
 
-def best_fit(grid):
-    best = (0, None, None)
-    for h in grid.houses.values():
-        for b in [b for b in grid.batteries.values() if b.load > b.max_load]:
-            if deff_diff(h, b) > best[0]:
+def A_fit(grid):
+    swaps = [(deff_diff(h, b), h, b) for h in grid.houses.values()
+             for b in grid.batteries.values() if b.load > b.max_load]
                 best = (deff_diff(h, b), h, b)
     if best[1]:
         unconnect(best[1])
