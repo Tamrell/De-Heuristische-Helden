@@ -10,7 +10,7 @@ class House:
     '''
 
     def __init__(self, info, batteries):
-        self.cord = (info[0], info[1])
+        self.cord = (int(info[0]), int(info[1]))
         self.output = float(info[2])
         self.free = True
         self.color = 'white'
