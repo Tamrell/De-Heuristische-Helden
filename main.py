@@ -94,7 +94,7 @@ if __name__ == "__main__":
             grid.print_heatmap(1)
 
     elif alg == 'bb':
-        branch_and_bound(grid)
+        grid = branch_and_bound(grid)
 
     if itt == 's':
         pre_score = grid.score()

@@ -10,8 +10,7 @@ import copy
 sys.path.insert(0, os.path.abspath(os.path.join(__file__, '..', '..', 'Classes')))
 sys.path.insert(0, os.path.abspath(os.path.join(__file__, '..', '..')))
 
-from lightweigth import *
-import connections
+from lightweight import *
 import time
 import random
 
@@ -23,10 +22,8 @@ filename2 = os.path.join(fileDir, 'wijk1_batterijen.txt')
 def obese_grid(lightweight_grid, root):
     root.reset()
     for connection in lightweight_grid.connections:
-        house, battery = connection
-        print(lightweigth_grid.houses[house])
-        print(lightweigth_grid.batteries[battery])
-        house_c, battery_c = lightweight_grid.houses[house].cord, lightweight_grid.batteries[battery].cord
+        print(len(lightweight_grid.connections))
+        (house_c, battery_c) = connection
         root_house, root_battery = root.houses[house_c], root.batteries[battery_c]
 
         root_battery.load += root_house.output
@@ -109,13 +106,6 @@ def search(grid):
 
         iter += 1
         count += 1
-
-if __name__ == "__main__":
-    print("Alles geladen")
-    root = Grid(filename1, filename2, "1")
-    connections = connections.Connections()
-    print("Root geinitialiseerd")
-    search(root, connections)
 
 def branch_and_bound(grid):
     return search(grid)
