@@ -181,9 +181,9 @@ class Grid:
     def print_stats(self, alg, pre="", alg2=""):
         print("\===============================================\ ")
         print("| Neighbourhood:", self.nbh, "\t\t\t\t|")
-        print("| Algorithm:", alg, "\t\t\t\t|")
+        print("| Algorithm:", alg, "\t\t\t|")
         if alg2:
-            print("| Iterative:", alg2, "\t\t\t\t|")
+            print("| Iterative:", alg2, "\t\t\t|")
 
         print("|===============================================|")
         print("| Battery\t: load\t\t: max\t\t|")

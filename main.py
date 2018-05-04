@@ -110,8 +110,9 @@ if __name__ == "__main__":
         grid.print_stats(alg, pre_score, itt)
     else:
         grid.print_stats(alg)
-    print('Do you want to print the resulting grid?')
+    print('Do you want to save the resulting grid?')
     option = input("y/n\n")
     if option == 'y':
         print(grid)
+        
         grid.print_stats(alg, pre_score)
