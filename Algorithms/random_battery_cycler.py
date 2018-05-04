@@ -4,9 +4,7 @@ from Algorithms.contest import *
 from Algorithms.greedy_hillclimber import greedy_hillclimber
 from tqdm import tqdm
 
-def random_battery_cycler(grid):
-    print("How many solutions do you want to run?")
-    solutions = int(input("(int): "))
+def random_battery_cycler(grid, solutions):
     best = (float("inf"), None)
     cent = solutions // 100
     tqdm.monitor_interval = 0
@@ -32,3 +30,8 @@ def random_battery_cycler(grid):
         grid.reset()
     if best[1]:
         grid.update(best[1])
+
+def battery_cycler(grid):
+    print("How many solutions do you want to run?\n")
+    solutions = int(input("(int): "))
+    random_battery_cycler(grid, solutions)
