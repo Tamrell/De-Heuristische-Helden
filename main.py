@@ -8,7 +8,7 @@ from Algorithms.astarry import *
 from Algorithms.shortest_depth_first import *
 from Algorithms.stochastic_hillclimber import *
 from Algorithms.solspace import random_sampler
-from Algorithms.random_battery_cycler import *
+from Algorithms.random_battery_cycler import battery_cycler
 from Results.Solspaces.plotter import *
 from Algorithms.branch_and_bound import *
 from copy import *
@@ -78,7 +78,7 @@ if __name__ == "__main__":
 
     elif alg == 'b':
         alg = 'battery cycler'
-        random_battery_cycler(grid)
+        battery_cycler(grid)
 
     elif alg == 'h':
         print(" Press 'g' for global, 'r' for relative")
@@ -114,5 +114,5 @@ if __name__ == "__main__":
     option = input("y/n\n")
     if option == 'y':
         print(grid)
-        
+
         grid.print_stats(alg, pre_score)
