@@ -4,7 +4,6 @@ from Algorithms.contest import *
 from Algorithms.greedy_hillclimber import greedy_hillclimber
 from tqdm import tqdm
 
-
 def random_battery_cycler(grid):
     print("How many solutions do you want to run?")
     solutions = int(input("(int): "))
