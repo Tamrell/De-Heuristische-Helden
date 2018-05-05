@@ -5,10 +5,13 @@ from Algorithms.greedy_hillclimber import greedy_hillclimber
 from tqdm import tqdm
 
 def random_battery_cycler(grid, solutions):
+    '''The random battery cycler '''
+
     best = (float("inf"), None)
     cent = solutions // 100
     tqdm.monitor_interval = 0
     pro = tqdm(total=100)
+
     while solutions:
         houses = [h for h in grid.houses.values()]
         batteries = [b for b in grid.batteries.values()]

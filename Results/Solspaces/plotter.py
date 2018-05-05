@@ -12,7 +12,7 @@ def count_data(nbh):
 def plotter(nbh):
     nbh_min = [3132, 2252, 1957]
     nbh_max = [8670, 7019, 8459]
-    nbh_best = [3517, 2302, 2071]
+    nbh_best = [3488, 2292, 2069]
 
 
     with open('Results/Solspaces/SS' + nbh + '.csv') as df:
