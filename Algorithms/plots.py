@@ -30,7 +30,7 @@ def hover_plot(grid):
     color_to_plot = {'on_green':'#2ca02c', 'on_blue':'#1f77b4', 'on_red':'#ff7f0e',
                      'on_cyan':'#e377c2', 'on_yellow':'#e7ba52',
                      'on_magenta':'#d62728', 'on_white':'#636363'}
-    p = figure()
+    p = figure(title=str(grid.score))
     bats = []
     no = 1
     for cord, b in grid.batteries.items():

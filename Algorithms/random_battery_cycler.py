@@ -8,9 +8,12 @@ def random_battery_cycler(grid, solutions):
     '''The random battery cycler '''
 
     best = (float("inf"), None)
-    cent = solutions // 100
-    tqdm.monitor_interval = 0
-    pro = tqdm(total=100)
+    if solutions > 99:
+        cent = solutions // 100
+        tqdm.monitor_interval = 0
+        pro = tqdm(total=100)
+    else:
+        cent = False
 
     while solutions:
         houses = [h for h in grid.houses.values()]
@@ -28,13 +31,16 @@ def random_battery_cycler(grid, solutions):
             if grid.score() < best[0]:
                 best = (grid.score(), deepcopy(grid))
             solutions -= 1
-            if solutions % cent == 0:
+            if cent and solutions % cent == 0:
                 pro.update(1)
         grid.reset()
     if best[1]:
         grid.update(best[1])
 
-def battery_cycler(grid):
-    print("How many solutions do you want to run?\n")
-    solutions = int(input("(int): "))
+def battery_cycler(grid, s=True):
+    if s:
+        print("How many solutions do you want to run?\n")
+        solutions = int(input("(int): "))
+    else:
+        solutions = 1
     random_battery_cycler(grid, solutions)
