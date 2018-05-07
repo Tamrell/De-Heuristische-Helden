@@ -17,10 +17,11 @@ class Battery:
     '''
     color_generator = assign_color()
 
-    def __init__(self, cord, max_load):
+    def __init__(self, cord, max_load, btype='Default'):
         self.cord = cord
         self.max_load = max_load
         self.load = 0
+        self.type = btype
         self.links = set()
         self.color = next(Battery.color_generator)
 

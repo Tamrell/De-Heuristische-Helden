@@ -26,7 +26,11 @@ def custom_plotter(grid, s1, s2):
     plt.axvspan(lb - 1000, lb, alpha=0.5, color='red')
     plt.axvspan(ub, ub + 1000,
                 alpha=0.5, color='red')
-    plt.show()
+
+    fig_name = 'Results/' + str(grid.nbh) + '/' + str(min(s2))
+    for b in grid.batteries.values():
+        fig_name += '\n' + b.type + ': ' + str(b.cord)
+    plt.savefig(fig_name + '\n.png')
 
 def plotter(nbh):
     nbh_min = [3132, 2252, 1957]
