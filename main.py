@@ -64,7 +64,7 @@ def run_algorithm(alg, grid):
             alg: string representing the algorithm to run
             grid: grid.Grid object to hand to the selected algorithms
         Returns:
-            return value of selected algorithm
+            return name of selected algorithm
     """
     algorithms = {'s': ['Shortest DF', shortest_depthest_first],
                   'bb': ['branch & bound', branch_and_bound],
@@ -78,6 +78,13 @@ def run_algorithm(alg, grid):
     return algorithms[alg][0]
 
 def mode():
+    """
+    This function returns the mode in which the algorithm must run
+    Takes:
+        None
+    Returns:
+        String representing a running mode
+    """
     print("\n Which mode do you want to enter?")
     print("\n <key>: <mode>\n\n p: plot data\n a: run algorithms")
     print(" d: add data\n")
