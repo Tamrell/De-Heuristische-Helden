@@ -1,11 +1,17 @@
 import sys
 from Classes.grid import Grid
+from Algorithms.plots import hover_plot
 from Algorithms.hill_leaper import hill_leaper
 from Algorithms.evaluate_distribution import evaluate_distribution
 from Algorithms.bounds import lower_bound, upper_bound
+from Algorithms.Helpers.upper_bound import find_worst
+from Algorithms.greedy_hillclimber import greedy_hillclimber
 from Algorithms.a_smart import A_smart
-from Algorithms.random_connect import random_sampler
+from Algorithms.shortest_depth_first import shortest_depthest_first
+from Algorithms.stochastic_hillclimber import *
+from Algorithms.solspace import random_sampler
 from Algorithms.random_battery_cycler import battery_cycler
+from Results.Solspaces.plotter import custom_plotter
 from Algorithms.branch_and_bound import *
 
 def get_neighbourhood():
@@ -52,6 +58,14 @@ def get_algorithm():
     return input("(alpha): ")
 
 def run_algorithm(alg, grid):
+    """The function run_algorithm(alg, grid) calls one of the primary algorithms,
+        depending on the parameter alg.
+        Takes:
+            alg: string representing the algorithm to run
+            grid: grid.Grid object to hand to the selected algorithms
+        Returns:
+            return value of selected algorithm
+    """
     algorithms = {'s': ['Shortest DF', shortest_depthest_first],
                   'bb': ['branch & bound', branch_and_bound],
                   'r': ['Random Connect', random_sampler],
