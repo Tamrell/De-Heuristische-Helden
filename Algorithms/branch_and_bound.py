@@ -212,6 +212,7 @@ def branch_and_bound(grid):
     try:
         search(grid)
     except KeyboardInterrupt:
+        # show prune efficiency
         import statistics
         print("Cutoff mean at\t", statistics.mean(cutoffs))
         print("With sd\t", statistics.stdev(cutoffs))
