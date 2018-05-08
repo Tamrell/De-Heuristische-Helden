@@ -61,7 +61,7 @@ def run_algorithm(alg, grid):
             alg: string representing the algorithm to run
             grid: grid.Grid object to hand to the selected algorithms
         Returns:
-            return value of selected algorithm
+            return name of selected algorithm
     """
     algorithms = {'bb': ['branch & bound', branch_and_bound],
                   'r': ['Random Connect', random_sampler],
@@ -72,6 +72,19 @@ def run_algorithm(alg, grid):
                   'a': ['A-smart', A_smart]                           }
     algorithms[alg][1](grid)
     return algorithms[alg][0]
+
+def mode():
+    """
+    This function returns the mode in which the algorithm must run
+    Takes:
+        None
+    Returns:
+        String representing a running mode
+    """
+    print("\n Which mode do you want to enter?")
+    print("\n <key>: <mode>\n\n p: plot data\n a: run algorithms")
+    print(" d: add data\n")
+    return input("(alpha): ")
 
 if __name__ == "__main__":
 
