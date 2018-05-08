@@ -77,7 +77,6 @@ def run_algorithm(alg, grid):
     algorithms[alg][1](grid)
     return algorithms[alg][0]
 
-<<<<<<< HEAD
 def mode():
     """
     This function returns the mode in which the algorithm must run
@@ -91,8 +90,6 @@ def mode():
     print(" d: add data\n")
     return input("(alpha): ")
 
-=======
->>>>>>> da86825241a64fb53de60581ddab352b4170f447
 if __name__ == "__main__":
 
     nbh = get_neighbourhood()
@@ -101,3 +98,40 @@ if __name__ == "__main__":
     grid = Grid(file1, file2, nbh)
     alg = get_algorithm()
     alg = run_algorithm(alg, grid)
+
+    if alg == 'n':
+        plotter(nbh)
+        exit(1)
+    print("\n Which iterative algorithm do you want to apply?\n\n")
+    print(" Press return for none\n")
+    print(" s: Stochastic Hillclimber")
+    print(" g: Greedy Hillclimber")
+    print(" l: Hill Leaper\n")
+
+    itt = input("(alpha): ")
+
+
+    if itt == 's':
+        itt = 'stochastic climber'
+        pre_score = grid.score()
+        stochastic_hillclimber(grid)
+    elif itt == 'g':
+        itt = 'greedy climber'
+        pre_score = grid.score()
+        greedy_hillclimber(grid)
+    elif itt == 'l':
+        itt = 'hill leaper'
+        pre_score = grid.score()
+        hill_leaper(grid)
+    else:
+        pre_score = False
+    if itt:
+        grid.print_stats(alg, pre_score, itt)
+    else:
+        grid.print_stats(alg)
+    print('Do you want to save the resulting grid?')
+    option = input("y/n\n")
+    if option == 'y':
+        print(grid)
+
+        grid.print_stats(alg, pre_score)
