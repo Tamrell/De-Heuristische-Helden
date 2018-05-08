@@ -58,6 +58,14 @@ def get_algorithm():
     return input("(alpha): ")
 
 def run_algorithm(alg, grid):
+    """The function run_algorithm(alg, grid) calls one of the primary algorithms,
+        depending on the parameter alg.
+        Takes:
+            alg: string representing the algorithm to run
+            grid: grid.Grid object to hand to the selected algorithms
+        Returns:
+            return value of selected algorithm
+    """
     algorithms = {'s': ['Shortest DF', shortest_depthest_first],
                   'bb': ['branch & bound', branch_and_bound],
                   'r': ['Random Connect', random_sampler],
