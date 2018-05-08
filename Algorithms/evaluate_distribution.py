@@ -6,11 +6,13 @@ import time
 
 
 def evaluate_distribution(grid):
-    '''multithreading to calculate ~20 random samples and ~20 solutions of The
+    '''
+       Multithreading to calculate ~20 random samples and ~20 solutions of The
        battery cycler??
        TO DO:
        - multithreading??
-       - change data structure in order to be faster!!!'''
+       - change data structure in order to be faster!!!
+    '''
     random_samples = []
     battery_cycler_samples = []
     t = time.time()

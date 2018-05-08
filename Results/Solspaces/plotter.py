@@ -5,10 +5,6 @@ import seaborn as sns
 from Algorithms.bounds import lower_bound, upper_bound
 sns.set(color_codes=True)
 
-def count_data(nbh):
-    with open('Results/Solspaces/SS' + nbh + '.csv') as df:
-        return len([0 for line in df])
-
 def custom_plotter(grid, s1, s2):
     '''s1 = scores list 1
        s2 = scores list 2

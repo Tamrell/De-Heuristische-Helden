@@ -63,32 +63,6 @@ def run_algorithm(alg, grid):
     algorithms[alg][1](grid)
     return algorithms[alg][0]
 
-    if alg == 'bb':
-        alg = 'branch & bound'
-        grid = branch_and_bound(grid)
-
-    # FIX SOLUTIONSPACE AND HEATMAP PRINTING
-    if alg == 's':
-        print("How many sample solutions do you want to generate?")
-        print("(There are currently", count_data(nbh),
-              "data points for this neighbourhood)\n")
-        solutions = input("(int): ")
-        random_sampler(grid, int(solutions))
-
-    elif alg == 'h':
-        print(" Press 'g' for global, 'r' for relative")
-        rd = input(" 'g'/'r'\n")
-        if rd == 'g':
-            grid.print_heatmap(0)
-        elif rd == 'r':
-            grid.print_heatmap(1)
-
-def mode():
-    print("\n Which mode do you want to enter?")
-    print("\n <key>: <mode>\n\n p: plot data\n a: run algorithms")
-    print(" d: add data\n")
-    return input("(alpha): ")
-
 if __name__ == "__main__":
 
     nbh = get_neighbourhood()
@@ -97,40 +71,3 @@ if __name__ == "__main__":
     grid = Grid(file1, file2, nbh)
     alg = get_algorithm()
     alg = run_algorithm(alg, grid)
-
-    if alg == 'n':
-        plotter(nbh)
-        exit(1)
-    print("\n Which iterative algorithm do you want to apply?\n\n")
-    print(" Press return for none\n")
-    print(" s: Stochastic Hillclimber")
-    print(" g: Greedy Hillclimber")
-    print(" l: Hill Leaper\n")
-
-    itt = input("(alpha): ")
-
-
-    if itt == 's':
-        itt = 'stochastic climber'
-        pre_score = grid.score()
-        stochastic_hillclimber(grid)
-    elif itt == 'g':
-        itt = 'greedy climber'
-        pre_score = grid.score()
-        greedy_hillclimber(grid)
-    elif itt == 'l':
-        itt = 'hill leaper'
-        pre_score = grid.score()
-        hill_leaper(grid)
-    else:
-        pre_score = False
-    if itt:
-        grid.print_stats(alg, pre_score, itt)
-    else:
-        grid.print_stats(alg)
-    print('Do you want to save the resulting grid?')
-    option = input("y/n\n")
-    if option == 'y':
-        print(grid)
-
-        grid.print_stats(alg, pre_score)
