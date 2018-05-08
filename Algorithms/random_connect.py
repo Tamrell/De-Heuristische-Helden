@@ -18,6 +18,13 @@ def random_connect(grid):
     else:
         return False
 
+
+def add_data(score, nbh):
+    filename =  os.path.abspath('Results/Solspaces/SS' + nbh +'.csv')
+    with open(filename, 'a') as data:
+        data.write(str(score) + '\n')
+
+
 def random_sampler(grid, solutions=1):
     while solutions > 0:
         grid.reset()
@@ -25,9 +32,3 @@ def random_sampler(grid, solutions=1):
             if solutions > 1:
                 add_data(grid.score(), grid.nbh)
             solutions -= 1
-
-
-def add_data(score, nbh):
-    filename =  os.path.abspath('Results/Solspaces/SS' + nbh +'.csv')
-    with open(filename, 'a') as data:
-        data.write(str(score) + '\n')

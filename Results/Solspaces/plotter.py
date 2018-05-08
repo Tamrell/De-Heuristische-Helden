@@ -21,8 +21,8 @@ def custom_plotter(grid, s1, s2):
     ub = grid.score()
     grid.reset
 
-    fig = plt.hist(s1)
     fig2 = plt.hist(s2)
+    fig = plt.hist(s1)
     plt.axvspan(lb - 500, lb, alpha=0.5, color='red')
     plt.axvspan(ub, ub + 500,
                 alpha=0.5, color='red')
