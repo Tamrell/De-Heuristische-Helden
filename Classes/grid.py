@@ -43,7 +43,8 @@ class Grid:
         self.batteries = {}
         self.x_dim = dimensions[0]
         self.y_dim = dimensions[1]
-        self.set_batteries(file2)
+        if file2:
+            self.set_batteries(file2)
         self.set_houses(file1, self.batteries.values())
         self.set_grid_points()
         self.set_global_density()
@@ -57,6 +58,13 @@ class Grid:
         self.batteries[bat.cord] = bat
         for h in self.houses.values():
             h.dists[bat] = self.distance(bat.cord, h.cord)
+            print(h.dists[bat])
+
+    def total_output(self):
+        output = 0
+        for h in self.houses.values():
+            output += h.output
+        return output
 
     def reset(self):
         self.houses.clear()

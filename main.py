@@ -10,6 +10,7 @@ from Algorithms.random_connect import random_sampler
 from Algorithms.random_battery_cycler import battery_cycler
 from Algorithms.Helpers.plotter import custom_plotter
 from Algorithms.branch_and_bound import *
+from Algorithms.population_based import start_simulation
 
 def get_neighbourhood():
     """
@@ -73,24 +74,20 @@ def run_algorithm(alg, grid):
     algorithms[alg][1](grid)
     return algorithms[alg][0]
 
-def mode():
-    """
-    This function returns the mode in which the algorithm must run
-    Takes:
-        None
-    Returns:
-        String representing a running mode
-    """
-    print("\n Which mode do you want to enter?")
-    print("\n <key>: <mode>\n\n p: plot data\n a: run algorithms")
-    print(" d: add data\n")
-    return input("(alpha): ")
-
 if __name__ == "__main__":
 
     nbh = get_neighbourhood()
     file1 = 'Data/wijk' + nbh + '_huizen.csv'
     file2 = 'Data/wijk' + nbh + '_batterijen.txt'
+
+###############testing purposes##################
+
+    # grid = Grid(file1, False, nbh)
+    # start_simulation(grid)
+    # exit(1)
+
+#################################################
+
     grid = Grid(file1, file2, nbh)
     alg = get_algorithm()
     alg = run_algorithm(alg, grid)
