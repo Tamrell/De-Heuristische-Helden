@@ -111,4 +111,4 @@ def search(grid):
         count += 1
 
 def branch_and_bound(grid):
-    return search(grid)
+    search(grid)

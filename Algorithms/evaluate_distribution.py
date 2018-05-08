@@ -10,17 +10,16 @@ def evaluate_distribution(grid):
        battery cycler??
        TO DO:
        - multithreading??
-       - save plot as score-b_name:cord-b2_name:cord.html
        - change data structure in order to be faster!!!'''
-    s1 = []
-    s2 = []
+    random_samples = []
+    battery_cycler_samples = []
     t = time.time()
-    for i in range(20): #10? 20? 50?
+    for i in range(100): #10? 20? 50?
         random_sampler(grid)
-        s1.append(grid.score())
+        random_samples.append(grid.score())
         grid.reset()
         battery_cycler(grid, False)
-        s2.append(grid.score())
+        battery_cycler_samples.append(grid.score())
         grid.reset()
-    custom_plotter(grid, s1, s2)
+    custom_plotter(grid, random_samples, battery_cycler_samples)
     print('took', time.time() - t, 'seconds.')

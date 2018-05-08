@@ -21,10 +21,10 @@ def custom_plotter(grid, s1, s2):
     ub = grid.score()
     grid.reset
 
-    fig = sns.distplot(s1)
-    fig2 = sns.distplot(s2)
-    plt.axvspan(lb - 1000, lb, alpha=0.5, color='red')
-    plt.axvspan(ub, ub + 1000,
+    fig = plt.hist(s1)
+    fig2 = plt.hist(s2)
+    plt.axvspan(lb - 500, lb, alpha=0.5, color='red')
+    plt.axvspan(ub, ub + 500,
                 alpha=0.5, color='red')
 
     fig_name = 'Results/' + str(grid.nbh) + '/' + str(min(s2))
@@ -35,7 +35,7 @@ def custom_plotter(grid, s1, s2):
 def plotter(nbh):
     nbh_min = [3132, 2252, 1957]
     nbh_max = [8670, 7019, 8459]
-    nbh_best = [3488, 2292, 2069]
+    nbh_best = [3486, 2292, 2069]
 
     with open('Results/Solspaces/SS' + nbh + '.csv') as df:
         data = [int(line) for no, line in enumerate(df)]
