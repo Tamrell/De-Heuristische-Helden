@@ -211,7 +211,7 @@ def branch_and_bound(grid):
     """
     try:
         search(grid)
-    except:
+    except KeyboardInterrupt:
         pass
     import statistics
     try:
