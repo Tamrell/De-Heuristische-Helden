@@ -1,4 +1,4 @@
-from Algorithms.contest import *
+from Algorithms.Helpers.connect import connect
 from copy import deepcopy
 import queue as Q
 

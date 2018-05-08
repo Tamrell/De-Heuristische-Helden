@@ -1,5 +1,5 @@
-from Algorithms.contest import *
-from Algorithms.plots import *
+from Algorithms.Helpers.connect import connect
+from Algorithms.Helpers.plots import *
 from random import shuffle, choice
 import os
 

@@ -19,8 +19,7 @@ class Grid:
     - grid_list: dict containing: coordinates:Grid_Point
     - houses: dict containing: coordinate:House
     - batteries: dict containing: coordinate:Battery
-
-     '''
+    '''
 
     def __init__(self, file1, file2, nbh, dimensions=(50, 50)):
         ''' Constructor, needs a file with information about the houses and

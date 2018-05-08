@@ -1,6 +1,6 @@
 from random import shuffle, choice, sample
 from copy import deepcopy
-from Algorithms.contest import *
+from Algorithms.Helpers.connect import connect
 from Algorithms.greedy_hillclimber import greedy_hillclimber
 from tqdm import tqdm
 

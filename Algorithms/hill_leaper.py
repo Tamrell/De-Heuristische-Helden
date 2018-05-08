@@ -1,4 +1,4 @@
-from Algorithms.contest import hard_swap
+from Algorithms.Helpers.connect import hard_swap
 from Algorithms.greedy_hillclimber import greedy_hillclimber
 
 def leap(grid):

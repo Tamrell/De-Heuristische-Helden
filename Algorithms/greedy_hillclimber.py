@@ -1,4 +1,4 @@
-from Algorithms.contest import *
+from Algorithms.Helpers.connect import hard_swap, swappable, swap_cost
 
 def greedy_hillclimber(grid):
     while True:

@@ -1,17 +1,14 @@
 import sys
 from Classes.grid import Grid
-from Algorithms.plots import hover_plot
+from Algorithms.Helpers.plots import hover_plot
 from Algorithms.hill_leaper import hill_leaper
 from Algorithms.evaluate_distribution import evaluate_distribution
-from Algorithms.bounds import lower_bound, upper_bound
-from Algorithms.Helpers.upper_bound import find_worst
+from Algorithms.Helpers.bounds import lower_bound, upper_bound
 from Algorithms.greedy_hillclimber import greedy_hillclimber
 from Algorithms.a_smart import A_smart
-from Algorithms.shortest_depth_first import shortest_depthest_first
-from Algorithms.stochastic_hillclimber import *
-from Algorithms.solspace import random_sampler
+from Algorithms.random_connect import random_sampler
 from Algorithms.random_battery_cycler import battery_cycler
-from Results.Solspaces.plotter import custom_plotter
+from Algorithms.Helpers.plotter import custom_plotter
 from Algorithms.branch_and_bound import *
 
 def get_neighbourhood():
@@ -66,8 +63,7 @@ def run_algorithm(alg, grid):
         Returns:
             return value of selected algorithm
     """
-    algorithms = {'s': ['Shortest DF', shortest_depthest_first],
-                  'bb': ['branch & bound', branch_and_bound],
+    algorithms = {'bb': ['branch & bound', branch_and_bound],
                   'r': ['Random Connect', random_sampler],
                   'b': ['battery cycler', battery_cycler],
                   'e': ['evaluate', evaluate_distribution],
@@ -85,3 +81,4 @@ if __name__ == "__main__":
     grid = Grid(file1, file2, nbh)
     alg = get_algorithm()
     alg = run_algorithm(alg, grid)
+    grid.print_stats(alg)

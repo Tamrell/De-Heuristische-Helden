@@ -1,6 +1,6 @@
 from Algorithms.random_connect import random_sampler
 from Algorithms.random_battery_cycler import battery_cycler
-from Results.Solspaces.plotter import custom_plotter
+from Algorithms.Helpers.plotter import custom_plotter
 import threading as th
 import time
 
