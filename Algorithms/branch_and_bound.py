@@ -22,7 +22,6 @@ def obese_grid(lightweight_grid, root):
     for connection in lightweight_grid.connections:
         (house_c, battery_c) = connection
         root_house, root_battery = root.houses[house_c], root.batteries[battery_c]
-
         root_battery.load += root_house.output
         root_house.bat = root_battery
         root_house.color = root_battery.color

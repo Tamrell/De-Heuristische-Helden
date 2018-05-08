@@ -6,7 +6,6 @@ import csv
 import copy
 import pickle
 from Classes.load_batteries import *
-import colorama
 
 from Classes.house import House
 from Classes.battery import Battery
@@ -55,6 +54,11 @@ class Grid:
     def __lt__(self, other):
         return True
 
+    def add_battery(self, bat):
+        self.batteries[bat.cord] = bat
+        for h in self.houses.values():
+            h.dists[bat] = self.distance(bat.cord, h.cord)
+
     def reset(self):
         self.houses.clear()
         self.batteries.clear()
@@ -81,10 +85,10 @@ class Grid:
 
     def set_grid_points(self):
         ''' Initiates all the Grid_Points for the Grid. '''
-
+        houses = [h for h in self.houses.values()]
         for y in range(self.y_dim):
             for x in range(self.x_dim):
-                self.grid_list[x, y] = Grid_Point(x, y, self.houses)
+                self.grid_list[x, y] = Grid_Point(x, y, houses)
 
     def set_global_density(self):
         ''' Goes through all the Grid_Points on the Grid and calculates the
@@ -181,9 +185,9 @@ class Grid:
     def print_stats(self, alg, pre="", alg2=""):
         print("\===============================================\ ")
         print("| Neighbourhood:", self.nbh, "\t\t\t\t|")
-        print("| Algorithm:", alg, "\t\t\t\t|")
+        print("| Algorithm:", alg, "\t\t\t|")
         if alg2:
-            print("| Iterative:", alg2, "\t\t\t\t|")
+            print("| Iterative:", alg2, "\t\t\t|")
 
         print("|===============================================|")
         print("| Battery\t: load\t\t: max\t\t|")
@@ -268,7 +272,7 @@ class Grid_Point:
         self.rel_probability = 0
 
         for house in houses:
-            dist_to_house = abs(house[0] - x) + abs(house[1] - y)
+            dist_to_house = abs(house.cord[0] - x) + abs(house.cord[1] - y)
             if dist_to_house:
                 self.rel_distance += 1 / dist_to_house
             else:
