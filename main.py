@@ -15,15 +15,34 @@ from Results.Solspaces.plotter import custom_plotter
 from Algorithms.branch_and_bound import *
 
 def get_neighbourhood():
+    """
+        This function selects the neighbourhood to run algorithms for, depending
+        on user input.
+        Takes:
+            None
+        Returns:
+            The number of the neighbourhood to run the algorithms for.
+    """
     legal = {'1', '2', '3'}
     print("\n For which neighbourhood do you want to run an algorithm?")
     nbh = input("\n(int): ")
+
+    # validity checking
     while not nbh in legal:
         print(nbh, "is an invalid choice, please choose 1, 2 or 3")
         nbh = input("\n(int): ")
     return nbh
 
 def get_algorithm():
+    """
+        This function selects the first algorithm to run, i.e. finding a solution
+        to run a secondary algorithm for.
+        Takes:
+            None
+        Returns:
+            string: user input resembling the algorithm to run
+    """
+
     print("\n Which algorithm do you want to run?")
     print("\n <key>: <algorithm>\n\n s: Solspace\n p: Procrastinator")
     print(" lower: Worst (illegal?) Config Finder")
@@ -50,29 +69,19 @@ def run_algorithm(alg, grid):
     algorithms[alg][1](grid)
     return algorithms[alg][0]
 
-def get_mode():
-    modes = {'p', 'a', 'd'}
-    print("\n Which mode do you want to enter?")
-    print("\n <key>: <mode>\n\n p: plot data\n a: run algorithms")
-    print(" d: generate data\n")
-    mode = input("(alpha): ")
-    while not mode in modes:
-        mode = input("invalid mode, please choose p, a or d.\n(alpha): ")
-    return mode
+    if alg == 'bb':
+        alg = 'branch & bound'
+        grid = branch_and_bound(grid)
 
-if __name__ == "__main__":
+    # FIX SOLUTIONSPACE AND HEATMAP PRINTING
+    if alg == 's':
+        print("How many sample solutions do you want to generate?")
+        print("(There are currently", count_data(nbh),
+              "data points for this neighbourhood)\n")
+        solutions = input("(int): ")
+        random_sampler(grid, int(solutions))
 
-    nbh = get_neighbourhood()
-    file1 = 'Data/wijk' + nbh + '_huizen.csv'
-    file2 = 'Data/wijk' + nbh + '_batterijen.txt'
-    mode = get_mode()
-
-    if mode == 'p':
-        print('this content has not been unlocked yet')
-
-    elif mode == 'd':
-        print('this content has not been unlocked yet')
-
+    elif alg == 'h':
         print(" Press 'g' for global, 'r' for relative")
         rd = input(" 'g'/'r'\n")
         if rd == 'g':
@@ -80,41 +89,54 @@ if __name__ == "__main__":
         elif rd == 'r':
             grid.print_heatmap(1)
 
-    elif mode == 'a':
-        grid = Grid(file1, file2, nbh)
-        alg = get_algorithm()
-        alg = run_algorithm(alg, grid)
+def mode():
+    print("\n Which mode do you want to enter?")
+    print("\n <key>: <mode>\n\n p: plot data\n a: run algorithms")
+    print(" d: add data\n")
+    return input("(alpha): ")
 
-################to be changed####################3
-        print("\n Which iterative algorithm do you want to apply?\n\n")
-        print(" Press return for none\n")
-        print(" s: Stochastic Hillclimber")
-        print(" g: Greedy Hillclimber")
-        print(" l: Hill Leaper\n")
+if __name__ == "__main__":
 
-        itt = input("(alpha): ")
+    nbh = get_neighbourhood()
+    file1 = 'Data/wijk' + nbh + '_huizen.csv'
+    file2 = 'Data/wijk' + nbh + '_batterijen.txt'
+    grid = Grid(file1, file2, nbh)
+    alg = get_algorithm()
+    alg = run_algorithm(alg, grid)
 
-        if itt == 's':
-            itt = 'stochastic climber'
-            pre_score = grid.score()
-            stochastic_hillclimber(grid)
-        elif itt == 'g':
-            itt = 'greedy climber'
-            pre_score = grid.score()
-            greedy_hillclimber(grid)
-        elif itt == 'l':
-            itt = 'hill leaper'
-            pre_score = grid.score()
-            hill_leaper(grid)
-        else:
-            pre_score = False
-        if itt:
-            grid.print_stats(alg, pre_score, itt)
-        else:
-            grid.print_stats(alg)
-#######################################################
-        print('Do you want to save the resulting grid?')
-        option = input("y/n\n")
-        if option == 'y':
-            print(grid)
-            grid.print_stats(alg, pre_score)
+    if alg == 'n':
+        plotter(nbh)
+        exit(1)
+    print("\n Which iterative algorithm do you want to apply?\n\n")
+    print(" Press return for none\n")
+    print(" s: Stochastic Hillclimber")
+    print(" g: Greedy Hillclimber")
+    print(" l: Hill Leaper\n")
+
+    itt = input("(alpha): ")
+
+
+    if itt == 's':
+        itt = 'stochastic climber'
+        pre_score = grid.score()
+        stochastic_hillclimber(grid)
+    elif itt == 'g':
+        itt = 'greedy climber'
+        pre_score = grid.score()
+        greedy_hillclimber(grid)
+    elif itt == 'l':
+        itt = 'hill leaper'
+        pre_score = grid.score()
+        hill_leaper(grid)
+    else:
+        pre_score = False
+    if itt:
+        grid.print_stats(alg, pre_score, itt)
+    else:
+        grid.print_stats(alg)
+    print('Do you want to save the resulting grid?')
+    option = input("y/n\n")
+    if option == 'y':
+        print(grid)
+
+        grid.print_stats(alg, pre_score)
