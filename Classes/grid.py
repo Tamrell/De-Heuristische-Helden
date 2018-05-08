@@ -202,7 +202,7 @@ class Grid:
         print("| total deff.   :", int(self.defficiency()), "\t\t\t\t|")
         print("|===============================================|")
         print("| total houses  :", len(self.houses), "\t\t\t\t|")
-        print("| average output:", int(count/len(self.houses)), "\t\t\t\t|")
+        print("| average output:", round(count/len(self.houses)), "\t\t\t\t|")
         if pre:
             print("| vanilla-cost\t:", pre, "\t\t\t\t|")
         print("| final-cost\t:", self.score(), "\t\t\t\t|")

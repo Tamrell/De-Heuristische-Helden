@@ -1,6 +1,4 @@
 # C:\Users\Eigenaar\Documents\school\Thema 2\De-Heuristische-Helden\De-Heuristische-Helden
-# en we kunnen dit doen: een functie schrijven die de minimale afstand van alle huizen vermenigvuldigt
-# met het aantal lege huizen, en kijkt of dit boven de bound komt
 from operator import itemgetter
 import sys
 import os
@@ -33,30 +31,41 @@ def obese_grid(lightweight_grid, root):
 
     return root
 
-def check_feasability(grid, bound):
+cutoffs = []
+def feasible(grid, bound):
     min_dist = 0
     for house_c in grid.houses.keys():
         distances = []
         for battery_c in grid.batteries.keys():
             distances.append(abs(house_c[0] - battery_c[0]) + abs(house_c[1] - battery_c[1]))
         min_dist += min(distances)
-    return min_dist + grid.score < bound
+
+    if not min_dist + grid.score < bound:
+        global cutoffs
+        cutoffs.append(len(grid.houses))
+    return (min_dist + grid.score < bound)
+
+def sorted_batteries(batteries, house):
+    b_list = [(house.distance(battery), battery) for battery in batteries]
+    b_list = sorted(b_list, key=operator.itemgetter(0), reverse = True)
+    return [battery.cord for (distance, battery) in b_list]
 
 def make_cases(grid, bound):
     cases = []
-    for battery_c in grid.batteries.keys():
+    house_c = list(grid.houses.keys()).pop()
+    house = grid.houses[house_c]
+    for battery_c in sorted_batteries(grid.batteries.values(), house):
 
         new_case = Lightweight_grid()
         new_case.houses = copy.deepcopy(grid.houses)
         new_case.batteries = copy.deepcopy(grid.batteries)
+        new_case.score = grid.score
 
         new_case.connections = copy.deepcopy(grid.connections)
-
-        house_c = list(new_case.houses.keys()).pop()
         house = new_case.houses.pop(house_c)
 
         if new_case.connect(house, new_case.batteries[battery_c]):
-            if check_feasability(new_case, bound):
+            if feasible(new_case, bound):
                 cases.append(new_case)
     return cases
 
@@ -81,7 +90,7 @@ def search(grid):
 
     stack = [(bound, root)]
 
-    while running(iter):
+    while True:
         # no solution
         if len(stack) == 0:
             sys.exit()
@@ -90,26 +99,30 @@ def search(grid):
         score, current_grid = stack.pop()
 
         if len(current_grid.houses) == 0:
-            print("Branch and Bound found a solution!")
-            return obese_grid(current_grid, grid)
-            score = current_grid.score()
+            obese_gr = obese_grid(current_grid, grid)
+            score = obese_gr.score()
+            print("Branch and Bound found a solution!", score)
+            if input("Keep this one, or keep searching? y = stop/n = search on!") == "y":
+                return obese_gr
             if score < bound:
-                count = 0
                 bound = score
-                best_case = current_grid
-
-                stack = filter(stack, bound)
-                print("solution", iter, current_grid.score())
+                best_case = obese_grid(current_grid, grid)
             continue
 
         for case in make_cases(current_grid, bound):
             stack.append((case.score, case))
 
-        if iter % 10 == 0:
-            print(iter, len(stack), bound)
+        if iter % 100 == 0:
+            print(iter, len(stack), bound, time.time() - start_time)
+            start_time = time.time()
 
         iter += 1
-        count += 1
 
 def branch_and_bound(grid):
-    return search(grid)
+    try:
+        return search(grid)
+    except KeyboardInterrupt:
+        import statistics
+        print("Cutoff mean at\t", statistics.mean(cutoffs))
+        print("With sd\t", statistics.stdev(cutoffs))
+        return grid
