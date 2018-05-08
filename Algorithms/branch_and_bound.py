@@ -18,9 +18,24 @@ filename1 = os.path.join(fileDir, 'wijk1_huizen.csv')
 filename2 = os.path.join(fileDir, 'wijk1_batterijen.txt')
 
 def obese_grid(lightweight_grid, root):
+    """
+    This function applies the solution from B&B to the grid.Grid object given to
+    the algorithm.
+    Takes:
+        lightweight_grid: Lightweight_grid object to apply to a grid.Grid object
+        root: grid.Grid object to apply solution to
+    Returns
+        root: grid.Grid object with solution applied to
+    """
+
+    # make sure to start from an empty grid.Grid object
     root.reset()
+
+    # apply solution
     for connection in lightweight_grid.connections:
         (house_c, battery_c) = connection
+
+        # connect house and battery
         root_house, root_battery = root.houses[house_c], root.batteries[battery_c]
         root_battery.load += root_house.output
         root_house.bat = root_battery
@@ -30,8 +45,19 @@ def obese_grid(lightweight_grid, root):
 
     return root
 
+# global variable for measuring bound effectivity
 cutoffs = []
+
 def feasible(grid, bound):
+    """This function finds if a given solution is feasible in terms of the given
+    bound.
+    Takes:
+        grid: Lightweight_grid object to evaluate
+        bound: bound to evaluate to
+    Returns:
+        True if there is a possibility of a solution within bound, else False"""
+
+    # find distance from every house to its closest battery
     min_dist = 0
     for house_c in grid.houses.keys():
         distances = []
@@ -39,9 +65,13 @@ def feasible(grid, bound):
             distances.append(abs(house_c[0] - battery_c[0]) + abs(house_c[1] - battery_c[1]))
         min_dist += min(distances)
 
+    # test if bound is feasible
     if not min_dist + grid.score < bound:
         global cutoffs
+
+        # for bound effectivity measurement
         cutoffs.append(len(grid.houses))
+        
     return (min_dist + grid.score < bound)
 
 def sorted_batteries(batteries, house):
