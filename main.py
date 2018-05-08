@@ -1,17 +1,11 @@
 import sys
 from Classes.grid import Grid
-from Algorithms.plots import hover_plot
 from Algorithms.hill_leaper import hill_leaper
 from Algorithms.evaluate_distribution import evaluate_distribution
 from Algorithms.bounds import lower_bound, upper_bound
-from Algorithms.Helpers.upper_bound import find_worst
-from Algorithms.greedy_hillclimber import greedy_hillclimber
 from Algorithms.a_smart import A_smart
-from Algorithms.shortest_depth_first import shortest_depthest_first
-from Algorithms.stochastic_hillclimber import *
-from Algorithms.solspace import random_sampler
+from Algorithms.random_connect import random_sampler
 from Algorithms.random_battery_cycler import battery_cycler
-from Results.Solspaces.plotter import custom_plotter
 from Algorithms.branch_and_bound import *
 
 def get_neighbourhood():
