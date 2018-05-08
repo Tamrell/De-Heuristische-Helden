@@ -1,11 +1,17 @@
 import sys
 from Classes.grid import Grid
+from Algorithms.plots import hover_plot
 from Algorithms.hill_leaper import hill_leaper
 from Algorithms.evaluate_distribution import evaluate_distribution
 from Algorithms.bounds import lower_bound, upper_bound
+from Algorithms.Helpers.upper_bound import find_worst
+from Algorithms.greedy_hillclimber import greedy_hillclimber
 from Algorithms.a_smart import A_smart
-from Algorithms.random_connect import random_sampler
+from Algorithms.shortest_depth_first import shortest_depthest_first
+from Algorithms.stochastic_hillclimber import *
+from Algorithms.solspace import random_sampler
 from Algorithms.random_battery_cycler import battery_cycler
+from Results.Solspaces.plotter import custom_plotter
 from Algorithms.branch_and_bound import *
 
 def get_neighbourhood():
@@ -70,26 +76,6 @@ def run_algorithm(alg, grid):
                   'a': ['A-smart', A_smart]                           }
     algorithms[alg][1](grid)
     return algorithms[alg][0]
-
-    if alg == 'bb':
-        alg = 'branch & bound'
-        grid = branch_and_bound(grid)
-
-    # FIX SOLUTIONSPACE AND HEATMAP PRINTING
-    if alg == 's':
-        print("How many sample solutions do you want to generate?")
-        print("(There are currently", count_data(nbh),
-              "data points for this neighbourhood)\n")
-        solutions = input("(int): ")
-        random_sampler(grid, int(solutions))
-
-    elif alg == 'h':
-        print(" Press 'g' for global, 'r' for relative")
-        rd = input(" 'g'/'r'\n")
-        if rd == 'g':
-            grid.print_heatmap(0)
-        elif rd == 'r':
-            grid.print_heatmap(1)
 
 def mode():
     print("\n Which mode do you want to enter?")
