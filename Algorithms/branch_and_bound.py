@@ -119,7 +119,7 @@ def search(grid):
 
 def branch_and_bound(grid):
     try:
-        return search(grid)
+        search(grid)
     except KeyboardInterrupt:
         import statistics
         print("Cutoff mean at\t", statistics.mean(cutoffs))
