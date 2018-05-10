@@ -17,6 +17,7 @@ def evaluate_distribution(grid):
     random_samples = []
     battery_cycler_samples = []
     t = time.time()
+    tqdm.monitor_interval = 0
     for i in tqdm(range(100)): #10? 20? 50?
         random_sampler(grid)
         random_samples.append(grid.score())

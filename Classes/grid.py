@@ -183,10 +183,15 @@ class Grid:
         plot(data, filename='labelled-heatmap.html')
 
     def score(self):
+        costs = {'Powerstar': 900,
+                 'Imerse-II': 1350,
+                 'Imerse-III': 1800,
+                 'Default': 5000}
         score = 0
         for b in self.batteries.values():
             for h in b.links:
                 score += h.dists[b]
+            score += costs[b.type]
         return score
 
     def print_stats(self, alg, pre="", alg2=""):

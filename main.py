@@ -82,9 +82,9 @@ if __name__ == "__main__":
 
 ###############testing purposes##################
 
-    # grid = Grid(file1, False, nbh)
-    # start_simulation(grid)
-    # exit(1)
+    grid = Grid(file1, False, nbh)
+    start_simulation(grid)
+    exit(1)
 
 #################################################
 
