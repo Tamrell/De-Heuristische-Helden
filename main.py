@@ -9,6 +9,7 @@ from Algorithms.a_smart import A_smart
 from Algorithms.random_connect import random_sampler
 from Algorithms.random_battery_cycler import battery_cycler
 from Algorithms.Helpers.plotter import custom_plotter
+from Algorithms.Helpers.plotter import plotter
 from Algorithms.branch_and_bound import *
 
 def get_neighbourhood():
@@ -92,6 +93,12 @@ if __name__ == "__main__":
     file1 = 'Data/wijk' + nbh + '_huizen.csv'
     file2 = 'Data/wijk' + nbh + '_batterijen.txt'
     grid = Grid(file1, file2, nbh)
+    ########################
+    plotter(nbh)
+    exit(1)
+    ##########################
+
+
     alg = get_algorithm()
     alg = run_algorithm(alg, grid)
     grid.print_stats(alg)
