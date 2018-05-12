@@ -86,6 +86,7 @@ if __name__ == "__main__":
 ###############testing purposes##################
 
     grid = Grid(file1, False, nbh)
+    print(grid.standard_deviation())
     random_weight_lifter(grid)
     k_visualize(grid)
     # print(grid)

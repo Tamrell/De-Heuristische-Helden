@@ -6,7 +6,7 @@ import csv
 import copy
 import pickle
 from Classes.load_batteries import *
-
+from statistics import stdev
 from Classes.house import House
 from Classes.battery import Battery
 from Algorithms.Helpers.connect import unconnect
@@ -82,6 +82,9 @@ class Grid:
         for h in self.houses.values():
             output += h.output
         return output
+
+    def standard_deviation(self):
+        return stdev([h.output for h in self.houses.values()])
 
     def reset(self):
         self.houses.clear()
