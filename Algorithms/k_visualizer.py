@@ -18,7 +18,7 @@ def k_visualize(grid):
     rand = []
     scitt = []
     iterations = []
-    s_size = 2
+    s_size = 100
     for i in tqdm(range(20)):
         lower_bound(grid)
         lower.append(grid.score())
