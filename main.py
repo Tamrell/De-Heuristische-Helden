@@ -11,6 +11,7 @@ from Algorithms.greedy_hillclimber import greedy_hillclimber
 from Algorithms.random_connect import random_sampler
 from Algorithms.random_battery_cycler import battery_cycler
 from Algorithms.Helpers.plotter import custom_plotter
+from Algorithms.Helpers.plotter import plotter
 from Algorithms.branch_and_bound import *
 from Algorithms.population_based import start_simulation
 from tqdm import tqdm
@@ -73,7 +74,8 @@ def run_algorithm(alg, grid):
                   'e': ['evaluate', evaluate_distribution],
                   'l': ['lower bound', lower_bound],
                   'u': ['upper bound', upper_bound],
-                  'a': ['A-smart', A_smart]                           }
+                  #'a': ['A-smart', A_smart]
+                  }
     algorithms[alg][1](grid)
     return algorithms[alg][0]
 
@@ -103,9 +105,7 @@ if __name__ == "__main__":
     # evaluate_distribution(grid)
     exit(1)
 
-#################################################
 
-    grid = Grid(file1, file2, nbh)
     alg = get_algorithm()
     alg = run_algorithm(alg, grid)
     grid.print_stats(alg)
