@@ -31,7 +31,8 @@ def custom_plotter(grid, s1, s2):
 def plotter(nbh):
     nbh_min = [3132, 2252, 1957]
     nbh_max = [8670, 7019, 8459]
-    nbh_best = [3486, 2292, 2069]
+    #nbh_best = [3486, 2292, 2069]
+    nbh_best = [4062, 2470, 2507]
 
     with open('Results/Solspaces/SS' + nbh + '.csv') as df:
         data = [int(line) for no, line in enumerate(df)]
