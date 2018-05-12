@@ -74,7 +74,8 @@ def run_algorithm(alg, grid):
                   'e': ['evaluate', evaluate_distribution],
                   'l': ['lower bound', lower_bound],
                   'u': ['upper bound', upper_bound],
-                  'a': ['A-smart', A_smart]                           }
+                  #'a': ['A-smart', A_smart]                           
+                  }
     algorithms[alg][1](grid)
     return algorithms[alg][0]
 
@@ -84,31 +85,10 @@ if __name__ == "__main__":
     file1 = 'Data/wijk' + nbh + '_huizen.csv'
     file2 = 'Data/wijk' + nbh + '_batterijen.txt'
 
-###############testing purposes##################
-
-    grid = Grid(file1, False, nbh)
-    random_weight_lifter(grid)
-    k_visualize(grid)
-    # print(grid)
-    # evaluate_distribution(grid)
-    # for i in tqdm(range(1000)):
-    #      k_means(grid)
-    #      k_means(grid)
-    #      k_means(grid)
-    #      k_means(grid)
-    #      restricted_k_means(grid)
-    # print(grid)
-    # grid.light_reset()
-    # print(grid)
-    # evaluate_distribution(grid)
-    exit(1)
-
-#################################################
-
     grid = Grid(file1, file2, nbh)
     ########################
-    plotter(nbh)
-    exit(1)
+    """plotter(nbh)
+    exit(1)"""
     ##########################
 
 

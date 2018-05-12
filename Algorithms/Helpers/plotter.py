@@ -42,9 +42,18 @@ def plotter(nbh):
     nbh_min = [3132, 2252, 1957]
     nbh_max = [8670, 7019, 8459]
     #nbh_best = [3486, 2292, 2069] #best
-    #nbh_best = [4062, 2470, 2507] #BB
+    nbh_best = [4062, 2470, 2507] #BB
     #nbh_best = [3486, 2292, 2069] #rbc+hc
-    nbh_best = [3517, 2302, 2073] #rbc
+    #nbh_best = [3517, 2302, 2073] #rbc
+
+    plt.title('Costs found by RC and BC')
+    plt.ylabel('Occurence')
+    plt.xlabel('Cost')
+
+    blue_patch = mpatches.Patch(color='blue', label='Random Connect')
+    green_patch = mpatches.Patch(color='green', label='Branch & Bound')
+    red_patch = mpatches.Patch(color='red', label='Bounds')
+    plt.legend(handles=[blue_patch, green_patch, red_patch])
 
     with open('Results/Solspaces/SS' + nbh + '.csv') as df:
         data = [int(line) for no, line in enumerate(df)]
