@@ -9,6 +9,7 @@ from Classes.load_batteries import *
 
 from Classes.house import House
 from Classes.battery import Battery
+from Algorithms.Helpers.connect import unconnect
 
 import sys
 import termcolor
@@ -55,10 +56,26 @@ class Grid:
         return True
 
     def add_battery(self, bat):
+        bat.links = set()
         self.batteries[bat.cord] = bat
+        self.initial_batteries[bat.cord] = copy.deepcopy(bat)
+
         for h in self.houses.values():
             h.dists[bat] = self.distance(bat.cord, h.cord)
-            print(h.dists[bat])
+
+    def move_battery(self, bat, new_cord):
+        if new_cord in self.houses:
+            print('Do you even try? there is a house on this spot already.')
+
+        self.initial_batteries.pop(bat.cord)
+        self.batteries.pop(bat.cord)
+        bat.cord = new_cord
+        self.add_battery(bat)
+
+    def light_reset(self):
+        for b in self.batteries.values():
+            for h in list(b.links):
+                unconnect(h)
 
     def total_output(self):
         output = 0

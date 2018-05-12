@@ -2,7 +2,7 @@ from random import choice, randint
 from Algorithms.random_weight_lifter import random_weight_lifter
 from Algorithms.evaluate_distribution import evaluate_distribution
 
-def start_simulation(grid):
+def start_simulation(grid, gen_size=100):
     """
         Generates a random starting population using the weight lifter,
         then either?????:
@@ -22,6 +22,13 @@ def start_simulation(grid):
     Returns
         None
     """
-    generations =
+    # individual = list of batteries with their location?
+    #for _ in range(gen_size):
+    #    create_individual(grid)
+    #generations = []
     random_weight_lifter(grid)
-    evaluate_distribution(grid)
+    print(grid)
+    #evaluate_distribution(grid)
+
+def let_there_be_life_exclamation_mark(grid):
+    pass

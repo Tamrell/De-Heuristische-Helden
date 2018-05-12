@@ -33,7 +33,7 @@ class House:
         (x2, y2) = cord2
         return math.sqrt(abs(int(x1) - int(x2))**2 + abs(int(y2) - int(y1))**2)
 
-    def find_closest_battery(self, grid, overload=False):
+    def closest_battery(self, grid, overload=False):
         ''' Returns the closest battery object or None
 
         Args:

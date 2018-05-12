@@ -3,7 +3,7 @@ from Algorithms.Helpers.connect import connect
 def get_bound(grid, lower=True):
     for h in grid.houses.values():
         if lower:
-            b = h.find_closest_battery(grid, True)
+            b = h.closest_battery(grid, True)
         else:
             b = h.find_furthest_battery(grid)
         connect(h, b, True)
