@@ -3,6 +3,7 @@ from scipy import stats, integrate
 import matplotlib.pyplot as plt
 import seaborn as sns
 from Algorithms.Helpers.bounds import lower_bound, upper_bound
+import matplotlib.patches as mpatches
 sns.set(color_codes=True)
 
 def custom_plotter(grid, s1, s2):
@@ -17,8 +18,17 @@ def custom_plotter(grid, s1, s2):
     ub = grid.score()
     grid.reset
 
-    fig2 = plt.hist(s2)
-    fig = plt.hist(s1)
+    plt.hist(s1)
+    plt.hist(s2)
+    plt.title('Costs found by RC and BC')
+    plt.ylabel('Occurence')
+    plt.xlabel('Cost')
+
+    blue_patch = mpatches.Patch(color='blue', label='Random Connect')
+    green_patch = mpatches.Patch(color='green', label='Battery Cycler')
+    red_patch = mpatches.Patch(color='red', label='Bounds')
+    plt.legend(handles=[blue_patch, green_patch, red_patch])
+
     plt.axvspan(lb - 500, lb, alpha=0.5, color='red')
     plt.axvspan(ub, ub + 500,
                 alpha=0.5, color='red')
@@ -26,7 +36,7 @@ def custom_plotter(grid, s1, s2):
     fig_name = 'Results/' + str(grid.nbh) + '/' + str(min(s2))
     for b in grid.batteries.values():
         fig_name += '\n' + b.type + ': ' + str(b.cord)
-    plt.savefig(fig_name + '\n.png')
+    plt.savefig(fig_name + '\n.png', bbox_inches='tight')
 
 def plotter(nbh):
     nbh_min = [3132, 2252, 1957]

@@ -12,7 +12,8 @@ class Connections:
         Takes
             None
         Returns
-            None"""
+            None
+        """
 
         print(self.connections)
 

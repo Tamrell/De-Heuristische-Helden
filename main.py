@@ -1,16 +1,20 @@
 import sys
 from Classes.grid import Grid
+from Algorithms.k_means import restricted_k_means, k_means
+from Algorithms.k_visualizer import k_visualize
 from Algorithms.Helpers.plots import hover_plot
 from Algorithms.hill_leaper import hill_leaper
 from Algorithms.evaluate_distribution import evaluate_distribution
+from Algorithms.random_weight_lifter import random_weight_lifter
 from Algorithms.Helpers.bounds import lower_bound, upper_bound
 from Algorithms.greedy_hillclimber import greedy_hillclimber
-from Algorithms.a_smart import A_smart
 from Algorithms.random_connect import random_sampler
 from Algorithms.random_battery_cycler import battery_cycler
 from Algorithms.Helpers.plotter import custom_plotter
 from Algorithms.Helpers.plotter import plotter
 from Algorithms.branch_and_bound import *
+from Algorithms.population_based import start_simulation
+from tqdm import tqdm
 
 def get_neighbourhood():
     """
@@ -74,24 +78,33 @@ def run_algorithm(alg, grid):
     algorithms[alg][1](grid)
     return algorithms[alg][0]
 
-def mode():
-    """
-    This function returns the mode in which the algorithm must run
-    Takes:
-        None
-    Returns:
-        String representing a running mode
-    """
-    print("\n Which mode do you want to enter?")
-    print("\n <key>: <mode>\n\n p: plot data\n a: run algorithms")
-    print(" d: add data\n")
-    return input("(alpha): ")
-
 if __name__ == "__main__":
 
     nbh = get_neighbourhood()
     file1 = 'Data/wijk' + nbh + '_huizen.csv'
     file2 = 'Data/wijk' + nbh + '_batterijen.txt'
+
+###############testing purposes##################
+
+    grid = Grid(file1, False, nbh)
+    random_weight_lifter(grid)
+    k_visualize(grid)
+    # print(grid)
+    # evaluate_distribution(grid)
+    # for i in tqdm(range(1000)):
+    #      k_means(grid)
+    #      k_means(grid)
+    #      k_means(grid)
+    #      k_means(grid)
+    #      restricted_k_means(grid)
+    # print(grid)
+    # grid.light_reset()
+    # print(grid)
+    # evaluate_distribution(grid)
+    exit(1)
+
+#################################################
+
     grid = Grid(file1, file2, nbh)
     ########################
     plotter(nbh)

@@ -9,6 +9,7 @@ from Classes.load_batteries import *
 
 from Classes.house import House
 from Classes.battery import Battery
+from Algorithms.Helpers.connect import unconnect
 
 import sys
 import termcolor
@@ -43,7 +44,8 @@ class Grid:
         self.batteries = {}
         self.x_dim = dimensions[0]
         self.y_dim = dimensions[1]
-        self.set_batteries(file2)
+        if file2:
+            self.set_batteries(file2)
         self.set_houses(file1, self.batteries.values())
         self.set_grid_points()
         self.set_global_density()
@@ -54,9 +56,32 @@ class Grid:
         return True
 
     def add_battery(self, bat):
+        bat.links = set()
         self.batteries[bat.cord] = bat
+        self.initial_batteries[bat.cord] = copy.deepcopy(bat)
+
         for h in self.houses.values():
             h.dists[bat] = self.distance(bat.cord, h.cord)
+
+    def move_battery(self, bat, new_cord):
+        if new_cord in self.houses:
+            print('Do you even try? there is a house on this spot already.')
+
+        self.initial_batteries.pop(bat.cord)
+        self.batteries.pop(bat.cord)
+        bat.cord = new_cord
+        self.add_battery(bat)
+
+    def light_reset(self):
+        for b in self.batteries.values():
+            for h in list(b.links):
+                unconnect(h)
+
+    def total_output(self):
+        output = 0
+        for h in self.houses.values():
+            output += h.output
+        return output
 
     def reset(self):
         self.houses.clear()
@@ -175,10 +200,15 @@ class Grid:
         plot(data, filename='labelled-heatmap.html')
 
     def score(self):
+        costs = {'Powerstar': 900,
+                 'Imerse-II': 1350,
+                 'Imerse-III': 1800,
+                 'Default': 5000}
         score = 0
         for b in self.batteries.values():
             for h in b.links:
                 score += h.dists[b]
+            score += costs[b.type]
         return score
 
     def print_stats(self, alg, pre="", alg2=""):

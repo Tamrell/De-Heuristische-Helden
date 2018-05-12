@@ -29,7 +29,6 @@ def unconnect(house):
         house.free = True
     except:
         print("HAHA GETREKT unconnect")
-        input(grid)
 
 def hard_swap(h1, h2, overload=False):
     """This function swaps two houses from two seperate batteries
