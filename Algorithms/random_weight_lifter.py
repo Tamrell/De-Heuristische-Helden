@@ -3,8 +3,9 @@ from copy import deepcopy
 from Classes.battery import Battery
 
 def choose_batteries(grid):
-    """This function makes a random combination of batteries which have
-       a summed capacity that exceeds the sum of all the houses' output.
+    """
+        This function makes a random combination of batteries which have
+        a summed capacity that exceeds the sum of all the houses' output.
 
     Takes
         Grid: grid containing the houses that have to be connected later on
@@ -25,8 +26,9 @@ def choose_batteries(grid):
     return chosen_batteries
 
 def choose_coordinates(grid, batteries):
-    """This function generates a legal random combination of coordinates
-       for a corresponding list of battery information.
+    """
+        This function generates a legal random combination of coordinates
+        for a corresponding list of battery information.
 
     Takes
         Grid: grid containing the houses that have to be connected later on
@@ -44,10 +46,11 @@ def choose_coordinates(grid, batteries):
     return coordinates
 
 def random_weight_lifter(grid):
-    """This function generates a random combination of batteries that have
-       a bigger sum of capacity than the total output of all the houses so
-       that it can 'lift' their 'weight' and puts the batteries on random
-       available locations in the grid.
+    """
+        This function generates a random combination of batteries that have
+        a bigger sum of capacity than the total output of all the houses so
+        that it can 'lift' their 'weight' and puts the batteries on random
+        available locations in the grid.
 
     Takes
         Grid: grid containing the houses that have to be connected later on

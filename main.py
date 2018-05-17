@@ -12,6 +12,7 @@ from Algorithms.random_connect import random_sampler
 from Algorithms.random_battery_cycler import battery_cycler
 from Algorithms.Helpers.plotter import custom_plotter
 from Algorithms.Helpers.plotter import plotter
+from Algorithms.Helpers.bfcf import all_combos
 from Algorithms.branch_and_bound import *
 from Algorithms.population_based import start_simulation
 from tqdm import tqdm
@@ -88,26 +89,8 @@ if __name__ == "__main__":
 ###############testing purposes##################
 
     grid = Grid(file1, file2, nbh)
-    #print(grid.standard_deviation())
-    print("mean, shortest", grid.mean_distance_shortest())
-    print("mean, avg", grid.mean_distance())
-    print("std, shortest", grid.std_distance_shortest())
-    print("std, avg", grid.std_distance())
-
-    # random_weight_lifter(grid)
-    # k_visualize(grid)
-    # print(grid)
-    # evaluate_distribution(grid)
-    # for i in tqdm(range(1000)):
-    #      k_means(grid)
-    #      k_means(grid)
-    #      k_means(grid)
-    #      k_means(grid)
-    #      restricted_k_means(grid)
-    # print(grid)
-    # grid.light_reset()
-    # print(grid)
-    # evaluate_distribution(grid)
+    for i, j in enumerate(all_combos(grid)):
+        print(i, j)
     exit(1)
 
 
