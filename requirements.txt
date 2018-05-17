@@ -1,0 +1,10 @@
+plotly
+numpy
+bokeh
+termcolor
+scipy
+tqdm
+pandas
+matplotlib
+tkinter
+seaborn
