@@ -1,5 +1,6 @@
 test.py
 __pycache__/
+*.html
 *.pyc
 *.pptx
 *.xlsx
