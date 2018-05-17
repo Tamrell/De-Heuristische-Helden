@@ -87,10 +87,15 @@ if __name__ == "__main__":
 
 ###############testing purposes##################
 
-    grid = Grid(file1, False, nbh)
-    print(grid.standard_deviation())
-    random_weight_lifter(grid)
-    k_visualize(grid)
+    grid = Grid(file1, file2, nbh)
+    #print(grid.standard_deviation())
+    print("mean, shortest", grid.mean_distance_shortest())
+    print("mean, avg", grid.mean_distance())
+    print("std, shortest", grid.std_distance_shortest())
+    print("std, avg", grid.std_distance())
+
+    # random_weight_lifter(grid)
+    # k_visualize(grid)
     # print(grid)
     # evaluate_distribution(grid)
     # for i in tqdm(range(1000)):

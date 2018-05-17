@@ -6,7 +6,7 @@ import csv
 import copy
 import pickle
 from Classes.load_batteries import *
-from statistics import stdev
+import statistics as st
 from Classes.house import House
 from Classes.battery import Battery
 from Algorithms.Helpers.connect import unconnect
@@ -84,7 +84,22 @@ class Grid:
         return output
 
     def standard_deviation(self):
-        return stdev([h.output for h in self.houses.values()])
+        return st.stdev([h.output for h in self.houses.values()])
+
+    def mean_distance_shortest(self):
+        return st.mean([h.dists[h.closest_battery(self)]
+                       for h in self.houses.values()])
+    def mean_distance(self):
+        return st.mean([d for h in self.houses.values()
+                          for d in h.dists.values()])
+
+    def std_distance_shortest(self):
+        return st.stdev([h.dists[h.closest_battery(self)]
+                        for h in self.houses.values()])
+    def std_distance(self):
+        return st.stdev([d for h in self.houses.values()
+                           for d in h.dists.values()])
+
 
     def reset(self):
         self.houses.clear()
@@ -210,7 +225,7 @@ class Grid:
         score = 0
         for b in self.batteries.values():
             for h in b.links:
-                score += h.dists[b]
+                score += h.dists[b] * 9
             score += costs[b.type]
         return score
 
