@@ -34,3 +34,4 @@ def battery_cycler(grid, s=False):
     else:
         solutions = 1
     random_battery_cycler(grid, solutions)
+    return grid.score()

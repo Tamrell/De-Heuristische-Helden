@@ -8,7 +8,7 @@ import pickle
 from Classes.load_batteries import *
 import statistics as st
 from Classes.house import House
-from Classes.battery import Battery
+from Classes.battery import Battery, assign_color
 from Algorithms.Helpers.connect import unconnect
 
 import sys
@@ -36,7 +36,9 @@ class Grid:
                 dimensions (Tuple): A tuple containing the x- and y-coordinates
                 of the Grid, defaults to 50x50.
         '''
+        Battery.color_generator = assign_color()
         self.nbh = nbh
+        self.file1 = file1
         self.grid_list = {}
         self.total_probability = 0
         self.total_sq_probability = 0
@@ -47,8 +49,8 @@ class Grid:
         if file2:
             self.set_batteries(file2)
         self.set_houses(file1, self.batteries.values())
-        self.set_grid_points()
-        self.set_global_density()
+        # self.set_grid_points()
+        # self.set_global_density()
         self.initial_houses = copy.deepcopy(self.houses) ##recalc!!
         self.initial_batteries = copy.deepcopy(self.batteries)
 

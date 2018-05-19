@@ -1,7 +1,9 @@
 import sys
+import time
 from Classes.grid import Grid
 from Algorithms.k_means import restricted_k_means, k_means
 from Algorithms.k_visualizer import k_visualize
+from Algorithms.population_based import start_simulation
 from Algorithms.Helpers.plots import hover_plot
 from Algorithms.hill_leaper import hill_leaper
 from Algorithms.evaluate_distribution import evaluate_distribution
@@ -40,8 +42,10 @@ def get_algorithm():
     """
         This function selects the first algorithm to run, i.e. finding a solution
         to run a secondary algorithm for.
+
         Takes:
             None
+
         Returns:
             string: user input resembling the algorithm to run
     """
@@ -61,7 +65,8 @@ def get_algorithm():
     return input("(alpha): ")
 
 def run_algorithm(alg, grid):
-    """The function run_algorithm(alg, grid) calls one of the primary algorithms,
+    """
+        The function run_algorithm(alg, grid) calls one of the primary algorithms,
         depending on the parameter alg.
         Takes:
             alg: string representing the algorithm to run
@@ -87,12 +92,14 @@ if __name__ == "__main__":
     file2 = 'Data/wijk' + nbh + '_batterijen.txt'
 
 ###############testing purposes##################
-
+    start = time.time()
     grid = Grid(file1, file2, nbh)
-    for i, j in enumerate(all_combos(grid)):
-        print(i, j)
+    print(time.time()-start)
+
+    start_simulation(grid)
     exit(1)
 
+#################################################
 
     alg = get_algorithm()
     alg = run_algorithm(alg, grid)

@@ -7,11 +7,11 @@ def choose_batteries(grid):
         This function makes a random combination of batteries which have
         a summed capacity that exceeds the sum of all the houses' output.
 
-    Takes
-        Grid: grid containing the houses that have to be connected later on
+        Takes
+            Grid: grid containing the houses that have to be connected later on
 
-    Returns
-        List: list containing tuples: (capacity, battery_type)
+        Returns
+            List: list containing tuples: (capacity, battery_type)
     """
     all_batteries = [(450, 'Powerstar'),
                      (900, 'Imerse-II'),
@@ -30,12 +30,12 @@ def choose_coordinates(grid, batteries):
         This function generates a legal random combination of coordinates
         for a corresponding list of battery information.
 
-    Takes
-        Grid: grid containing the houses that have to be connected later on
-        List: list containing (output, battery_type) tuples
+        Takes
+            Grid: grid containing the houses that have to be connected later on
+            List: list containing (output, battery_type) tuples
 
-    Returns
-        Set: set containing tuples: (x_coordinate, y_coordinate)
+        Returns
+            Set: set containing tuples: (x_coordinate, y_coordinate)
     """
     coordinates = set()
     available_coordinates = [(x, y) for x in range(grid.x_dim)
@@ -52,11 +52,11 @@ def random_weight_lifter(grid):
         that it can 'lift' their 'weight' and puts the batteries on random
         available locations in the grid.
 
-    Takes
-        Grid: grid containing the houses that have to be connected later on
+        Takes
+            Grid: grid containing the houses that have to be connected later on
 
-    Returns
-        None
+        Returns
+            None
     """
     batteries = choose_batteries(grid)
     coordinates = choose_coordinates(grid, batteries)
