@@ -3,8 +3,10 @@ from Classes.grid import Grid
 from Algorithms.random_weight_lifter import random_weight_lifter
 from Algorithms.random_battery_cycler import battery_cycler
 from tqdm import tqdm
+from multiprocessing import Pool
+import time
 
-def start_simulation(grid, p_size=10, generations=10):
+def start_simulation(grid, p_size=20, generations=10):
     """
         Generates a random starting population using the weight lifter,
         then either?????:
@@ -35,16 +37,21 @@ def start_simulation(grid, p_size=10, generations=10):
 
         # New population will consist of the fittest individual and mutations
         # of it.
-        fittest = population[0]
-        population = new_generation(fittest)
+        # for j in population:
+        #     print(i, j[0])
+        fittest, score = population[0][1], population[0][0]
+        print(fittest, score)
+        population = sorted(new_generation(fittest, score, p_size))
+        genetic_history.append(population)
 
-
-    for i in population:
-        print(i[0])
+    for i, p in enumerate(genetic_history):
+        print("generation:", i)
+        print("fittest:", p[0][0])
+        print("average:", sum([g[0] for g in p])/len(p), "\n\n")
 
     #evaluate_distribution(grid)
 
-def new_generation(fittest, p_size):
+def new_generation(fittest, score, p_size):
     """
         Generates a new population of size p_size based on the fittest
         individual.
@@ -57,8 +64,12 @@ def new_generation(fittest, p_size):
             list: list containing the new population
     """
     population = []
-    for i in range(p_size):
-        population.append(mutated(fittest))
+    for i in tqdm(range(p_size)):
+        child = mutated(fittest)
+        population.append((fitness(child), child))
+    # add parent
+    population.append((score, fittest))
+    return population
 
 
 
@@ -92,12 +103,11 @@ def fitness(grid):
         Returns
             int: fitness of the grid
     '''
-    i_size = 1
-    score = 0
-    for i in range(i_size):
-        score += battery_cycler(grid)
+    i_size = 10
+    with Pool(processes=10) as p:
+        score_list = p.map(battery_cycler, [grid for i in range(i_size)])
         grid.reset()
-    return score/i_size
+    return sum(score_list)/len(score_list)
 
 
 def mutated(parent):
@@ -110,8 +120,7 @@ def mutated(parent):
         Returns
             Grid: randomly mutated child of the input individual
     """
-    child = Grid(parent.file1, None, parent.nbh)
-
+    child = parent.copy()
     # Randomly choose type of mutation
     option = randint(0, 100)
 
@@ -121,7 +130,6 @@ def mutated(parent):
 
     elif option <= 50:
         pass
-        #mutate_battery_location(child)
 
     elif option <= 75:
         pass
@@ -130,3 +138,16 @@ def mutated(parent):
     else:
         pass
         #mutate_remove_battery(child)
+    mutate_battery_location(child)
+    return child
+
+def mutate_battery_location(individual):
+    battery = choice([b for b in individual.batteries.values()])
+    new_location = choice([(x, y) for x in range(individual.x_dim)
+                                  for y in range(individual.y_dim)
+                                  if not (x, y) in individual.houses
+                                  if not (x, y) in individual.batteries])
+    individual.move_battery(battery, new_location)
+
+def mutate_battery_type(individual):
+    battery = choice([b for b in individual.batteries.values()])

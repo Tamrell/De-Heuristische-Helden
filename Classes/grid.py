@@ -57,6 +57,9 @@ class Grid:
     def __lt__(self, other):
         return True
 
+    def copy(self):
+        return copy.deepcopy(self)
+
     def add_battery(self, bat):
         bat.links = set()
         self.batteries[bat.cord] = bat
@@ -84,6 +87,13 @@ class Grid:
         for h in self.houses.values():
             output += h.output
         return output
+
+    def total_capacity(self):
+        capacity = 0
+        for b in self.batteries.values():
+            capacity += b.max_load
+        return capacity
+
 
     def standard_deviation(self):
         return st.stdev([h.output for h in self.houses.values()])
@@ -231,27 +241,19 @@ class Grid:
             score += costs[b.type]
         return score
 
-    def print_stats(self, alg, pre="", alg2=""):
+    def print_stats(self, alg, pre=""):
         print("\===============================================\ ")
-        print("| Neighbourhood:", self.nbh, "\t\t\t\t|")
-        print("| Algorithm:", alg, "\t\t\t|")
-        if alg2:
-            print("| Iterative:", alg2, "\t\t\t|")
-
+        print("| Neighbourhood:", self.nbh,           "\t\t\t\t|")
+        print("| Algorithm:", alg,                      "\t\t\t|")
         print("|===============================================|")
-        print("| Battery\t: load\t\t: max\t\t|")
+        print("| Battery    \t: load    \t\t: max           \t\t|")
         print("|-----------------------------------------------|")
-        b_count = 0
         for b in self.batteries.values():
-            b_count += b.max_load
             print("|", b.color[3:] + '  ', "\t:", round(b.load, 4),
                   "\t:", b.max_load, "\t|")
         print("|-----------------------------------------------|")
-        print("| total capacity:", b_count, "\t\t\t|")
-        count = 0
-        for h in self.houses.values():
-            count += h.output
-        print("| total output  :", round(count), "\t\t\t\t|")
+        print("| total capacity:", self.total_capacity(), "\t\t\t|")
+        print("| total output  :", round(self.total_output()), "\t\t\t\t|")
         print("| total deff.   :", int(self.defficiency()), "\t\t\t\t|")
         print("|===============================================|")
         print("| total houses  :", len(self.houses), "\t\t\t\t|")
