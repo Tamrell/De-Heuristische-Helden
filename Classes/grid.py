@@ -49,8 +49,6 @@ class Grid:
         if file2:
             self.set_batteries(file2)
         self.set_houses(file1, self.batteries.values())
-        # self.set_grid_points()
-        # self.set_global_density()
         self.initial_houses = copy.deepcopy(self.houses) ##recalc!!
         self.initial_batteries = copy.deepcopy(self.batteries)
 
@@ -143,28 +141,6 @@ class Grid:
         for y in range(self.y_dim):
             for x in range(self.x_dim):
                 self.grid_list[x, y] = Grid_Point(x, y, houses)
-
-    def set_global_density(self):
-        ''' Goes through all the Grid_Points on the Grid and calculates the
-            "global density" of each point. This is done by first calculating
-            the sum of the distances to every house on the grid from that
-            point. Then the reciprocal (1 divided by the value) is taken. The
-            density for each point is calculated by dividing its own reciprocal
-            by the sum of all reciprocals on the board.
-        '''
-
-        for point in self.grid_list:
-            self.total_probability += (1 / self.grid_list[point].distance)
-            self.total_sq_probability += self.grid_list[point].rel_distance
-        for point in self.grid_list:
-            if point in self.houses:
-                self.grid_list[point].probability = 0
-                self.grid_list[point].rel_probability = 0
-                continue
-            self.grid_list[point].probability = (1
-                / self.grid_list[point].distance) / self.total_probability
-            self.grid_list[point].rel_probability = (
-            self.grid_list[point].rel_distance / self.total_sq_probability)
 
     def set_houses(self, file, batteries):
         ''' Takes a .csv file and add the houses in the file to the houses
