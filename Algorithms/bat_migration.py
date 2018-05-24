@@ -18,7 +18,7 @@ def migration(grid, combo):
     Battery.color_generator = assign_color()
 
     houses = [h for h in grid.houses.values()]
-    reset_local_density(grid, houses)
+    set_local_density(grid, houses)
 
     output_per_bat = grid.total_output() / it
 
@@ -39,9 +39,9 @@ def migration(grid, combo):
             connect(h, b, True)
             houses.remove(h)
         if houses:
-            reset_local_density(grid, houses)
+            set_local_density(grid, houses)
 
-    reset_global_density(grid, grid.houses.values())
+    set_global_density(grid, grid.houses.values())
     sorted_list = sorted(bats, key=lambda x: grid.grid_list[x].probability)
 
     Battery.color_generator = assign_color()

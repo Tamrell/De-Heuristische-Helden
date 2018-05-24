@@ -49,8 +49,6 @@ class Grid:
         if file2:
             self.set_batteries(file2)
         self.set_houses(file1, self.batteries.values())
-        # self.set_grid_points()
-        # self.set_global_density()
         self.initial_houses = copy.deepcopy(self.houses) ##recalc!!
         self.initial_batteries = copy.deepcopy(self.batteries)
 
