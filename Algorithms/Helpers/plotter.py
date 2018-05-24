@@ -58,11 +58,12 @@ def plotter(nbh):
     with open('Results/Solspaces/SS' + nbh + '.csv') as df:
         data = [int(line) for no, line in enumerate(df)]
 
+        print("Making figure...")
         fig = sns.distplot(data)
+        plt.xlim((nbh_min[int(nbh) - 1] - 500, nbh_max[int(nbh) - 1] + 500))
         plt.axvline(x=nbh_best[int(nbh) - 1], color='green')
-        plt.axvspan(0, nbh_min[int(nbh) - 1], alpha=0.5, color='red')
-        plt.axvspan(nbh_max[int(nbh) - 1], nbh_max[int(nbh) - 1] + 1000,
-                    alpha=0.5, color='red')
+        plt.axvspan(nbh_min[int(nbh) - 1] - 500, nbh_min[int(nbh) - 1], alpha=0.5, color='red')
+        plt.axvspan(nbh_max[int(nbh) - 1], nbh_max[int(nbh) - 1] + 500, alpha=0.5, color='red')
         plt.show()
         print('done!')
     return

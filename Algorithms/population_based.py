@@ -104,7 +104,7 @@ def fitness(grid):
             int: fitness of the grid
     '''
     i_size = 10
-    with Pool(processes=10) as p:
+    with Pool(processes=6) as p:
         score_list = p.map(battery_cycler, [grid for i in range(i_size)])
         grid.reset()
     return sum(score_list)/len(score_list)

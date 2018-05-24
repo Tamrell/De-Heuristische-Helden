@@ -1,3 +1,4 @@
+print("Loading...")
 import sys
 import time
 from Classes.grid import Grid
@@ -92,15 +93,18 @@ if __name__ == "__main__":
     file2 = 'Data/wijk' + nbh + '_batterijen.txt'
 
 ###############testing purposes##################
+    """
     start = time.time()
     grid = Grid(file1, file2, nbh)
     print(time.time()-start)
 
     start_simulation(grid)
     exit(1)
-
+    """
 #################################################
-
+    plotter(nbh)
+    """
     alg = get_algorithm()
     alg = run_algorithm(alg, grid)
     grid.print_stats(alg)
+    """
