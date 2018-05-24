@@ -6,5 +6,4 @@ scipy
 tqdm
 pandas
 matplotlib
-tkinter
 seaborn
