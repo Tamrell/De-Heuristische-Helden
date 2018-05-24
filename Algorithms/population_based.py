@@ -1,6 +1,6 @@
 from random import choice, randint
 from Classes.grid import Grid
-from Algorithms.random_weight_lifter import random_weight_lifter
+from Algorithms.random_bat_config import random_bat_config
 from Algorithms.random_battery_cycler import battery_cycler
 from tqdm import tqdm
 from multiprocessing import Pool
@@ -27,9 +27,6 @@ def start_simulation(grid, p_size=20, generations=10):
             None
     """
     # individual = list of batteries with their location?
-    #for _ in range(gen_size):
-    #    create_individual(grid)
-    #generations = []
     genetic_history = []
     population = let_there_be_life_exclamation_mark(grid, p_size)
     genetic_history.append(population)
@@ -37,19 +34,14 @@ def start_simulation(grid, p_size=20, generations=10):
 
         # New population will consist of the fittest individual and mutations
         # of it.
-        # for j in population:
-        #     print(i, j[0])
         fittest, score = population[0][1], population[0][0]
-        print(fittest, score)
+        print(fittest, fittest.print_stats("ayyy"), score)
         population = sorted(new_generation(fittest, score, p_size))
         genetic_history.append(population)
-
     for i, p in enumerate(genetic_history):
         print("generation:", i)
         print("fittest:", p[0][0])
         print("average:", sum([g[0] for g in p])/len(p), "\n\n")
-
-    #evaluate_distribution(grid)
 
 def new_generation(fittest, score, p_size):
     """
@@ -87,7 +79,7 @@ def let_there_be_life_exclamation_mark(grid, p_size):
     population = []
     for i in tqdm(range(p_size)):
         individual = Grid(grid.file1, None, grid.nbh)
-        random_weight_lifter(individual)
+        random_bat_config(individual)
         population.append([fitness(individual), individual])
     return sorted(population)
 
@@ -104,12 +96,12 @@ def fitness(grid):
             int: fitness of the grid
     '''
     i_size = 10
-    tim = time.time()
+    # tim = time.time()
     score_list = []
     with Pool(processes=10) as p:
         score_list = p.map(battery_cycler, [grid for i in range(i_size)])
         grid.reset()
-    print(time.time() - tim)
+    # print(time.time() - tim)
     return sum(score_list)/len(score_list)
 
 

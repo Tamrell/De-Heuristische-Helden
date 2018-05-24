@@ -41,5 +41,4 @@ def k_visualize(grid):
     p.scatter(scitt, rand, color="blue", legend="Random Connect")
     p.scatter(scitt, cycler, color="green", legend="Battery Cycler")
     p.line(iterations, lower, color="red", legend="Lower bound")
-    # p.line(iterations, upper)
     show(p)

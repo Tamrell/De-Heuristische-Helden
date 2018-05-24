@@ -45,7 +45,7 @@ def choose_coordinates(grid, batteries):
         coordinates.add(choice(available_coordinates))
     return coordinates
 
-def random_weight_lifter(grid):
+def random_bat_config(grid):
     """
         This function generates a random combination of batteries that have
         a bigger sum of capacity than the total output of all the houses so

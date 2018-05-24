@@ -1,13 +1,12 @@
 import sys
 import time
 from Classes.grid import Grid
-from Algorithms.k_means import restricted_k_means, k_means
-from Algorithms.k_visualizer import k_visualize
+from Algorithms.k_means import k_means
 from Algorithms.population_based import start_simulation
 from Algorithms.Helpers.plots import hover_plot
 from Algorithms.hill_leaper import hill_leaper
 from Algorithms.evaluate_distribution import evaluate_distribution
-from Algorithms.random_weight_lifter import random_weight_lifter
+from Algorithms.random_bat_config import random_bat_config
 from Algorithms.Helpers.bounds import lower_bound, upper_bound
 from Algorithms.greedy_hillclimber import greedy_hillclimber
 from Algorithms.random_connect import random_sampler

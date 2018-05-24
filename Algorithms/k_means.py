@@ -16,31 +16,6 @@ def k_means(grid):
         cluster_mean(grid, b)
     grid.light_reset()
 
-def restricted_k_means(grid):
-    """
-        Calculates k-means with the restriction that it only calculates the
-        closest houses which fit on the battery.
-
-    Takes
-        Grid: grid containing the houses used for the k-means
-
-    Returns
-        ?????
-    """
-    for b in grid.batteries.values():
-        houses = [h for h in grid.houses.values() if h.free if h.closest_battery(grid) == b]
-        if houses:
-            yes = True
-            while yes and houses:
-                h = b.find_closest_house(grid, houses)
-                if connect(h, b):
-                    houses.remove(h)
-                else:
-                    yes = False
-                print(grid)
-            cluster_mean(grid, b, True)
-    grid.light_reset()
-
 def cluster_mean(grid, bat, restricted=False):
     '''
         Calculates new location for battery, this being the mean of its current
