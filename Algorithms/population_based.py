@@ -104,9 +104,12 @@ def fitness(grid):
             int: fitness of the grid
     '''
     i_size = 10
+    tim = time.time()
+    score_list = []
     with Pool(processes=10) as p:
         score_list = p.map(battery_cycler, [grid for i in range(i_size)])
         grid.reset()
+    print(time.time() - tim)
     return sum(score_list)/len(score_list)
 
 
@@ -121,23 +124,6 @@ def mutated(parent):
             Grid: randomly mutated child of the input individual
     """
     child = parent.copy()
-    # Randomly choose type of mutation
-    option = randint(0, 100)
-
-    if option <= 25:
-        pass
-        #mutate_battery_type(child)
-
-    elif option <= 50:
-        pass
-
-    elif option <= 75:
-        pass
-        #mutate_add_battery(child)
-
-    else:
-        pass
-        #mutate_remove_battery(child)
     mutate_battery_location(child)
     return child
 
