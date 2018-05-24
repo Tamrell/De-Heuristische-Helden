@@ -44,8 +44,7 @@ def migration(grid, combo):
     sorted_list = sorted(bats, key=lambda x: grid.grid_list[x].probability)
 
     Battery.color_generator = assign_color()
-    new_grid.initial_batteries = deepcopy(new_grid.batteries)
-    new_grid.initial_houses = deepcopy(new_grid.houses)
+
     grid.update(new_grid)
     for bat, location in zip(combo, sorted_list):
         grid.add_battery(Battery(location, bat[0], bat[1]))
