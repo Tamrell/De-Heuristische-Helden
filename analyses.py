@@ -8,11 +8,11 @@ data_3 = {"mean":0, "sigma":0}
 
 random = [data_1, data_2, data_3]
 
-for n in tqdm.tqdm([1, 2, 3]):
+for n in [1, 2, 3]:
     with open("Results/Solspaces/SS" + str(n) + ".csv") as file:
         results = csv.reader(file)
         numbers = []
-        for number in tqdm.tqdm(results):
+        for number in results:
             numbers.append(int(number[0]))
 
         print("Wijk", n)
@@ -30,6 +30,12 @@ def z_score(value, nbh):
     grid_values = random[nbh - 1]
     return (value - grid_values["mean"]) / grid_values["sigma"]
 
+print("\nRBCHC")
 print(z_score(3486, 1))
 print(z_score(2292, 2))
+print(z_score(2069, 3))
+
+print("\nRBC")
+print(z_score(3517, 1))
+print(z_score(2302, 2))
 print(z_score(2069, 3))
