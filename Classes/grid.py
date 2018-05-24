@@ -130,7 +130,7 @@ class Grid:
         self.initial_batteries.clear()
         self.initial_houses = copy.deepcopy(other.initial_houses)
         self.initial_batteries = copy.deepcopy(other.initial_batteries)
-
+        
     def legal(self):
         if [h for h in self.houses.values() if h.free]:
             return False
