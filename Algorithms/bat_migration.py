@@ -1,5 +1,6 @@
 import sys
 import time
+from copy import deepcopy
 from Classes.grid import *
 from Classes.battery import Battery
 from Algorithms.hill_leaper import hill_leaper
@@ -15,7 +16,6 @@ def migration(grid, combo):
 
     grid.batteries.clear()
     new_grid = grid.copy()
-    Battery.color_generator = assign_color()
 
     houses = [h for h in grid.houses.values()]
     set_local_density(grid, houses)
@@ -26,10 +26,9 @@ def migration(grid, combo):
         sorted_list = sorted(grid.grid_list.values(), key=lambda x: x.rel_probability,
                              reverse=True)
 
-        cap = bat[0]
         location = (sorted_list[0].x, sorted_list[0].y)
         bats.append(location)
-        b = Battery(location, cap)
+        b = Battery(location, bat[0])
         grid.add_battery(b)
 
         while True:
@@ -45,9 +44,12 @@ def migration(grid, combo):
     sorted_list = sorted(bats, key=lambda x: grid.grid_list[x].probability)
 
     Battery.color_generator = assign_color()
-    for bat, location in zip(combo, sorted_list):
-        new_grid.batteries[location] = Battery(location, bat[0])
-
+    new_grid.initial_batteries = deepcopy(new_grid.batteries)
+    new_grid.initial_houses = deepcopy(new_grid.houses)
     grid.update(new_grid)
+    for bat, location in zip(combo, sorted_list):
+        grid.add_battery(Battery(location, bat[0], bat[1]))
+
+
     for house in grid.houses.values():
         house.dists = {b: house.distance(house.cord, b.cord) for b in grid.batteries.values()}
