@@ -22,4 +22,3 @@ def hill_leaper(grid):
     greedy_hillclimber(grid)
     while leap(grid):
         greedy_hillclimber(grid)
-        #print(grid.score())

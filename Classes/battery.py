@@ -53,18 +53,16 @@ class Battery:
         options = [(h.dists[self], h) for h in houses if self.fits(h.output)]
         if options:
             return min(options)[1]
-        #
-        # best = grid.x_dim + grid.y_dim
-        # best_cord = ()
-        #
-        # for h in house_list:
-        #     housyboi = grid.houses[h]
-        #     if self.max_load >= self.load + housyboi.output:
-        #         dist = grid.distance(self.cord, h)
-        #         if best > dist:
-        #             best = dist
-        #             best_cord = h
-        # return best_cord
+
+    def fits_max(self, output, max_load):
+        if max_load >= self.load + output:
+            return True
+        return False
+
+    def find_closest_house_max(self, grid, houses, max_load):
+        options = [(h.dists[self], h) for h in houses if self.fits_max(h.output, max_load)]
+        if options:
+            return min(options)[1]
 
     def find_cheapest_house(self):
         ''' Returns the House object with the lowest output in self.links.

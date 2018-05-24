@@ -96,8 +96,7 @@ if __name__ == "__main__":
     """
     start = time.time()
     grid = Grid(file1, file2, nbh)
-    print(time.time()-start)
-
+    print(time.time() - start)
     start_simulation(grid)
     exit(1)
     """
