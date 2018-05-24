@@ -31,3 +31,12 @@ def set_local_density(grid, house_list):
             continue
         grid.grid_list[point].rel_probability = (
         grid.grid_list[point].rel_distance / grid.total_sq_probability)
+
+def move_to_middle(grid, bat):
+
+    houses = [h for h in bat.links]
+    set_global_density(grid, houses)
+    sorted_list = sorted(grid.grid_list.values(), key=lambda x: x.probability,
+                         reverse=True)
+    loc = (sorted_list[0].x, sorted_list[0].y)
+    grid.move_battery(bat, loc)
