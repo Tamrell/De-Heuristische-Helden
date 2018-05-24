@@ -1,0 +1,21 @@
+PGraphics pg;
+
+void setup()
+{
+ size(1000,1000);
+ pg = createGraphics(1000,1000);
+
+}
+
+void draw()
+{
+  pg.beginDraw();
+  pg.background(255);
+  
+  textSize(32);
+  text("word", 10, 50);
+  fill(0, 0, 0);
+  pg.endDraw();
+  image(pg, 0, 0);
+  save("try.png");
+}
