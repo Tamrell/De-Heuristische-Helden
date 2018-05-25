@@ -42,7 +42,7 @@ def plotter(nbh):
     nbh_min = [3132, 2252, 1957]
     nbh_max = [8670, 7019, 8459]
     #nbh_best = [3486, 2292, 2069] #best
-    nbh_best = [4062, 2470, 2507] #BB
+    nbh_best = [25000 + 9 * 4062, 25000 + 9 * 2470, 9 * 2507 + 25000] #BB
     #nbh_best = [3486, 2292, 2069] #rbc+hc
     #nbh_best = [3517, 2302, 2073] #rbc
 
@@ -55,15 +55,15 @@ def plotter(nbh):
     red_patch = mpatches.Patch(color='red', label='Bounds')
     plt.legend(handles=[blue_patch, green_patch, red_patch])
 
-    with open('Results/Solspaces/SS' + nbh + '.csv') as df:
+    with open('Results/Solspaces/SSB' + nbh + '.csv') as df:
         data = [int(line) for no, line in enumerate(df)]
 
         print("Making figure...")
         fig = sns.distplot(data)
-        plt.xlim((nbh_min[int(nbh) - 1] - 500, nbh_max[int(nbh) - 1] + 500))
+        #plt.xlim((nbh_min[int(nbh) - 1] - 500, nbh_max[int(nbh) - 1] + 500))
         plt.axvline(x=nbh_best[int(nbh) - 1], color='green')
-        plt.axvspan(nbh_min[int(nbh) - 1] - 500, nbh_min[int(nbh) - 1], alpha=0.5, color='red')
-        plt.axvspan(nbh_max[int(nbh) - 1], nbh_max[int(nbh) - 1] + 500, alpha=0.5, color='red')
+        #plt.axvspan(nbh_min[int(nbh) - 1] - 500, nbh_min[int(nbh) - 1], alpha=0.5, color='red')
+        #plt.axvspan(nbh_max[int(nbh) - 1], nbh_max[int(nbh) - 1] + 500, alpha=0.5, color='red')
         plt.show()
         print('done!')
     return

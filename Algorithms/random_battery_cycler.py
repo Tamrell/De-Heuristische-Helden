@@ -27,11 +27,6 @@ def random_battery_cycler(grid, solutions):
     if best[1]:
         grid.update(best[1])
 
-def battery_cycler(grid, s=False):
-    if s:
-        print("How many solutions do you want to run?\n")
-        solutions = int(input("(int): "))
-    else:
-        solutions = 1
-    random_battery_cycler(grid, solutions)
+def battery_cycler(grid, s=1):
+    random_battery_cycler(grid, s)
     return grid.score()

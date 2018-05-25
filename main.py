@@ -5,6 +5,7 @@ from Classes.grid import Grid
 from Algorithms.k_means import k_means
 from Algorithms.population_based import start_simulation
 from Algorithms.Helpers.plots import hover_plot
+from Algorithms.Helpers.random_config_saver import start_recording
 from Algorithms.hill_leaper import hill_leaper
 from Algorithms.evaluate_distribution import evaluate_distribution
 from Algorithms.random_bat_config import random_bat_config
@@ -90,7 +91,7 @@ if __name__ == "__main__":
     nbh = get_neighbourhood()
     file1 = 'Data/wijk' + nbh + '_huizen.csv'
     file2 = 'Data/wijk' + nbh + '_batterijen.txt'
-
+    start_recording(nbh)
 ###############testing purposes##################
     """
     start = time.time()
