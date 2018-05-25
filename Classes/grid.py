@@ -59,7 +59,6 @@ class Grid:
         return copy.deepcopy(self)
 
     def add_battery(self, bat):
-        bat.links = set()
         self.batteries[bat.cord] = bat
         self.initial_batteries[bat.cord] = copy.deepcopy(bat)
 
