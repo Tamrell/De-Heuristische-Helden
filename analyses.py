@@ -34,13 +34,13 @@ for n in [1, 2, 3]:
         for number in results:
             numbers.append(int(number[0]))
 
-        print("wijk", n, "deel 2")
+        print("\nwijk", n, "deel 2")
 
         numbers_mean = statistics.mean(numbers)
         numbers_sigma = statistics.stdev(numbers)
 
-        print("Mean deel 2\t", numbers_mean)
-        print("Dev deel 2\t", numbers_mean)
+        print("Mean\t", numbers_mean)
+        print("Dev\t", numbers_sigma)
 
         random_b[n - 1]["mean"] = numbers_mean
         random_b[n - 1]["sigma"] = numbers_sigma
@@ -53,6 +53,7 @@ def z_score_b(value, nbh):
     grid_values = random_b[nbh - 1]
     return (value - grid_values["mean"]) / grid_values["sigma"]
 
+print("Deel 1")
 print("\nRBCHC")
 print(z_score_a(3486, 1))
 print(z_score_a(2292, 2))
@@ -62,3 +63,15 @@ print("\nRBC")
 print(z_score_a(3517, 1))
 print(z_score_a(2302, 2))
 print(z_score_a(2069, 3))
+
+print("Deel 2")
+print("\nRBCHC")
+print(z_score_b(26043.3, 1))
+print(z_score_b(9450, 2))
+print(z_score_b(9450, 3))
+
+print("Deel 2")
+print("\nRBC")
+print(z_score_b(24790.5, 1))
+print(z_score_b(9450, 2))
+print(z_score_b(9450, 3))

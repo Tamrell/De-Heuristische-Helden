@@ -93,15 +93,15 @@ if __name__ == "__main__":
     file2 = 'Data/wijk' + nbh + '_batterijen.txt'
     #start_recording(nbh)
 ###############testing purposes##################
-    """
+
     start = time.time()
     grid = Grid(file1, file2, nbh)
     print(time.time() - start)
     start_simulation(grid)
     exit(1)
-    """
+    
 #################################################
-    plotter(nbh)
+    #plotter(nbh)
     """
     alg = get_algorithm()
     alg = run_algorithm(alg, grid)
