@@ -40,3 +40,5 @@ def move_to_middle(grid, bat):
                          reverse=True)
     loc = (sorted_list[0].x, sorted_list[0].y)
     grid.move_battery(bat, loc)
+    for h in houses:
+        h.dists[bat] = grid.distance(bat.cord, h.cord)
