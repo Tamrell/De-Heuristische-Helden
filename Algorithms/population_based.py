@@ -2,6 +2,7 @@ from random import choice, randint
 from Classes.grid import Grid
 from Algorithms.random_bat_config import random_bat_config
 from Algorithms.random_battery_cycler import battery_cycler
+from Algorithms.Helpers.bounds import get_bound
 from tqdm import tqdm
 from multiprocessing import Pool
 import time
@@ -42,6 +43,7 @@ def start_simulation(grid, p_size=20, generations=10):
         print("generation:", i)
         print("fittest:", p[0][0])
         print("average:", sum([g[0] for g in p])/len(p), "\n\n")
+        print(battery_cycler(p[0][1]))
 
 def new_generation(fittest, score, p_size):
     """
@@ -83,7 +85,7 @@ def let_there_be_life_exclamation_mark(grid, p_size):
         population.append([fitness(individual), individual])
     return sorted(population)
 
-def fitness(grid):
+def fitness(grid, fit_measure=get_bound):
     '''
         Calculates the fitness of a given grid as a function of its total cost.
         The fitness is decided by taking the average of i_size
@@ -99,7 +101,7 @@ def fitness(grid):
     # tim = time.time()
     score_list = []
     with Pool(processes=10) as p:
-        score_list = p.map(battery_cycler, [grid for i in range(i_size)])
+        score_list = p.map(fit_measure, [grid for i in range(i_size)])
         grid.reset()
     # print(time.time() - tim)
     return sum(score_list)/len(score_list)

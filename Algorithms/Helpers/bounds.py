@@ -8,6 +8,7 @@ def get_bound(grid, lower=True):
         else:
             b = h.find_furthest_battery(grid)
         connect(h, b, True)
+    return grid.score()
 
 
 def upper_bound(grid):

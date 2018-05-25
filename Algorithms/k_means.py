@@ -1,4 +1,5 @@
 from Algorithms.Helpers.connect import connect
+from statistics import mean
 
 def k_means(grid):
     """
@@ -17,35 +18,30 @@ def k_means(grid):
             if cluster_mean(grid, b):
                 moved = True
 
-def cluster_mean(grid, bat, restricted=False):
+def cluster_mean(grid, battery):
     '''
         Calculates new location for battery, this being the mean of its current
-        cluster. currently also moves the battery.
+        cluster. Then moves the battery to that location
 
-    Takes
-        Grid: grid containing houses
-        Battery: battery for which the new location will be calculated
+        Takes
+            Grid: grid containing houses
+            Battery: battery for which the new location will be calculated
 
-    Returns
-        Bool: True if the battery has been moved, else False
+        Returns
+            Bool: True if the battery has been moved, else False
     '''
-    x_val = 0
-    y_val = 0
-    houses = [h.cord for h in grid.houses.values() if h.closest_battery(grid) == bat]
+    houses = [h.cord for h in grid.houses.values()
+              if h.closest_battery(grid) == battery]
     if houses:
 
-        # Calculate the mean coordinate of the cluster.
-        for x, y in houses:
-            x_val += x
-            y_val += y
-        x_val = int(x_val / len(houses))
-        y_val = int(y_val / len(houses))
+        # Calculate the mean coordinate of the house cluster.
+        x = int(mean([cord[0] for cord in houses]))
+        y = int(mean([cord[1] for cord in houses]))
 
         # Move battery to the mean, or next to it if it contains a house.
+
         for i in [0, 1, -1]:
-            if not (x_val + i, y_val) in grid.houses:
-                grid.move_battery(bat ,(x_val + i, y_val))
-                break
-            if not (x_val, y_val + i) in grid.houses:
-                grid.move_battery(bat ,(x_val, y_val + i))
-                break
+            for cord in [(x + i, y), (x, y + i)]:
+                if not cord in grid.houses:
+                    grid.move_battery(battery ,(x_val + i, y_val))
+                    break

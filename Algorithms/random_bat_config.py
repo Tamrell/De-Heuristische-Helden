@@ -2,6 +2,27 @@ from random import choice, randint
 from copy import deepcopy
 from Classes.battery import Battery
 
+
+def random_bat_config(grid):
+    """
+        This function generates a random combination of batteries that have
+        a bigger sum of capacity than the total output of all the houses so
+        that it can 'lift' their 'weight' and puts the batteries on random
+        available locations in the grid.
+
+        Takes
+            Grid: grid containing the houses that have to be connected later on
+
+        Returns
+            None
+    """
+    batteries = choose_batteries(grid)
+    coordinates = choose_coordinates(grid, batteries)
+    for capacity, name in batteries:
+        grid.add_battery(Battery(coordinates.pop(), capacity, name))
+    grid.initial_batteries = deepcopy(grid.batteries)
+
+
 def choose_batteries(grid):
     """
         This function makes a random combination of batteries which have
@@ -25,6 +46,7 @@ def choose_batteries(grid):
         needed_capacity -= chosen_batteries[-1][0]
     return chosen_batteries
 
+
 def choose_coordinates(grid, batteries):
     """
         This function generates a legal random combination of coordinates
@@ -44,22 +66,3 @@ def choose_coordinates(grid, batteries):
     while len(coordinates) < len(batteries):
         coordinates.add(choice(available_coordinates))
     return coordinates
-
-def random_bat_config(grid):
-    """
-        This function generates a random combination of batteries that have
-        a bigger sum of capacity than the total output of all the houses so
-        that it can 'lift' their 'weight' and puts the batteries on random
-        available locations in the grid.
-
-        Takes
-            Grid: grid containing the houses that have to be connected later on
-
-        Returns
-            None
-    """
-    batteries = choose_batteries(grid)
-    coordinates = choose_coordinates(grid, batteries)
-    for capacity, name in batteries:
-        grid.add_battery(Battery(coordinates.pop(), capacity, name))
-    grid.initial_batteries = deepcopy(grid.batteries)
