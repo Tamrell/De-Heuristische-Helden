@@ -91,14 +91,14 @@ if __name__ == "__main__":
     nbh = get_neighbourhood()
     file1 = 'Data/wijk' + nbh + '_huizen.csv'
     file2 = 'Data/wijk' + nbh + '_batterijen.txt'
-    #start_recording(nbh)
+    start_recording(nbh)
 ###############testing purposes##################
 
     start = time.time()
     grid = Grid(file1, file2, nbh)
     print(time.time() - start)
     #start_simulation(grid)
-    #exit(1)
+    exit(1)
 
 #################################################
     plotter(nbh)
