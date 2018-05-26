@@ -98,11 +98,14 @@ if __name__ == "__main__":
     grid = Grid(file1, file2, nbh)
     print(time.time() - start)
     #start_simulation(grid)
-    exit(1)
+    k_means(grid)
+    #exit(1)
 
 #################################################
+    """
     plotter(nbh)
 
     alg = get_algorithm()
     alg = run_algorithm(alg, grid)
+    """
     grid.print_stats(alg)
