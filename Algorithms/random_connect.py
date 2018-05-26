@@ -5,13 +5,14 @@ import os
 
 
 def random_connect(grid):
-    """This function randomly connects random batteries with random houses.
+    """
+        This function randomly connects random batteries with random houses.
 
-    Takes
-        Grid: grid object containing the houses and batteries
+        Takes
+            Grid: grid object containing the houses and batteries
 
-    Returns
-        Bool: True if the solution is legal, else False
+        Returns
+            Bool: True if the solution is legal, else False
     """
     houses = [h for h in grid.houses.values() if h.free]
     shuffle(houses)

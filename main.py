@@ -1,6 +1,3 @@
-print("Loading...")
-import sys
-import time
 from Classes.grid import Grid
 from Algorithms.k_means import k_means
 from Algorithms.population_based import start_simulation
@@ -13,12 +10,13 @@ from Algorithms.Helpers.bounds import lower_bound, upper_bound
 from Algorithms.greedy_hillclimber import greedy_hillclimber
 from Algorithms.random_connect import random_sampler
 from Algorithms.random_battery_cycler import battery_cycler
-from Algorithms.Helpers.plotter import custom_plotter
-from Algorithms.Helpers.plotter import plotter
+from Algorithms.Helpers.plotter import custom_plotter, plotter
 from Algorithms.Helpers.bfcf import all_combos
-from Algorithms.branch_and_bound import *
 from Algorithms.population_based import start_simulation
+import Algorithms.Helpers.load_data as dt
 from tqdm import tqdm
+import sys
+import time
 
 def get_neighbourhood():
     """
@@ -89,17 +87,16 @@ def run_algorithm(alg, grid):
 if __name__ == "__main__":
 
     nbh = get_neighbourhood()
-    file1 = 'Data/wijk' + nbh + '_huizen.csv'
-    file2 = 'Data/wijk' + nbh + '_batterijen.txt'
-    #start_recording(nbh)
+    h_file = 'Data/wijk' + nbh + '_huizen.csv'
+    b_file = 'Data/wijk' + nbh + '_batterijen.txt'
+    houses = dt.get_houses(h_file)
+    batteries = dt.get_batteries(b_file)
+    grid = Grid(nbh, houses, batteries)
+
 ###############testing purposes##################
 
-    start = time.time()
-    grid = Grid(file1, file2, nbh)
-    print(time.time() - start)
-    #start_simulation(grid)
-    k_means(grid)
-    #exit(1)
+    start_simulation(grid)
+    exit(1)
 
 #################################################
     """

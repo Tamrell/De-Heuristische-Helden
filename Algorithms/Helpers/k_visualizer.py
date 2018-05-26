@@ -13,7 +13,6 @@ def k_visualize(grid):
     p.add_layout(Title(text="Iterations", align="center"), "below")
     p.add_layout(Title(text="Cost", align="center"), "left")
     lower = []
-    # upper = []
     cycler = []
     rand = []
     scitt = []
@@ -22,9 +21,6 @@ def k_visualize(grid):
     for i in tqdm(range(20)):
         lower_bound(grid)
         lower.append(grid.score())
-        # grid.reset()
-        # upper_bound(grid)
-        # upper.append(grid.score())
         grid.reset()
         for j in range(s_size):
             battery_cycler(grid)

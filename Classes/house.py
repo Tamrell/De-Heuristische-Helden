@@ -9,13 +9,13 @@ class House:
         - dists: dict with Battery:distance
     '''
 
-    def __init__(self, info, batteries):
-        self.cord = (int(info[0]), int(info[1]))
-        self.output = float(info[2])
+    def __init__(self, cord, output):
+        self.cord = cord
+        self.output = output
         self.free = True
         self.color = 'white'
         self.bat = None
-        self.dists = {b: self.distance(self.cord, b.cord) for b in batteries}
+        self.dists = {}#{b: self.distance(self.cord, b.cord) for b in batteries}
 
     def __lt__(self, other):
         '''For sorting purposes, there is no need to differentiate. '''
