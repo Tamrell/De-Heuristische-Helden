@@ -50,8 +50,9 @@ class Grid:
         self.initial_houses = copy.deepcopy(self.houses) ##recalc!!
         self.initial_batteries = copy.deepcopy(self.batteries)
 
-        for b in batteries:
-            self.add_battery(b)
+        if batteries:
+            for b in batteries:
+                self.add_battery(b)
         print(self)
 
     # defuq is met deze?
@@ -172,8 +173,8 @@ class Grid:
         print("| total houses  :", len(self.houses), "\t\t\t\t|")
         print("| average output:",
                  round(self.total_output()/len(self.houses)), "\t\t\t\t|")
-        if pre:
-            print("| vanilla-cost\t:", pre, "\t\t\t\t|")
+        # if pre:
+        #     print("| vanilla-cost\t:", pre, "\t\t\t\t|")
         print("| final-cost\t:", self.score(), "\t\t\t\t|")
         print("\===============================================\ ")
 
