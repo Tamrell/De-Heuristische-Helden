@@ -73,7 +73,7 @@ def run_algorithm(alg, grid):
         Returns:
             return name of selected algorithm
     """
-    algorithms = {'bb': ['branch & bound', branch_and_bound],
+    algorithms = {#'bb': ['branch & bound', branch_and_bound],
                   'r': ['Random Connect', random_sampler],
                   'b': ['battery cycler', battery_cycler],
                   'e': ['evaluate', evaluate_distribution],
@@ -81,8 +81,16 @@ def run_algorithm(alg, grid):
                   'u': ['upper bound', upper_bound],
                   #'a': ['A-smart', A_smart]
                   }
-    algorithms[alg][1](grid)
+    return algorithms[alg][1](grid)
     return algorithms[alg][0]
+
+def run():
+    results = []
+    for i in range(100):
+        print(i)
+        results.append(run_algorithm('b', grid))
+        #greedy_hillclimber(grid)
+    return(min(results))
 
 if __name__ == "__main__":
 
@@ -93,10 +101,24 @@ if __name__ == "__main__":
     batteries = dt.get_batteries(b_file)
     grid = Grid(nbh, houses, batteries)
 
+    """
+    print("K-meansing")
+    grid.print_stats("K-means")
+    for i in range(100):
+        run_algorithm('b', grid)
+        print("Iteration", i, grid.score())
+        k_means(grid)
+        start_simulation(grid, 5, 5)
+    grid.print_stats("K-means")
+    """
 ###############testing purposes##################
 
+    #start_simulation(grid)
+
+    #print(run())
+
     start_simulation(grid)
-    exit(1)
+    exit()
 
 #################################################
     """
@@ -105,4 +127,4 @@ if __name__ == "__main__":
     alg = get_algorithm()
     alg = run_algorithm(alg, grid)
     """
-    grid.print_stats(alg)
+# for testing purposes

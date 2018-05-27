@@ -13,4 +13,4 @@ def greedy_hillclimber(grid):
         if best[0] < 0: # <=???
             hard_swap(best[1], best[2])
         else:
-            return
+            return grid.score()

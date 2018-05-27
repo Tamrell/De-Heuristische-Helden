@@ -46,13 +46,14 @@ class Grid:
         self.batteries = {}
         self.grid_list = {}
         self.total_probability = 0
-        self.total_sq_probability = 0
+        self.total_loc_probability = 0
         self.initial_houses = copy.deepcopy(self.houses) ##recalc!!
         self.initial_batteries = copy.deepcopy(self.batteries)
 
-        for b in batteries:
-            self.add_battery(b)
-        print(self)
+        if batteries:
+            for b in batteries:
+                self.add_battery(b)
+        #print(self)
 
     # defuq is met deze?
     def __lt__(self, other):
@@ -95,7 +96,9 @@ class Grid:
         self.initial_batteries.clear()
         self.initial_houses = copy.deepcopy(other.initial_houses)
         self.initial_batteries = copy.deepcopy(other.initial_batteries)
-        self.reset()
+        self.houses = copy.deepcopy(other.houses)
+        self.batteries = copy.deepcopy(other.batteries)
+        # self.reset()
 
     def legal(self):
         if [h for h in self.houses.values() if h.free]:
@@ -104,13 +107,6 @@ class Grid:
             if b.load > b.max_load:
                 return False
         return True
-
-    def set_grid_points(self):
-        ''' Initiates all the Grid_Points for the Grid. '''
-        houses = [h for h in self.houses.values()]
-        for y in range(self.y_dim):
-            for x in range(self.x_dim):
-                self.grid_list[x, y] = Grid_Point(x, y, houses)
 
     def y_list(self, y, method=0):
         ''' Helper function for print_heatmap. Returns the probabilities
@@ -124,7 +120,7 @@ class Grid:
 
         if method == 1:
             for i in range(self.x_dim):
-                dist_list.append(self.grid_list[(i, y)].rel_probability)
+                dist_list.append(self.grid_list[(i, y)].loc_probability)
         return dist_list
 
     def print_heatmap(self, method=0):
@@ -172,8 +168,8 @@ class Grid:
         print("| total houses  :", len(self.houses), "\t\t\t\t|")
         print("| average output:",
                  round(self.total_output()/len(self.houses)), "\t\t\t\t|")
-        if pre:
-            print("| vanilla-cost\t:", pre, "\t\t\t\t|")
+        # if pre:
+        #     print("| vanilla-cost\t:", pre, "\t\t\t\t|")
         print("| final-cost\t:", self.score(), "\t\t\t\t|")
         print("\===============================================\ ")
 
@@ -266,15 +262,15 @@ class Grid_Point:
 
         self.probability = 0
         self.distance = 0
-        self.rel_distance = 0
-        self.rel_probability = 0
+        self.loc_distance = 0
+        self.loc_probability = 0
 
         for house in houses:
-            dist_to_house = abs(house.cord[0] - x) + abs(house.cord[1] - y)
+            dist_to_house = house.distance((x, y), house.cord)
             if dist_to_house:
-                self.rel_distance += 1 / dist_to_house
+                self.loc_distance += 1 / dist_to_house
             else:
-                self.rel_distance += 1
+                self.loc_distance += 1
             self.distance += dist_to_house
         self.x = x
         self.y = y
