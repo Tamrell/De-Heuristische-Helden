@@ -11,11 +11,11 @@ from Algorithms.Case_A.random_battery_cycler import battery_cycler
 
 from Algorithms.Data_Analysis.evaluate_distribution import evaluate_distribution
 from Algorithms.Data_Analysis.random_config_saver import start_recording
+from Algorithms.Data_Analysis.plots import hover_plot
+from Algorithms.Data_Analysis.plotter import custom_plotter, plotter
 
 from Algorithms.Helpers.bounds import lower_bound, upper_bound
-from Algorithms.Helpers.plotter import custom_plotter, plotter
 from Algorithms.Helpers.bfcf import all_combos
-from Algorithms.Helpers.plots import hover_plot
 import Algorithms.Helpers.load_data as dt
 
 from tqdm import tqdm
@@ -103,7 +103,7 @@ if __name__ == "__main__":
     b_file = 'Data/wijk' + nbh + '_batterijen.txt'
     houses = dt.get_houses(h_file)
     batteries = dt.get_batteries(b_file)
-    grid = Grid(nbh, houses, batteries)
+    grid = Grid(nbh, houses)#, batteries)
 
     """
     print("K-meansing")

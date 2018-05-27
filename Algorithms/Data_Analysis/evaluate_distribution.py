@@ -1,6 +1,6 @@
-from Algorithms.random_connect import random_sampler
-from Algorithms.random_battery_cycler import battery_cycler
-from Algorithms.Helpers.plotter import custom_plotter
+from Algorithms.Case_A.random_connect import random_sampler
+from Algorithms.Case_A.random_battery_cycler import battery_cycler
+from Algorithms.Data_Analysis.plotter import custom_plotter
 from tqdm import tqdm
 
 
