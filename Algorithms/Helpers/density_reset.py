@@ -28,12 +28,11 @@ def set_global_density(grid, house_list):
     for point in grid.grid_list.values():
         if point.distance:
             grid.total_probability += (1 / point.distance)
-    for point in grid.grid_list:
-        if point in grid.houses:
-            grid.grid_list[point].probability = 0
+    for cord, point in grid.grid_list.items():
+        if cord in grid.houses:
+            point.probability = 0
             continue
-        grid.grid_list[point].probability = (1
-            / grid.grid_list[point].distance) / grid.total_probability
+        point.probability = (1 / point.distance) / grid.total_probability
 
 def set_local_density(grid, house_list):
     """
@@ -64,12 +63,12 @@ def set_local_density(grid, house_list):
         if point.distance:
             grid.total_loc_probability += point.loc_distance
 
-    for point in grid.grid_list:
-        if point in grid.houses:
-            grid.grid_list[point].loc_probability = 0
+    for cord, point in grid.grid_list.items():
+        if cord in grid.houses:
+            point.loc_probability = 0
             continue
-        grid.grid_list[point].loc_probability = (
-        grid.grid_list[point].loc_distance / grid.total_loc_probability)
+        point.loc_probability = (
+            point.loc_distance / grid.total_loc_probability)
 
 def move_to_middle(grid, bat):
     """
