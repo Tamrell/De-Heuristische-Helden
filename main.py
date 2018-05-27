@@ -1,6 +1,3 @@
-print("Loading...")
-import sys
-import time
 from Classes.grid import Grid
 from Algorithms.k_means import k_means
 from Algorithms.population_based import start_simulation
@@ -13,12 +10,13 @@ from Algorithms.Helpers.bounds import lower_bound, upper_bound
 from Algorithms.greedy_hillclimber import greedy_hillclimber
 from Algorithms.random_connect import random_sampler
 from Algorithms.random_battery_cycler import battery_cycler
-from Algorithms.Helpers.plotter import custom_plotter
-from Algorithms.Helpers.plotter import plotter
+from Algorithms.Helpers.plotter import custom_plotter, plotter
 from Algorithms.Helpers.bfcf import all_combos
-from Algorithms.branch_and_bound import *
 from Algorithms.population_based import start_simulation
+import Algorithms.Helpers.load_data as dt
 from tqdm import tqdm
+import sys
+import time
 
 def get_neighbourhood():
     """
@@ -75,7 +73,7 @@ def run_algorithm(alg, grid):
         Returns:
             return name of selected algorithm
     """
-    algorithms = {'bb': ['branch & bound', branch_and_bound],
+    algorithms = {#'bb': ['branch & bound', branch_and_bound],
                   'r': ['Random Connect', random_sampler],
                   'b': ['battery cycler', battery_cycler],
                   'e': ['evaluate', evaluate_distribution],
@@ -83,26 +81,50 @@ def run_algorithm(alg, grid):
                   'u': ['upper bound', upper_bound],
                   #'a': ['A-smart', A_smart]
                   }
-    algorithms[alg][1](grid)
+    return algorithms[alg][1](grid)
     return algorithms[alg][0]
+
+def run():
+    results = []
+    for i in range(100):
+        print(i)
+        results.append(run_algorithm('b', grid))
+        #greedy_hillclimber(grid)
+    return(min(results))
 
 if __name__ == "__main__":
 
     nbh = get_neighbourhood()
-    file1 = 'Data/wijk' + nbh + '_huizen.csv'
-    file2 = 'Data/wijk' + nbh + '_batterijen.txt'
-    start_recording(nbh)
+    h_file = 'Data/wijk' + nbh + '_huizen.csv'
+    b_file = 'Data/wijk' + nbh + '_batterijen.txt'
+    houses = dt.get_houses(h_file)
+    batteries = dt.get_batteries(b_file)
+    grid = Grid(nbh, houses, batteries)
+
+    """
+    print("K-meansing")
+    grid.print_stats("K-means")
+    for i in range(100):
+        run_algorithm('b', grid)
+        print("Iteration", i, grid.score())
+        k_means(grid)
+        start_simulation(grid, 5, 5)
+    grid.print_stats("K-means")
+    """
 ###############testing purposes##################
 
-    start = time.time()
-    grid = Grid(file1, file2, nbh)
-    print(time.time() - start)
     #start_simulation(grid)
-    exit(1)
+
+    #print(run())
+
+    start_simulation(grid)
+    exit()
 
 #################################################
+    """
     plotter(nbh)
 
     alg = get_algorithm()
     alg = run_algorithm(alg, grid)
-    grid.print_stats(alg)
+    """
+# for testing purposes
