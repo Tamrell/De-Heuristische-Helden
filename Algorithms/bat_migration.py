@@ -40,7 +40,7 @@ def migration(grid, combo):
     output_per_bat = grid.total_output() / it
 
     for bat in combo:
-        sorted_list = sorted(grid.grid_list.values(), key=lambda x: x.rel_probability,
+        sorted_list = sorted(grid.grid_list.values(), key=lambda x: x.loc_probability,
                              reverse=True)
 
         location = (sorted_list[0].x, sorted_list[0].y)

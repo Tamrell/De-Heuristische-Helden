@@ -46,7 +46,7 @@ class Grid:
         self.batteries = {}
         self.grid_list = {}
         self.total_probability = 0
-        self.total_sq_probability = 0
+        self.total_loc_probability = 0
         self.initial_houses = copy.deepcopy(self.houses) ##recalc!!
         self.initial_batteries = copy.deepcopy(self.batteries)
 
@@ -127,7 +127,7 @@ class Grid:
 
         if method == 1:
             for i in range(self.x_dim):
-                dist_list.append(self.grid_list[(i, y)].rel_probability)
+                dist_list.append(self.grid_list[(i, y)].loc_probability)
         return dist_list
 
     def print_heatmap(self, method=0):
@@ -269,16 +269,15 @@ class Grid_Point:
 
         self.probability = 0
         self.distance = 0
-        self.rel_distance = 0
-        self.rel_probability = 0
+        self.loc_distance = 0
+        self.loc_probability = 0
 
         for house in houses:
-            # dist_to_house = abs(house.cord[0] - x) + abs(house.cord[1] - y)
             dist_to_house = house.distance((x, y), house.cord)
             if dist_to_house:
-                self.rel_distance += 1 / dist_to_house
+                self.loc_distance += 1 / dist_to_house
             else:
-                self.rel_distance += 1
+                self.loc_distance += 1
             self.distance += dist_to_house
         self.x = x
         self.y = y
