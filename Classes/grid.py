@@ -96,7 +96,9 @@ class Grid:
         self.initial_batteries.clear()
         self.initial_houses = copy.deepcopy(other.initial_houses)
         self.initial_batteries = copy.deepcopy(other.initial_batteries)
-        self.reset()
+        self.houses = copy.deepcopy(other.houses)
+        self.batteries = copy.deepcopy(other.batteries)
+        # self.reset()
 
     def legal(self):
         if [h for h in self.houses.values() if h.free]:
@@ -271,7 +273,8 @@ class Grid_Point:
         self.rel_probability = 0
 
         for house in houses:
-            dist_to_house = abs(house.cord[0] - x) + abs(house.cord[1] - y)
+            # dist_to_house = abs(house.cord[0] - x) + abs(house.cord[1] - y)
+            dist_to_house = house.distance((x, y), house.cord)
             if dist_to_house:
                 self.rel_distance += 1 / dist_to_house
             else:

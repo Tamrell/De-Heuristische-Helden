@@ -8,9 +8,26 @@ from Algorithms.greedy_hillclimber import *
 from Algorithms.Helpers.density_reset import *
 from Algorithms.random_battery_cycler import *
 from Algorithms.Helpers.bfcf import all_combos
-from Results.Solspaces.plotter import *
 
 def migration(grid, combo):
+    """
+        Goes through a combination of batteries. For each battery, it finds the
+        most "locally dense" point on the grid, and places the battery there.
+        It then finds the closest houses and connects until the capacity of an
+        average battery (the total output of the houses divided by the number
+        of batteries) is reached. Then the density is recalculated without
+        taking the connected houses into account.
+
+        Takes
+            Grid: grid containing the houses that have to be connected later on
+
+            List: A list of batteries (capacity, battery type) that will be
+            placed on the Grid.
+
+        Returns
+            None
+    """
+
     it = len(combo)
     bats = []
 
