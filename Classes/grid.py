@@ -52,7 +52,7 @@ class Grid:
 
         for b in batteries:
             self.add_battery(b)
-        print(self)
+        #print(self)
 
     # defuq is met deze?
     def __lt__(self, other):
@@ -172,8 +172,8 @@ class Grid:
         print("| total houses  :", len(self.houses), "\t\t\t\t|")
         print("| average output:",
                  round(self.total_output()/len(self.houses)), "\t\t\t\t|")
-        if pre:
-            print("| vanilla-cost\t:", pre, "\t\t\t\t|")
+        #if pre:
+        #    print("| vanilla-cost\t:", pre, "\t\t\t\t|")
         print("| final-cost\t:", self.score(), "\t\t\t\t|")
         print("\===============================================\ ")
 

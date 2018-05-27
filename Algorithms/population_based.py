@@ -80,7 +80,7 @@ def let_there_be_life_exclamation_mark(grid, p_size):
     """
     population = []
     for i in tqdm(range(p_size)):
-        individual = Grid(grid.file1, None, grid.nbh)
+        individual = Grid(grid.nbh, grid.houses)
         random_bat_config(individual)
         population.append([fitness(individual), individual])
     return sorted(population)
@@ -102,7 +102,8 @@ def fitness(grid, fit_measure=get_bound):
     score_list = []
     with Pool(processes=10) as p:
         score_list = p.map(fit_measure, [grid for i in range(i_size)])
-        grid.reset()
+        # tamar's schuld
+        #grid.reset()
     # print(time.time() - tim)
     return sum(score_list)/len(score_list)
 
@@ -118,6 +119,8 @@ def mutated(parent):
             Grid: randomly mutated child of the input individual
     """
     child = parent.copy()
+    # tamar's schuld
+    #child = parent.deepcopy()
     mutate_battery_location(child)
     return child
 
