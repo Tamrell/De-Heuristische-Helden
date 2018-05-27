@@ -1,8 +1,8 @@
-from random import choice, randint
 from Classes.grid import Grid
-from Algorithms.random_bat_config import random_bat_config
-from Algorithms.random_battery_cycler import battery_cycler
-from Algorithms.Helpers.bounds import get_bound
+from Algorithms.Case_A.random_battery_cycler import battery_cycler
+from Algorithms.Case_B.random_bat_config import random_bat_config
+#from Algorithms.Helpers.bounds import get_bound
+from random import choice, randint
 from tqdm import tqdm
 from multiprocessing import Pool
 import time
@@ -85,7 +85,7 @@ def let_there_be_life_exclamation_mark(grid, p_size):
         population.append([fitness(individual), individual])
     return sorted(population)
 
-def fitness(grid, fit_measure=get_bound):
+def fitness(grid, fit_measure=battery_cycler):
     '''
         Calculates the fitness of a given grid as a function of its total cost.
         The fitness is decided by taking the average of i_size

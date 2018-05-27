@@ -1,19 +1,23 @@
 from Classes.grid import Grid
-from Algorithms.k_means import k_means
-from Algorithms.population_based import start_simulation
-from Algorithms.Helpers.plots import hover_plot
-from Algorithms.Helpers.random_config_saver import start_recording
-from Algorithms.hill_leaper import hill_leaper
-from Algorithms.evaluate_distribution import evaluate_distribution
-from Algorithms.random_bat_config import random_bat_config
+from Algorithms.Case_B.k_means import k_means
+from Algorithms.Case_B.population_based import start_simulation
+from Algorithms.Case_B.random_bat_config import random_bat_config
+from Algorithms.Case_B.population_based import start_simulation
+
+from Algorithms.Case_A.hill_leaper import hill_leaper
+from Algorithms.Case_A.greedy_hillclimber import greedy_hillclimber
+from Algorithms.Case_A.random_connect import random_sampler
+from Algorithms.Case_A.random_battery_cycler import battery_cycler
+
+from Algorithms.Data_Analysis.evaluate_distribution import evaluate_distribution
+from Algorithms.Data_Analysis.random_config_saver import start_recording
+from Algorithms.Data_Analysis.plots import hover_plot
+from Algorithms.Data_Analysis.plotter import custom_plotter, plotter
+
 from Algorithms.Helpers.bounds import lower_bound, upper_bound
-from Algorithms.greedy_hillclimber import greedy_hillclimber
-from Algorithms.random_connect import random_sampler
-from Algorithms.random_battery_cycler import battery_cycler
-from Algorithms.Helpers.plotter import custom_plotter, plotter
 from Algorithms.Helpers.bfcf import all_combos
-from Algorithms.population_based import start_simulation
 import Algorithms.Helpers.load_data as dt
+
 from tqdm import tqdm
 import sys
 import time
@@ -99,7 +103,7 @@ if __name__ == "__main__":
     b_file = 'Data/wijk' + nbh + '_batterijen.txt'
     houses = dt.get_houses(h_file)
     batteries = dt.get_batteries(b_file)
-    grid = Grid(nbh, houses, batteries)
+    grid = Grid(nbh, houses)#, batteries)
 
     """
     print("K-meansing")
