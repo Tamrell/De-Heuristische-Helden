@@ -1,7 +1,7 @@
 from random import shuffle, choice, sample
 from copy import deepcopy
 from Algorithms.Helpers.connect import connect
-from Algorithms.greedy_hillclimber import greedy_hillclimber
+from Algorithms.Case_A.greedy_hillclimber import greedy_hillclimber
 
 def random_battery_cycler(grid, solutions):
     '''The random battery cycler '''

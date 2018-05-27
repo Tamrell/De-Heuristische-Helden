@@ -18,6 +18,24 @@ def k_means(grid):
             if cluster_mean(grid, b):
                 moved = True
 
+def restricted_k_means(grid):
+    """
+        Tries to find ideal k-means configuration for the grid,
+        also taking the battery capacities into account.
+
+    Takes
+        Grid: grid containing the houses used for the k-means
+
+    Returns
+        None
+    """
+    moved = True
+    while moved:
+        moved = False
+        for b in grid.batteries.values():
+            if cluster_mean(grid, b):
+                moved = True
+
 def cluster_mean(grid, battery):
     '''
         Calculates new location for battery, this being the mean of its current

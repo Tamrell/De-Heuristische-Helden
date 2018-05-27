@@ -1,5 +1,5 @@
 from Algorithms.Helpers.connect import hard_swap
-from Algorithms.greedy_hillclimber import greedy_hillclimber
+from Algorithms.Case_A.greedy_hillclimber import greedy_hillclimber
 
 def leap(grid):
     '''Hill leaper goes 2 levels deep in order to escape local optima'''

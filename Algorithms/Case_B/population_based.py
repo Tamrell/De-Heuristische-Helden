@@ -80,7 +80,7 @@ def let_there_be_life_exclamation_mark(grid, p_size):
     """
     population = []
     for i in tqdm(range(p_size)):
-        individual = Grid(grid.file1, None, grid.nbh)
+        individual = Grid(grid.nbh, grid.houses)
         random_bat_config(individual)
         population.append([fitness(individual), individual])
     return sorted(population)
