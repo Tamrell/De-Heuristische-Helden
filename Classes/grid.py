@@ -108,13 +108,6 @@ class Grid:
                 return False
         return True
 
-    def set_grid_points(self):
-        ''' Initiates all the Grid_Points for the Grid. '''
-        houses = [h for h in self.houses.values()]
-        for y in range(self.y_dim):
-            for x in range(self.x_dim):
-                self.grid_list[x, y] = Grid_Point(x, y, houses)
-
     def y_list(self, y, method=0):
         ''' Helper function for print_heatmap. Returns the probabilities
             of row y.

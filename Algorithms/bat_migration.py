@@ -15,7 +15,7 @@ def migration(grid, combo):
         most "locally dense" point on the grid, and places the battery there.
         It then finds the closest houses and connects until the capacity of an
         average battery (the total output of the houses divided by the number
-        of batteries) is reached. Then the density is recalculated without
+        of batteries) is reached. The density is then recalculated without
         taking the connected houses into account.
 
         Takes
