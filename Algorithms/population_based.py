@@ -2,7 +2,7 @@ from random import choice, randint
 from Classes.grid import Grid
 from Algorithms.random_bat_config import random_bat_config
 from Algorithms.random_battery_cycler import battery_cycler
-from Algorithms.Helpers.bounds import get_bound
+from Algorithms.Helpers.bounds import get_bound, upper_bound, lower_bound
 from tqdm import tqdm
 from multiprocessing import Pool
 import time
@@ -28,22 +28,30 @@ def start_simulation(grid, p_size=20, generations=10):
             None
     """
     # individual = list of batteries with their location?
+    start_time = time.time()
     genetic_history = []
     population = let_there_be_life_exclamation_mark(grid, p_size)
     genetic_history.append(population)
     for i in range(generations):
-
+        print("#" * 80)
+        print("Generation:\t",i)
         # New population will consist of the fittest individual and mutations
         # of it.
         fittest, score = population[0][1], population[0][0]
         print(fittest, fittest.print_stats("ayyy"), score)
         population = sorted(new_generation(fittest, score, p_size))
         genetic_history.append(population)
+    print(time.time() - start_time)
     for i, p in enumerate(genetic_history):
         print("generation:", i)
         print("fittest:", p[0][0])
         print("average:", sum([g[0] for g in p])/len(p), "\n\n")
-        print(battery_cycler(p[0][1]))
+        #print(p, i)
+        #print(battery_cycler(p[0][1]))
+        print([upper_bound(p[i][1]) for i in range(len(p))])
+        print([lower_bound(p[i][1]) for i in range(len(p))])
+        #p[0][1].print_stats("Arr!")
+    print(p_size, generations)
 
 def new_generation(fittest, score, p_size):
     """

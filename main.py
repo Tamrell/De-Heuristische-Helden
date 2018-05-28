@@ -1,3 +1,4 @@
+print("Loading modules")
 from Classes.grid import Grid
 from Algorithms.k_means import k_means
 from Algorithms.population_based import start_simulation
@@ -117,7 +118,7 @@ if __name__ == "__main__":
 
     #print(run())
 
-    start_simulation(grid)
+    start_simulation(grid, 50, 10)
     exit()
 
 #################################################
