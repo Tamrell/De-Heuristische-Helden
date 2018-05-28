@@ -6,7 +6,7 @@ from random import choice, randint
 from tqdm import tqdm
 from multiprocessing import Pool
 import time
-
+import statistics
 def start_simulation(grid, p_size=20, generations=10):
     """
         Generates a random starting population using the weight lifter,
@@ -35,15 +35,23 @@ def start_simulation(grid, p_size=20, generations=10):
 
         # New population will consist of the fittest individual and mutations
         # of it.
-        fittest, score = population[0][1], population[0][0]
-        print(fittest, fittest.print_stats("ayyy"), score)
+        #fittest, score = population[0][1], population[0][0]
+        (score, fittest) = population.pop(0)
+        #print(fittest, fittest.print_stats("ayyy"), score)
         population = sorted(new_generation(fittest, score, p_size))
-        genetic_history.append(population)
-    for i, p in enumerate(genetic_history):
-        print("generation:", i)
-        print("fittest:", p[0][0])
-        print("average:", sum([g[0] for g in p])/len(p), "\n\n")
-        print(battery_cycler(p[0][1]))
+        print("generation", i)
+        scores = [individual[0] for individual in population]
+        print("avg", statistics.mean(scores))
+        print("dev", statistics.stdev(scores))
+        print("best", min(scores))
+
+        #genetic_history.append(population)
+
+    # for i, p in enumerate(genetic_history):
+    #     print("generation:", i)
+    #     print("fittest:", p[0][0])
+    #     print("average:", sum([g[0] for g in p])/len(p), "\n\n")
+    #     print(battery_cycler(p[0][1]))
 
 def new_generation(fittest, score, p_size):
     """

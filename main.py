@@ -1,4 +1,3 @@
-print("Loading modules")
 from Classes.grid import Grid
 from Classes.battery import *
 from Algorithms.Case_B.k_means import k_means
@@ -101,15 +100,19 @@ def run():
     return(min(results))
 
 if __name__ == "__main__":
-
+    
     nbh = get_neighbourhood()
     h_file = 'Data/wijk' + nbh + '_huizen.csv'
     b_file = 'Data/wijk' + nbh + '_batterijen.txt'
     houses = dt.get_houses(h_file)
     batteries = dt.get_batteries(b_file)
     grid = Grid(nbh, houses)#, batteries)
+
+    start_simulation(grid, 2, 50)
+    """
     print("Battery cycling...")
     print(battery_cycler(grid))
+    """
     """
     print("K-meansing")
     grid.print_stats("K-means")
