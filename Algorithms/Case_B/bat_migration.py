@@ -1,12 +1,11 @@
 import sys
 import time
 from copy import deepcopy
-from Classes.grid import Grid
-from Classes.battery import Battery
-from Algorithms.Case_A.greedy_hillclimber import *
+from Classes.grid import *
+from Classes.battery import *
 from Algorithms.Helpers.density_reset import *
-from Algorithms.Case_A.random_battery_cycler import *
 from Algorithms.Helpers.bfcf import all_combos
+from Algorithms.Helpers.connect import *
 
 def migration(grid, combo):
     """

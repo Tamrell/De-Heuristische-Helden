@@ -1,14 +1,16 @@
 print("Loading modules")
 from Classes.grid import Grid
+from Classes.battery import *
 from Algorithms.Case_B.k_means import k_means
 from Algorithms.Case_B.population_based import start_simulation
 from Algorithms.Case_B.random_bat_config import random_bat_config
 from Algorithms.Case_B.population_based import start_simulation
+from Algorithms.Case_B.bat_migration import migration
 
 from Algorithms.Case_A.hill_leaper import hill_leaper
 from Algorithms.Case_A.greedy_hillclimber import greedy_hillclimber
 from Algorithms.Case_A.random_connect import random_sampler
-from Algorithms.Case_A.random_battery_cycler import battery_cycler
+from Algorithms.Case_A.random_battery_cycler import battery_cycler, random_battery_cycler
 
 from Algorithms.Data_Analysis.evaluate_distribution import evaluate_distribution
 from Algorithms.Data_Analysis.random_config_saver import start_recording
@@ -18,6 +20,7 @@ from Algorithms.Data_Analysis.plotter import custom_plotter, plotter
 from Algorithms.Helpers.bounds import lower_bound, upper_bound
 from Algorithms.Helpers.bfcf import all_combos
 import Algorithms.Helpers.load_data as dt
+from Algorithms.Helpers.density_reset import *
 
 from tqdm import tqdm
 import sys
@@ -117,6 +120,29 @@ if __name__ == "__main__":
         start_simulation(grid, 5, 5)
     grid.print_stats("K-means")
     """
+
+    """
+    combos = all_combos(grid)
+    # 22779
+    combo1 = ((900, 'Imerse-II'), (900, 'Imerse-II'), (900, 'Imerse-II'), (900, 'Imerse-II'), (900, 'Imerse-II'), (1800, 'Imerse-III'), (1800, 'Imerse-III'))
+    # 23625
+    combo2 = ((450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (1800, 'Imerse-III'))
+    # 23130
+    combo3 = ((450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (900, 'Imerse-II'), (900, 'Imerse-II'), (900, 'Imerse-II'), (900, 'Imerse-II'))
+
+    migration(grid, combo2)
+    random_battery_cycler(grid, 100)
+    print(grid)
+    grid.print_stats('RBC')
+    for bat in grid.batteries.values():
+        move_to_middle(grid, bat)
+        for h in bat.links:
+            h.dists[bat] = grid.distance(h.cord, bat.cord)
+    grid.print_stats('Middle')
+    print(grid)
+    """
+
+
 ###############testing purposes##################
 
     #start_simulation(grid)
