@@ -48,11 +48,8 @@ class Grid:
         self.total_loc_probability = 0
         self.initial_houses = copy.deepcopy(self.houses) ##recalc!!
         self.initial_batteries = copy.deepcopy(self.batteries)
-
-        if batteries:
-            for b in batteries:
-                self.add_battery(b)
-        #print(self)
+        for b in batteries:
+            self.add_battery(b)
 
     # defuq is met deze?
     def __lt__(self, other):
@@ -66,8 +63,10 @@ class Grid:
         self.initial_batteries[bat.cord] = copy.deepcopy(bat)
         for h in self.houses.values():
             h.dists.clear()
+            print(self.batteries)
             for b in self.batteries.values():
-                h.dists[bat] = self.distance(b.cord, h.cord)
+                h.dists[b] = self.distance(b.cord, h.cord)
+            print(h.dists, "\n\n\n\n")
 
 
     def move_battery(self, bat, new_cord):

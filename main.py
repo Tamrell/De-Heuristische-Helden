@@ -105,13 +105,13 @@ if __name__ == "__main__":
     h_file = 'Data/wijk' + nbh + '_huizen.csv'
     b_file = 'Data/wijk' + nbh + '_batterijen.txt'
     houses = dt.get_houses(h_file)
+    batteries = dt.get_batteries(b_file)
 
-    case = input("Which part of the case do you want to run?\n[A/B]: ")
-    while case not in ['A', 'B']:
-        case = input("only A or B\n[A/B]: ")
+    case = input("Which part of the case do you want to run?\n[a/b]: ")
+    while case not in ['a', 'b']:
+        case = input("only A or B\n[a/b]: ")
 
-    if case == 'A':
-        batteries = dt.get_batteries(b_file)
+    if case == 'a':
         grid = Grid(nbh, houses, batteries)
     else:
         grid = Grid(nbh, houses)
