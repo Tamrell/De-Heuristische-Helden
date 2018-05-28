@@ -35,7 +35,6 @@ class Grid:
                 dimensions (Tuple): A tuple containing the x- and y-coordinates
                 of the Grid, defaults to 50x50.
         '''
-
         # Reset color_generator
         Battery.color_generator = assign_color()
 
@@ -66,7 +65,10 @@ class Grid:
         self.batteries[bat.cord] = bat
         self.initial_batteries[bat.cord] = copy.deepcopy(bat)
         for h in self.houses.values():
-            h.dists[bat] = self.distance(bat.cord, h.cord)
+            h.dists.clear()
+            for b in self.batteries.values():
+                h.dists[bat] = self.distance(b.cord, h.cord)
+
 
     def move_battery(self, bat, new_cord):
         self.initial_batteries.pop(bat.cord)

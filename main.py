@@ -1,4 +1,3 @@
-print("Loading modules")
 from Classes.grid import Grid
 from Classes.battery import *
 from Algorithms.Case_B.k_means import k_means
@@ -106,8 +105,17 @@ if __name__ == "__main__":
     h_file = 'Data/wijk' + nbh + '_huizen.csv'
     b_file = 'Data/wijk' + nbh + '_batterijen.txt'
     houses = dt.get_houses(h_file)
-    batteries = dt.get_batteries(b_file)
-    grid = Grid(nbh, houses)#, batteries)
+
+    case = input("Which part of the case do you want to run?\n[A/B]: ")
+    while case not in ['A', 'B']:
+        case = input("only A or B\n[A/B]: ")
+
+    if case == 'A':
+        batteries = dt.get_batteries(b_file)
+        grid = Grid(nbh, houses, batteries)
+    else:
+        grid = Grid(nbh, houses)
+
     print("Battery cycling...")
     print(battery_cycler(grid))
     """
