@@ -1,5 +1,5 @@
-from Algorithms.random_battery_cycler import battery_cycler
-from Algorithms.random_bat_config import random_bat_config
+from Algorithms.Case_A.random_battery_cycler import battery_cycler
+from Algorithms.Case_B.random_bat_config import random_bat_config
 from Classes.grid import Grid
 import os
 import time

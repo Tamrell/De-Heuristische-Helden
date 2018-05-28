@@ -1,11 +1,12 @@
-from random import choice, randint
 from Classes.grid import Grid
-from Algorithms.random_bat_config import random_bat_config
-from Algorithms.random_battery_cycler import battery_cycler
-from Algorithms.Helpers.bounds import get_bound, upper_bound, lower_bound
+from Algorithms.Case_A.random_battery_cycler import battery_cycler
+from Algorithms.Case_B.random_bat_config import random_bat_config
+from Algorithms.Helpers.bounds import get_bound
+from random import choice, randint
 from tqdm import tqdm
 from multiprocessing import Pool
 import time
+import statistics
 
 def start_simulation(grid, p_size=20, generations=10):
     """
@@ -38,19 +39,24 @@ def start_simulation(grid, p_size=20, generations=10):
         # New population will consist of the fittest individual and mutations
         # of it.
         fittest, score = population[0][1], population[0][0]
-        print(fittest, fittest.print_stats("ayyy"), score)
+        #print(fittest, fittest.print_stats("ayyy"), score)
         population = sorted(new_generation(fittest, score, p_size))
-        genetic_history.append(population)
+        scores = [p[0] for p in population]
+        print("Mean:", statistics.average(scores))
+        print("Dev:", statistics.stdev(scores))
+        print("Best", min(scores))
+        #genetic_history.append(population)
+
     print(time.time() - start_time)
-    for i, p in enumerate(genetic_history):
-        print("generation:", i)
-        print("fittest:", p[0][0])
-        print("average:", sum([g[0] for g in p])/len(p), "\n\n")
-        #print(p, i)
-        #print(battery_cycler(p[0][1]))
-        print([upper_bound(p[i][1]) for i in range(len(p))])
-        print([lower_bound(p[i][1]) for i in range(len(p))])
-        #p[0][1].print_stats("Arr!")
+    # for i, p in enumerate(genetic_history):
+    #     print("generation:", i)
+    #     print("fittest:", p[0][0])
+    #     print("average:", sum([g[0] for g in p])/len(p), "\n\n")
+    #     #print(p, i)
+    #     #print(battery_cycler(p[0][1]))
+    #     print([upper_bound(p[i][1]) for i in range(len(p))])
+    #     print([lower_bound(p[i][1]) for i in range(len(p))])
+    #     #p[0][1].print_stats("Arr!")
     print(p_size, generations)
 
 def new_generation(fittest, score, p_size):
@@ -108,7 +114,7 @@ def fitness(grid, fit_measure=get_bound):
     i_size = 10
     # tim = time.time()
     score_list = []
-    with Pool(processes=10) as p:
+    with Pool(processes=1) as p:
         score_list = p.map(fit_measure, [grid for i in range(i_size)])
         # tamar's schuld
         #grid.reset()

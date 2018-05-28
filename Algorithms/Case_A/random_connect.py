@@ -1,5 +1,4 @@
 from Algorithms.Helpers.connect import connect
-from Algorithms.Helpers.plots import *
 from random import shuffle, choice
 import os
 
@@ -28,7 +27,17 @@ def random_connect(grid):
         return False
 
 
+# deze moeten nog naar de data analysis map
 def add_data(score, nbh):
+    """
+
+
+        Takes
+            Grid: grid object containing the houses and batteries
+
+        Returns
+            Bool: True if the solution is legal, else False
+    """
     filename =  os.path.abspath('Results/Solspaces/SS' + nbh +'.csv')
     with open(filename, 'a') as data:
         data.write(str(score) + '\n')
