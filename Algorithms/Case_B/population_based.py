@@ -42,7 +42,7 @@ def start_simulation(grid, p_size=20, generations=10):
         #print(fittest, fittest.print_stats("ayyy"), score)
         population = sorted(new_generation(fittest, score, p_size))
         scores = [p[0] for p in population]
-        print("Mean:", statistics.average(scores))
+        print("Mean:", statistics.mean(scores))
         print("Dev:", statistics.stdev(scores))
         print("Best", min(scores))
         #genetic_history.append(population)

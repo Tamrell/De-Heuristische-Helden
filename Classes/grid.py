@@ -63,10 +63,10 @@ class Grid:
         self.initial_batteries[bat.cord] = copy.deepcopy(bat)
         for h in self.houses.values():
             h.dists.clear()
-            print(self.batteries)
+            #print(self.batteries)
             for b in self.batteries.values():
                 h.dists[b] = self.distance(b.cord, h.cord)
-            print(h.dists, "\n\n\n\n")
+            #print(h.dists, "\n\n\n\n")
 
 
     def move_battery(self, bat, new_cord):
