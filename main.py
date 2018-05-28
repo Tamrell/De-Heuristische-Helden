@@ -1,3 +1,4 @@
+print("Loading modules")
 from Classes.grid import Grid
 from Algorithms.Case_B.k_means import k_means
 from Algorithms.Case_B.population_based import start_simulation
@@ -104,7 +105,8 @@ if __name__ == "__main__":
     houses = dt.get_houses(h_file)
     batteries = dt.get_batteries(b_file)
     grid = Grid(nbh, houses)#, batteries)
-
+    print("Battery cycling...")
+    print(battery_cycler(grid))
     """
     print("K-meansing")
     grid.print_stats("K-means")
@@ -121,7 +123,7 @@ if __name__ == "__main__":
 
     #print(run())
 
-    start_simulation(grid)
+    #start_simulation(grid)
     exit()
 
 #################################################
