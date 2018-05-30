@@ -18,6 +18,9 @@ def set_global_density(grid, house_list, x_range=(0,50), y_range=(0,50)):
         List: A list of batteries (capacity, battery type) that will be
         placed on the Grid.
 
+        Tuple: Optional arguments x_range and y_range to reduce the range of
+        points to be calculated.
+
     Returns
         None
     """

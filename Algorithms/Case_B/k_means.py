@@ -21,8 +21,8 @@ def k_means(grid):
 
 def restricted_k_means(grid):
     """
-        Tries to find ideal k-means configuration for the grid,
-        also taking the battery capacities into account.
+    Tries to find ideal k-means configuration for the grid,
+    also taking the battery capacities into account.
 
     Takes
         Grid: grid containing the houses used for the k-means
@@ -39,15 +39,15 @@ def restricted_k_means(grid):
 
 def cluster_mean(grid, battery):
     '''
-        Calculates new location for battery, this being the mean of its current
-        cluster. Then moves the battery to that location
+    Calculates new location for battery, this being the mean of its current
+    cluster. Then moves the battery to that location
 
-        Takes
-            Grid: grid containing houses
-            Battery: battery for which the new location will be calculated
+    Takes
+        Grid: grid containing houses
+        Battery: battery for which the new location will be calculated
 
-        Returns
-            Bool: True if the battery has been moved, else False
+    Returns
+        Bool: True if the battery has been moved, else False
     '''
     houses = [h.cord for h in grid.houses.values()
               if h.closest_battery(grid) == battery]
@@ -68,15 +68,15 @@ def cluster_mean(grid, battery):
 
 def cluster_mean2(grid, battery):
     '''
-        Calculates new location for battery, this being the mean of its current
-        cluster. Then moves the battery to that location
+    Calculates new location for battery, this being the mean of its current
+    cluster. Then moves the battery to that location
 
-        Takes
-            Grid: grid containing houses
-            Battery: battery for which the new location will be calculated
+    Takes
+        Grid: grid containing houses
+        Battery: battery for which the new location will be calculated
 
-        Returns
-            Bool: True if the battery has been moved, else False
+    Returns
+        Bool: True if the battery has been moved, else False
     '''
     houses = []
     for h in grid.houses.values():

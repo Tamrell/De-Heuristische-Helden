@@ -21,6 +21,7 @@ def random_battery_cycler(grid, solutions):
         None
     '''
 
+    # Infinity
     best = (float("inf"), None)
     while solutions:
         houses = [h for h in grid.houses.values()]
