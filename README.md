@@ -3,6 +3,7 @@
 ## Getting Started
 
 for an in-depth introduction to the case, it is recommended to read the report in the Results folder.
+for a more broad Q&A, visit the website http://heuristieken.nl/wiki/index.php?title=SmartGrid
 
 ## The Case
 At present, it is becoming increasingly popular to install solar panels on one's rooftop in order to harvest clean energy. The major downside to this trend is that this energy can only be harvested during the day, so it has to be stored if one wants to use it after the sun goes down. SmartGrid is a case in which we will be exploring possibilities for cost-efficiently storing this energy.  
