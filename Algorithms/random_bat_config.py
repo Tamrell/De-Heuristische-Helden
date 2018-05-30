@@ -3,7 +3,7 @@ from copy import deepcopy
 from Classes.battery import Battery
 
 
-def random_bat_config(grid, batteries=[]):
+def random_bat_config(grid):
     """
         This function generates a random combination of batteries that have
         a bigger sum of capacity than the total output of all the houses so
@@ -16,8 +16,7 @@ def random_bat_config(grid, batteries=[]):
         Returns
             None
     """
-    if not batteries:
-        batteries = choose_batteries(grid)
+    batteries = choose_batteries(grid)
     coordinates = choose_coordinates(grid, batteries)
     for capacity, name in batteries:
         grid.add_battery(Battery(coordinates.pop(), capacity, name))

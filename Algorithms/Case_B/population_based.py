@@ -1,11 +1,12 @@
 from Classes.grid import Grid
 from Algorithms.Case_A.random_battery_cycler import battery_cycler
 from Algorithms.Case_B.random_bat_config import random_bat_config
-#from Algorithms.Helpers.bounds import get_bound
+from Algorithms.Helpers.bounds import get_bound
 from random import choice, randint
 from tqdm import tqdm
 from multiprocessing import Pool
 import time
+import statistics
 
 def start_simulation(grid, p_size=20, generations=10):
     """
@@ -28,21 +29,13 @@ def start_simulation(grid, p_size=20, generations=10):
             None
     """
     # individual = list of batteries with their location?
+    start_time = time.time()
     genetic_history = []
     population = let_there_be_life_exclamation_mark(grid, p_size)
-    genetic_history.append(population)
     for i in range(generations):
-
-        # New population will consist of the fittest individual and mutations
-        # of it.
+        print("\n\nGeneration:\t",i)
         fittest, score = population[0][1], population[0][0]
-        print(fittest, fittest.print_stats("ayyy"), score)
         population = sorted(new_generation(fittest, score, p_size))
-        genetic_history.append([p[0] for p in population])
-    for i, p in enumerate(genetic_history):
-        print("generation:", i)
-        print("fittest:", p[0])
-        print("average:", sum([f for f in p])/len(p), "\n\n")
 
 def new_generation(fittest, score, p_size):
     """
@@ -92,18 +85,15 @@ def fitness(grid, fit_measure=battery_cycler):
 
         Takes
             Grid: grid containing the batteries and houses
+            Function: fitness function
 
         Returns
             int: fitness of the grid
     '''
     i_size = 10
-    # tim = time.time()
     score_list = []
-    with Pool(processes=1) as p:
+    with Pool(processes=5) as p:
         score_list = p.map(fit_measure, [grid for i in range(i_size)])
-        # tamar's schuld
-        #grid.reset()
-    # print(time.time() - tim)
     return sum(score_list)/len(score_list)
 
 
@@ -118,8 +108,6 @@ def mutated(parent):
             Grid: randomly mutated child of the input individual
     """
     child = parent.copy()
-    # tamar's schuld
-    #child = parent.deepcopy()
     mutate_battery_location(child)
     return child
 
@@ -129,7 +117,4 @@ def mutate_battery_location(individual):
                                   for y in range(individual.y_dim)
                                   if not (x, y) in individual.houses
                                   if not (x, y) in individual.batteries])
-    individual.move_battery(battery, new_location)
-
-def mutate_battery_type(individual):
-    battery = choice([b for b in individual.batteries.values()])
+    individual.move_battery(battery, new_location, linked_only=False)

@@ -1,3 +1,4 @@
+print("Loading modules")
 from Classes.grid import Grid
 from Classes.battery import *
 from Algorithms.Case_B.k_means import k_means
@@ -6,7 +7,6 @@ from Algorithms.Case_B.random_bat_config import random_bat_config
 from Algorithms.Case_B.population_based import start_simulation
 from Algorithms.Case_B.bat_migration import migration
 
-from Algorithms.Case_A.hill_leaper import hill_leaper
 from Algorithms.Case_A.greedy_hillclimber import greedy_hillclimber
 from Algorithms.Case_A.random_connect import random_sampler
 from Algorithms.Case_A.random_battery_cycler import battery_cycler, random_battery_cycler
@@ -53,9 +53,6 @@ if __name__ == "__main__":
 
 ###############testing purposes##################
 
-    # start_simulation(grid)
-
-    # print(run())
 
     start_simulation(grid)
     exit()

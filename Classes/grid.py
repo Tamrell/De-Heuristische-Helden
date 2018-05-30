@@ -20,7 +20,7 @@ class Grid:
         - batteries: dict containing: coordinate:Battery
     '''
 
-    def __init__(self, nbh, h_file, b_file=[], dimensions=(50, 50)):
+    def __init__(self, nbh, houses, batteries=[], dimensions=(50, 50)):
         '''
             Constructor, needs a file with information about the houses and
             optional dimensions of the Grid (default islf.houses = {} 50x50).
@@ -41,13 +41,13 @@ class Grid:
         self.nbh = nbh
         self.x_dim = dimensions[0]
         self.y_dim = dimensions[1]
-        self.houses = houses ###
+        self.houses = houses
         self.batteries = {}
         self.initial_batteries = {}
         self.grid_list = {}
         self.total_probability = 0
         self.total_loc_probability = 0
-        self.initial_houses = copy.deepcopy(self.houses) ##recalc!!
+        self.initial_houses = copy.deepcopy(self.houses)
         for b in batteries:
             self.add_battery(b)
 
@@ -60,18 +60,21 @@ class Grid:
 
     def add_battery(self, bat):
         self.batteries[bat.cord] = bat
-        self.initial_batteries[bat.cord] = copy.deepcopy(bat)
+        self.initial_batteries[bat.cord] = copy.copy(bat)
         for h in self.houses.values():
             h.dists.clear()
             for b in self.batteries.values():
                 h.dists[b] = self.distance(b.cord, h.cord)
 
-
-    def move_battery(self, bat, new_cord):
-        self.initial_batteries.pop(bat.cord)
-        self.batteries.pop(bat.cord)
+    def move_battery(self, bat, new_cord, linked_only=True):
+        self.batteries[new_cord] = self.batteries.pop(bat.cord)
         bat.cord = new_cord
-        self.add_battery(bat)
+        if linked_only:
+            for h in bat.links:
+                h.dists[bat] = self.distance(h.cord, bat.cord)
+        else:
+            for h in self.houses.values():
+                h.dists[bat] = self.distance(h.cord, bat.cord)
 
     def light_reset(self):
         for b in self.batteries.values():
@@ -81,6 +84,7 @@ class Grid:
                 unconnect(h)
 
     def reset(self):
+        # print('Reset')
         self.houses.clear()
         self.batteries.clear()
         self.houses = copy.deepcopy(self.initial_houses)
@@ -93,10 +97,12 @@ class Grid:
     def update(self, other):
         self.initial_houses.clear()
         self.initial_batteries.clear()
-        self.initial_houses = copy.deepcopy(other.initial_houses)
-        self.initial_batteries = copy.deepcopy(other.initial_batteries)
-        self.houses = copy.deepcopy(other.houses)
-        self.batteries = copy.deepcopy(other.batteries)
+        self.initial_houses.update(other.initial_houses)#= copy.copy(other.initial_houses)
+        self.initial_batteries.update(other.initial_batteries)
+        self.houses.clear()
+        self.batteries.clear()
+        self.houses = copy.copy(other.houses)
+        self.batteries = copy.copy(other.batteries)
         # self.reset()
 
     def legal(self):
