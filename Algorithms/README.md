@@ -13,6 +13,7 @@ In this part of the case, the type, location and amount of batteries are added o
 ### Data Analysis
 
 This folder contains programs used to analyze and generate data.
+- not relevant if you are interested in the workings of the code.
 
 ### Helpers
 

@@ -10,17 +10,8 @@ import statistics
 
 def start_simulation(grid, p_size=20, generations=10):
     """
-        Generates a random starting population using the weight lifter,
-        then either?????:
-        - creates offspring with mutations varying in severity based on
-          the 'fitness' of the individual
-        - creates a bigger amount of offspring off of individuals with a
-          higher 'fitness' and vice versa a lower amount for low fitness
-          (in percentages? keeping each generation to 20 individuals??)
-
-        continues untill stopped, then yields information???
-        //
-        or saves data in .csv files???
+        Generates a random starting population using the random_bat_config,
+        then uses the heuristic function to select the first fittest individual
 
         Takes
             Grid: grid containing the houses that have to be connected later on
@@ -29,8 +20,6 @@ def start_simulation(grid, p_size=20, generations=10):
             None
     """
     # individual = list of batteries with their location?
-    start_time = time.time()
-    genetic_history = []
     population = let_there_be_life_exclamation_mark(grid, p_size)
     for i in range(generations):
         print("\n\nGeneration:\t",i)
@@ -50,10 +39,11 @@ def new_generation(fittest, score, p_size):
             list: list containing the new population
     """
     population = []
-    for i in tqdm(range(p_size)):
+    for i in range(p_size):
         child = mutated(fittest)
         population.append((fitness(child), child))
-    # add parent
+
+    # add parent as well
     population.append((score, fittest))
     return population
 
