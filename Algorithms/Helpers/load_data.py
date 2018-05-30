@@ -13,6 +13,7 @@ from Algorithms.Case_B.bat_migration import migration
 from Algorithms.Case_A.greedy_hillclimber import greedy_hillclimber
 from Algorithms.Case_A.random_connect import random_sampler
 from Algorithms.Case_A.random_battery_cycler import battery_cycler
+from Algorithms.Case_A.random_battery_cycler import random_battery_cycler
 
 from Algorithms.Helpers.density import *
 from Algorithms.Helpers.bfcf import all_combos
@@ -111,7 +112,8 @@ def run_algorithm(alg, grid):
             algorithms[alg[0]][1](grid, combo)
             print("\n The best combination found was:\n\n", combo)
             print("\n With a score of: ", best)
-            print("\n Would you like to run more battery cycle iterations with this combo?")
+            print("\n Would you like to run more battery cycle")
+            print("iterations with this combo?")
             if input(" y/n? ") is 'y':
                 print("\n For how many iterations?")
                 i = getInt()
