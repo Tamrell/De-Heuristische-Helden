@@ -41,22 +41,22 @@ class Grid:
         self.x_dim = dimensions[0]
         self.y_dim = dimensions[1]
         self.houses = houses
+        self.initial_houses = copy.deepcopy(self.houses)
         self.batteries = {}
         self.initial_batteries = {}
         self.grid_list = {}
         self.total_probability = 0
         self.total_loc_probability = 0
-        self.initial_houses = copy.deepcopy(self.houses)
         for b in batteries:
             self.add_battery(b)
 
-    # defuq is met deze?
     def __lt__(self, other):
+        '''for practical reasons, this operation should always return True'''
         return True
 
     def copy(self):
         new_grid = copy.deepcopy(self)
-        self.recalc()
+        new_grid.recalc()
         return new_grid
 
     def add_battery(self, bat):

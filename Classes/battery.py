@@ -1,6 +1,13 @@
 from numpy import subtract
 
 def assign_color():
+    ''' For debugging reasons, we give batteries a color.
+
+        Args:
+            None
+        Returns:
+            str: next color
+    '''
     for color in ['on_green', 'on_blue', 'on_red', 'on_cyan', 'on_yellow',
                   'on_magenta', 'on_white', 'on_grey',
                   'on_green', 'on_blue', 'on_red', 'on_cyan', 'on_yellow',
@@ -38,6 +45,7 @@ class Battery:
         return False
 
     def fits(self, output):
+        ''' Returns True if the output fits on the battery else False'''
         if self.max_load >= self.load + output:
             return True
         return False
@@ -45,18 +53,21 @@ class Battery:
     def find_closest_house(self, grid, houses):
         ''' Returns the closest House object
 
-        Args:
-            Grid: grid that contains batteries
-            List: list containing houses on the grid
+            Args:
+                Grid: grid that contains batteries
+                List: list containing houses on the grid
 
-        Returns:
-            House: closest House
+            Returns:
+                House: closest House
         '''
         options = [(h.dists[self], h) for h in houses if self.fits(h.output)]
         if options:
             return min(options)[1]
 
     def fits_max(self, output, max_load):
+        ''' Returns True if the output fits on the battery if it had
+            a max_load equal to the third argument else False
+        '''
         if max_load >= self.load + output:
             return True
         return False
@@ -65,21 +76,6 @@ class Battery:
         options = [(h.dists[self], h) for h in houses if self.fits_max(h.output, max_load)]
         if options:
             return min(options)[1]
-
-    def find_cheapest_house(self):
-        ''' Returns the House object with the lowest output in self.links.
-
-        Args:
-            None
-
-        Returns:
-            House: 'cheapest' House
-        '''
-        cheapest = list(self.links)[0]
-        for h in self.links:
-            if h.output < cheapest.output:
-                cheapest = h
-        return cheapest
 
     def find_furthest_house(self, grid):
         ''' Returns the furthest House object in self.links.
@@ -92,7 +88,6 @@ class Battery:
         '''
         best = 0
         best_house = None
-
         for house in self.links:
             dist = grid.distance(house.cord, self.cord)
             if dist > best:

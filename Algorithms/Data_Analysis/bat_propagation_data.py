@@ -1,7 +1,5 @@
 from Algorithms.Helpers.bfcf import all_combos
-from Algorithms.Case_B.k_means import k_means
-from Algorithms.Case_A.random_battery_cycler import battery_cycler
-from Algorithms.Case_B.random_bat_config import random_bat_config
+from Algorithms.Case_B.bat_propagation import start_simulation
 import csv
 import statistics as stat
 from tqdm import tqdm
@@ -13,15 +11,14 @@ def bat_propagation_data(grid):
     '''
     for combo in tqdm(all_combos(grid)):
         results = []
-        for test in range(10):
+        for test in range(2):
             test_grid = grid.copy()
-            random_bat_config(test_grid, list(combo))
-            start_simulation(test_grid)
-            results.append(battery_cycler(test_grid))
+            results.append(start_simulation(test_grid, 5, list(combo)))
         best = min(results)
         worst = max(results)
         avg = stat.mean(results)
         stdev = stat.stdev(results)
-        with open('Results/Solspaces/K_means' + str(grid.nbh) + '.csv', 'a', newline='') as csvfile:
+        with open('Results/Solspaces/BP' +
+                  str(grid.nbh) + '.csv', 'a', newline='') as csvfile:
             writer = csv.writer(csvfile, delimiter=',')
             writer.writerow([combo[0:], best, worst, avg, stdev])

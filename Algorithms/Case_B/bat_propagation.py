@@ -7,7 +7,7 @@ from multiprocessing import Pool
 import time
 import statistics
 
-def start_simulation(grid, p_size=20, batteries=[], generations=10):
+def start_simulation(grid, p_size=20, batteries=[], generations=5):
     """
         Generates a random starting population using the random_bat_config,
         then uses the heuristic function to select the first fittest individual
@@ -27,6 +27,7 @@ def start_simulation(grid, p_size=20, batteries=[], generations=10):
         print("\n\nGeneration:\t",i)
         fittest, score = population[0][1], population[0][0]
         population = sorted(new_generation(fittest, score, p_size))
+    return population[0][0]
 
 def new_generation(fittest, score, p_size):
     """
@@ -84,7 +85,7 @@ def fitness(grid, fit_measure=battery_cycler):
         Returns
             int: fitness of the grid
     '''
-    i_size = 10
+    i_size = 5
     score_list = []
     with Pool(processes=5) as p:
         score_list = p.map(fit_measure, [grid for i in range(i_size)])

@@ -1,9 +1,8 @@
 from Classes.grid import Grid
-s
+
 from Algorithms.Case_B.k_means import k_means
 from Algorithms.Case_B.bat_propagation import start_simulation
 from Algorithms.Case_B.random_bat_config import random_bat_config
-from Algorithms.Case_B.population_based import start_simulation
 from Algorithms.Case_B.bat_migration import migration
 
 from Algorithms.Case_A.greedy_hillclimber import greedy_hillclimber
