@@ -56,15 +56,14 @@ class Grid:
         return True
 
     def copy(self):
-        return copy.deepcopy(self)
+        new_grid = copy.deepcopy(self)
+        self.recalc()
+        return new_grid
 
     def add_battery(self, bat):
         self.batteries[bat.cord] = bat
         self.initial_batteries[bat.cord] = copy.copy(bat)
-        for h in self.houses.values():
-            h.dists.clear()
-            for b in self.batteries.values():
-                h.dists[b] = self.distance(b.cord, h.cord)
+        self.recalc()
 
     def move_battery(self, bat, new_cord, linked_only=True):
         self.batteries[new_cord] = self.batteries.pop(bat.cord)
@@ -78,10 +77,14 @@ class Grid:
 
     def light_reset(self):
         for b in self.batteries.values():
-            if not b:
-                print('found the bug!!!')
             for h in list(b.links):
                 unconnect(h)
+
+    def recalc(self):
+        for h in self.houses.values():
+            h.dists.clear()
+            for b in self.batteries.values():
+                h.dists[b] = self.distance(b.cord, h.cord)
 
     def reset(self):
         # print('Reset')
@@ -89,10 +92,7 @@ class Grid:
         self.batteries.clear()
         self.houses = copy.deepcopy(self.initial_houses)
         self.batteries = copy.deepcopy(self.initial_batteries)
-        for h in self.houses.values():
-            h.dists.clear()
-            for b in self.batteries.values():
-                h.dists[b] = self.distance(b.cord, h.cord)
+        self.recalc()
 
     def update(self, other):
         self.initial_houses.clear()
