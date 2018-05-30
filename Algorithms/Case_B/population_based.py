@@ -38,12 +38,11 @@ def start_simulation(grid, p_size=20, generations=10):
         fittest, score = population[0][1], population[0][0]
         print(fittest, fittest.print_stats("ayyy"), score)
         population = sorted(new_generation(fittest, score, p_size))
-        genetic_history.append(population)
+        genetic_history.append([p[0] for p in population])
     for i, p in enumerate(genetic_history):
         print("generation:", i)
-        print("fittest:", p[0][0])
-        print("average:", sum([g[0] for g in p])/len(p), "\n\n")
-        print(battery_cycler(p[0][1]))
+        print("fittest:", p[0])
+        print("average:", sum([f for f in p])/len(p), "\n\n")
 
 def new_generation(fittest, score, p_size):
     """

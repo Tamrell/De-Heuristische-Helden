@@ -20,7 +20,7 @@ class Grid:
         - batteries: dict containing: coordinate:Battery
     '''
 
-    def __init__(self, nbh, houses, batteries=[], dimensions=(50, 50)):
+    def __init__(self, nbh, h_file, b_file=[], dimensions=(50, 50)):
         '''
             Constructor, needs a file with information about the houses and
             optional dimensions of the Grid (default islf.houses = {} 50x50).
@@ -41,13 +41,13 @@ class Grid:
         self.nbh = nbh
         self.x_dim = dimensions[0]
         self.y_dim = dimensions[1]
-        self.houses = houses
+        self.houses = houses ###
         self.batteries = {}
+        self.initial_batteries = {}
         self.grid_list = {}
         self.total_probability = 0
         self.total_loc_probability = 0
         self.initial_houses = copy.deepcopy(self.houses) ##recalc!!
-        self.initial_batteries = copy.deepcopy(self.batteries)
         for b in batteries:
             self.add_battery(b)
 
@@ -63,10 +63,8 @@ class Grid:
         self.initial_batteries[bat.cord] = copy.deepcopy(bat)
         for h in self.houses.values():
             h.dists.clear()
-            print(self.batteries)
             for b in self.batteries.values():
                 h.dists[b] = self.distance(b.cord, h.cord)
-            print(h.dists, "\n\n\n\n")
 
 
     def move_battery(self, bat, new_cord):
