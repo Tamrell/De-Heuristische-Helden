@@ -7,7 +7,10 @@ from tqdm import tqdm
 from multiprocessing import Pool
 import time
 import statistics
+<<<<<<< HEAD
+=======
 
+>>>>>>> a00bc56935511e898099dc2aed8ca7245a41b91f
 def start_simulation(grid, p_size=20, generations=10):
     """
         Generates a random starting population using the random_bat_config,

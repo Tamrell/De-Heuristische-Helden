@@ -1,4 +1,3 @@
-print("Loading modules")
 from Classes.grid import Grid
 from Classes.battery import *
 from Algorithms.Case_B.k_means import k_means
@@ -52,6 +51,40 @@ if __name__ == "__main__":
         grid = Grid(nbh, houses)
 
 
+    print("Battery cycling...")
+    print(battery_cycler(grid))
+    """
+    """
+    print("K-meansing")
+    grid.print_stats("K-means")
+    for i in range(100):
+        run_algorithm('b', grid)
+        print("Iteration", i, grid.score())
+        k_means(grid)
+        start_simulation(grid, 5, 5)
+    grid.print_stats("K-means")
+    """
+
+    """
+    combos = all_combos(grid)
+    # 22779
+    combo1 = ((900, 'Imerse-II'), (900, 'Imerse-II'), (900, 'Imerse-II'), (900, 'Imerse-II'), (900, 'Imerse-II'), (1800, 'Imerse-III'), (1800, 'Imerse-III'))
+    # 23625
+    combo2 = ((450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (1800, 'Imerse-III'))
+    # 23130
+    combo3 = ((450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (450, 'Powerstar'), (900, 'Imerse-II'), (900, 'Imerse-II'), (900, 'Imerse-II'), (900, 'Imerse-II'))
+
+    migration(grid, combo2)
+    random_battery_cycler(grid, 100)
+    print(grid)
+    grid.print_stats('RBC')
+    for bat in grid.batteries.values():
+        move_to_middle(grid, bat)
+        for h in bat.links:
+            h.dists[bat] = grid.distance(h.cord, bat.cord)
+    grid.print_stats('Middle')
+    print(grid)
+    """
 ###############testing purposes##################
     k_data(grid)
     #start_simulation(grid)
