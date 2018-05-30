@@ -64,7 +64,10 @@ class Grid:
         self.recalc()
 
     def move_battery(self, bat, new_cord, linked_only=True):
-        self.batteries[new_cord] = self.batteries.pop(bat.cord)
+        try:
+            self.batteries[new_cord] = self.batteries.pop(bat.cord)
+        except:
+            print(self.batteries, new_cord, bat.cord)
         bat.cord = new_cord
         if linked_only:
             for h in bat.links:

@@ -17,7 +17,7 @@ def k_data(grid):
     '''
     for combo in tqdm(all_combos(grid)):
         results = []
-        for test in range(2):
+        for test in range(10):
             test_grid = grid.copy()
             random_bat_config(test_grid, list(combo))
             k_means(test_grid)
