@@ -9,7 +9,6 @@ import statistics as st
 import sys
 import termcolor
 
-
 class Grid:
     '''
         atrributes:
@@ -52,7 +51,7 @@ class Grid:
             self.add_battery(b)
 
     def __lt__(self, other):
-        '''for practical reasons, this operation should always return True'''
+        '''for practical reasons, this operation should always return True.'''
         return True
 
     def copy(self):
@@ -79,19 +78,20 @@ class Grid:
                 h.dists[bat] = self.distance(h.cord, bat.cord)
 
     def light_reset(self):
-        '''Unconnects all houses in the grid'''
+        '''Unconnects all houses in the grid.'''
         for b in self.batteries.values():
             for h in list(b.links):
                 unconnect(h)
 
     def recalc(self):
+        """Recalculates all h.dists in the grid."""
         for h in self.houses.values():
             h.dists.clear()
             for b in self.batteries.values():
                 h.dists[b] = self.distance(b.cord, h.cord)
 
     def reset(self):
-        # print('Reset')
+        '''Resets the grid to it's original state.'''
         self.houses.clear()
         self.batteries.clear()
         self.houses = copy.deepcopy(self.initial_houses)
@@ -99,17 +99,18 @@ class Grid:
         self.recalc()
 
     def update(self, other):
+        '''Overwrites the grid with another grid.'''
         self.initial_houses.clear()
         self.initial_batteries.clear()
-        self.initial_houses.update(other.initial_houses)#= copy.copy(other.initial_houses)
+        self.initial_houses.update(other.initial_houses)
         self.initial_batteries.update(other.initial_batteries)
         self.houses.clear()
         self.batteries.clear()
         self.houses = copy.copy(other.houses)
         self.batteries = copy.copy(other.batteries)
-        # self.reset()
 
     def legal(self):
+        '''Checks whether the current configuration is legal.'''
         if [h for h in self.houses.values() if h.free]:
             return False
         for b in self.batteries.values():
@@ -118,6 +119,7 @@ class Grid:
         return True
 
     def score(self):
+        '''Returns the score of the current configuration.'''
         costs = {'Powerstar': 900,
                  'Imerse-II': 1350,
                  'Imerse-III': 1800,
@@ -130,7 +132,8 @@ class Grid:
         return score
 
     def print_stats(self):
-        print("\n\===============================================\ ")
+        '''Prints stats in a handy format.'''
+        print("\===============================================\ ")
         print("| Neighbourhood:", self.nbh,           "\t\t\t\t|")
         print("|===============================================|")
         print("| Battery    \t: load    \t: max\t\t|")
@@ -150,38 +153,21 @@ class Grid:
         print("\===============================================\ ")
 
     def total_output(self):
+        '''Calculates total output.'''
         output = 0
         for h in self.houses.values():
             output += h.output
         return output
 
     def total_capacity(self):
+        '''Calculates total capacity.'''
         capacity = 0
         for b in self.batteries.values():
             capacity += b.max_load
         return capacity
 
-    def standard_deviation(self):
-        return st.stdev([h.output for h in self.houses.values()])
-
-    def mean_distance_shortest(self):
-        return st.mean([h.dists[h.closest_battery(self)]
-                       for h in self.houses.values()])
-
-    def mean_distance(self):
-        return st.mean([d for h in self.houses.values()
-                          for d in h.dists.values()])
-
-    def std_distance_shortest(self):
-        return st.stdev([h.dists[h.closest_battery(self)]
-                        for h in self.houses.values()])
-
-    def std_distance(self):
-        return st.stdev([d for h in self.houses.values()
-                           for d in h.dists.values()])
-
     def defficiency(self):
-        # calculates how inefficient all the batteries are used.
+        '''Calculates how inefficient all the batteries are used.'''
         deff = 0
         for b in self.batteries.values():
             deff += abs(b.max_load - b.load)
@@ -214,6 +200,7 @@ class Grid:
         return s
 
     def distance(self, cord1, cord2):
+        '''Calculates manhattan distance between cord1 and cord2'''
         (x1, y1) = cord1
         (x2, y2) = cord2
         return (abs(int(x1) - int(x2)) + abs(int(y2) - int(y1)))
