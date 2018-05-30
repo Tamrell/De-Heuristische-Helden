@@ -104,7 +104,6 @@ class Grid:
         self.batteries.clear()
         self.houses = copy.copy(other.houses)
         self.batteries = copy.copy(other.batteries)
-        # self.reset()
 
     def legal(self):
         if [h for h in self.houses.values() if h.free]:

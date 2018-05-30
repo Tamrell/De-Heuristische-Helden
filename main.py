@@ -1,18 +1,7 @@
 from Classes.grid import Grid
-
-from Algorithms.Case_B.k_means import k_means
-from Algorithms.Case_B.bat_propagation import start_simulation
-from Algorithms.Case_B.random_bat_config import random_bat_config
-from Algorithms.Case_B.bat_migration import migration
-
 import Algorithms.Data_Analysis.plots as pts
-from Algorithms.Data_Analysis.k_data import k_data
-from Algorithms.Data_Analysis.plotter import custom_plotter, plotter
-
 import Algorithms.Helpers.load_data as dt
 from Algorithms.Helpers.density import move_to_middle
-
-from tqdm import tqdm
 
 
 if __name__ == "__main__":
