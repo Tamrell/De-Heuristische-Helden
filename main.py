@@ -9,21 +9,11 @@ import Algorithms.Data_Analysis.plots as pts
 from Algorithms.Data_Analysis.k_data import k_data
 from Algorithms.Data_Analysis.plotter import custom_plotter, plotter
 
-from Algorithms.Helpers.bfcf import all_combos
 import Algorithms.Helpers.load_data as dt
+from Algorithms.Helpers.density import move_to_middle
 
 from tqdm import tqdm
-import sys
-import time
 
-
-def run():
-    results = []
-    for i in range(100):
-        print(i)
-        results.append(run_algorithm('b', grid))
-        #greedy_hillclimber(grid)
-    return(min(results))
 
 if __name__ == "__main__":
 
@@ -42,4 +32,11 @@ if __name__ == "__main__":
 
     alg = dt.get_algorithm(case)
     dt.run_algorithm(alg, grid)
+    if case is 'b':
+        print(" Move batteries to optimal position for their links?")
+        move = input(' [y/n]: ')
+        if move is 'y':
+            for bat in grid.batteries.values():
+                move_to_middle(grid, bat)
+    grid.print_stats()
     pts.plot(grid)

@@ -22,13 +22,12 @@ def start_simulation(grid, p_size=20, batteries=[], generations=5):
         Returns
             None
     """
-    # individual = list of batteries with their location?
     population = let_there_be_life_exclamation_mark(grid, p_size, batteries)
     for i in range(generations):
         print("\n\nGeneration:\t",i)
         fittest, score = population[0][1], population[0][0]
         population = sorted(new_generation(fittest, score, p_size))
-    return population[0][0]
+    return population[0][1]
 
 
 def new_generation(fittest, score, p_size):

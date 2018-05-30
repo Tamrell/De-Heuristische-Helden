@@ -129,27 +129,24 @@ class Grid:
             score += costs[b.type]
         return score
 
-    def print_stats(self, alg):
+    def print_stats(self):
         print("\===============================================\ ")
         print("| Neighbourhood:", self.nbh,           "\t\t\t\t|")
-        print("| Algorithm:", alg,                      "\t\t\t|")
         print("|===============================================|")
-        print("| Battery    \t: load    \t\t: max           \t\t|")
+        print("| Battery    \t: load    \t: max\t\t|")
         print("|-----------------------------------------------|")
         for b in self.batteries.values():
             print("|", b.color[3:] + '  ', "\t:", round(b.load, 4),
-                  "\t:", b.max_load, "\t|")
+                  "\t: %.2f\t|" % b.max_load)
         print("|-----------------------------------------------|")
-        print("| total capacity:", self.total_capacity(), "\t\t\t|")
-        print("| total output  :", round(self.total_output()), "\t\t\t\t|")
+        print("| total capacity: %.2f\t\t\t|" % self.total_capacity())
+        print("| total output  : %.2f\t\t\t|" % self.total_output())
         print("| total deff.   :", int(self.defficiency()), "\t\t\t\t|")
         print("|===============================================|")
         print("| total houses  :", len(self.houses), "\t\t\t\t|")
         print("| average output:",
                  round(self.total_output()/len(self.houses)), "\t\t\t\t|")
-        # if pre:
-        #     print("| vanilla-cost\t:", pre, "\t\t\t\t|")
-        print("| final-cost\t:", self.score(), "\t\t\t\t|")
+        print("| final-cost\t:", self.score(), "\t\t\t|")
         print("\===============================================\ ")
 
     def total_output(self):
