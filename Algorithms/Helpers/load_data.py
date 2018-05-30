@@ -74,10 +74,12 @@ def run_algorithm(alg, grid):
                   'k': ['K-Means', k_means],
                   'p': ['Bat Propagation', start_simulation]
                  }
+    # Random Connect or Heatmap
     if len(alg) is 1:
         algorithms[alg][1](grid)
 
     elif len(alg) is 2:
+        # Battery Cycler, K-Means or Bat Propagation
         if type(alg[1]) is int:
             if alg[0] is 'b':
                 algorithms[alg[0]][1](grid, alg[1])
@@ -86,9 +88,13 @@ def run_algorithm(alg, grid):
                 algorithms[alg[0]][1](grid)
                 random_battery_cycler(grid, alg[1])
             else:
-                algorithms[alg[0]][1](grid)
+                print(" How many generations?")
+                gen = getInt()
+                print(" Population size per generation?")
+                pop = getInt()
+                grid.update(algorithms[alg[0]][1](grid, p_size=pop, generations=gen))
                 random_battery_cycler(grid, alg[1])
-
+        # Migration all combos
         elif type(alg[1]) is str:
             results = []
             combos = all_combos(grid)
@@ -105,17 +111,11 @@ def run_algorithm(alg, grid):
             print("\n Would you like to run more battery cycle iterations with this combo?")
             if input(" y/n? ") is 'y':
                 print("\n For how many iterations?")
-                i = ''
-                while not i:
-                    userInput = input(' (int): ')
-                    try:
-                        i = int(userInput)
-                    except ValueError:
-                        print(" That's not an integer \n")
+                i = getInt()
                 random_battery_cycler(grid, i)
                 for bat in grid.batteries.values():
                     move_to_middle(grid, bat)
-
+    # Migration random combo
     else:
         combos = all_combos(grid)
         if alg[2] is 'r':
@@ -150,12 +150,7 @@ def get_algorithm(case):
         else:
             it = ''
             print("\n How many iterations of battery cycling would you like to run?")
-            while not it:
-                userInput = input(' (int): ')
-                try:
-                    it = int(userInput)
-                except ValueError:
-                    print(" That's not an integer \n")
+            it = getInt()
             return(alg, it)
 
     else:
@@ -166,28 +161,16 @@ def get_algorithm(case):
         while alg not in ['m', 'k', 'p']:
             alg = input(' [m / k / p]: ')
         if alg is not 'm':
-            it = ''
             print("\n How many iterations of battery cycling would you like to run?")
-            while not it:
-                userInput = input(' (int): ')
-                try:
-                    it = int(userInput)
-                except ValueError:
-                    print(" That's not an integer \n")
+            it = getInt()
             return alg, it
 
         random = input("\n Random combination or all possible combinations?\n [r/a]: ")
         while random not in ['a', 'r']:
             random = input(" Only r or a\n [r/a]: ")
         if random is 'r':
-            it = ''
             print("\n How many iterations of battery cycling would you like to run?")
-            while not it:
-                userInput = input(' (int): ')
-                try:
-                    it = int(userInput)
-                except ValueError:
-                    print(" That's not an integer \n")
+            it = getInt()
             return alg, it, random
         return alg, random
 
@@ -210,3 +193,13 @@ def get_neighbourhood():
         print(" ", nbh, "is an invalid choice, please choose 1, 2 or 3")
         nbh = input("\n (int): ")
     return nbh
+
+def getInt():
+    it = ''
+    while not it:
+        userInput = input(' (int): ')
+        try:
+            it = int(userInput)
+        except ValueError:
+            print(" That's not an integer \n")
+    return it
