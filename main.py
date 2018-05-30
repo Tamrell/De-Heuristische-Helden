@@ -6,13 +6,10 @@ from Algorithms.Case_B.random_bat_config import random_bat_config
 from Algorithms.Case_B.bat_migration import migration
 
 import Algorithms.Data_Analysis.plots as pts
-from Algorithms.Data_Analysis.k_data import k_data
 from Algorithms.Data_Analysis.plotter import custom_plotter, plotter
 
 import Algorithms.Helpers.load_data as dt
 from Algorithms.Helpers.density import move_to_middle
-
-from tqdm import tqdm
 
 
 if __name__ == "__main__":
@@ -20,10 +17,11 @@ if __name__ == "__main__":
     nbh = dt.get_neighbourhood()
     houses = dt.get_houses('Data/wijk' + nbh + '_huizen.csv')
     batteries = dt.get_batteries('Data/wijk' + nbh + '_batterijen.txt')
-
-    case = input(" Which part of the case do you want to run?\n [a/b]: ")
+    print(" Which part of the case do you want to run?\n - a:",
+          "connecting houses and batteries\n - b: placing batteries\n")
+    case = input("[a/b]: ")
     while case not in ['a', 'b']:
-        case = input(" Only A or B\n [a/b]: ")
+        case = input(" Only a or b\n [a/b]: ")
 
     if case == 'a':
         grid = Grid(nbh, houses, batteries)
@@ -33,7 +31,7 @@ if __name__ == "__main__":
     alg = dt.get_algorithm(case)
     dt.run_algorithm(alg, grid)
     if case is 'b':
-        print("\n Move batteries to optimal position for their links?")
+        print(" Move batteries to optimal position for their links?")
         move = input(' [y/n]: ')
         if move is 'y':
             for bat in grid.batteries.values():
