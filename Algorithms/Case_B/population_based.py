@@ -117,7 +117,7 @@ def fitness(grid, fit_measure=get_bound):
     i_size = 10
     # tim = time.time()
     score_list = []
-    with Pool(processes=1) as p:
+    with Pool(processes=5) as p:
         score_list = p.map(fit_measure, [grid for i in range(i_size)])
         # tamar's schuld
         #grid.reset()
