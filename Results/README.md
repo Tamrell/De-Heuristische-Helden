@@ -2,7 +2,7 @@
 
 ### This map contains the documentation for the Results found in the project.
 
-- Report
+- Report (Heuristieken.pdf)
 - Slides
 - Solspaces (solution spaces)
 - Graphs (plotted neighbourhoods)
