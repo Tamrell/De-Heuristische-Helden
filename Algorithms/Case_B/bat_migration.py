@@ -3,14 +3,14 @@ import time
 from copy import deepcopy
 from Classes.grid import *
 from Classes.battery import *
-from Algorithms.Helpers.density_reset import *
+from Algorithms.Helpers.density import set_global_density, set_local_density
 from Algorithms.Helpers.bfcf import all_combos
 from Algorithms.Helpers.connect import *
 
 def migration(grid, combo):
     """
     Goes through a combination of batteries. For each battery, it finds the
-    most "locally dense" point on the grid, and places the battery there.
+    most locally dense point on the grid, and places the battery there.
     It then finds the closest houses and connects until the capacity of an
     average battery (the total output of the houses divided by the number
     of batteries) is reached. The density is then recalculated without
