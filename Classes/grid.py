@@ -130,7 +130,7 @@ class Grid:
         return score
 
     def print_stats(self):
-        print("\===============================================\ ")
+        print("\n\===============================================\ ")
         print("| Neighbourhood:", self.nbh,           "\t\t\t\t|")
         print("|===============================================|")
         print("| Battery    \t: load    \t: max\t\t|")
