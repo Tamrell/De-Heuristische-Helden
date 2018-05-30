@@ -10,7 +10,7 @@ from Algorithms.Helpers.connect import *
 def migration(grid, combo):
     """
     Goes through a combination of batteries. For each battery, it finds the
-    most "locally dense" point on the grid, and places the battery there.
+    most locally dense point on the grid, and places the battery there.
     It then finds the closest houses and connects until the capacity of an
     average battery (the total output of the houses divided by the number
     of batteries) is reached. The density is then recalculated without

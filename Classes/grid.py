@@ -1,6 +1,4 @@
 import plotly.plotly as py
-import plotly.graph_objs as go
-from plotly.offline import plot
 from Classes.house import House
 from Classes.battery import Battery, assign_color
 from Algorithms.Helpers.connect import unconnect
@@ -117,36 +115,6 @@ class Grid:
                 return False
         return True
 
-    def y_list(self, y, method=0):
-        ''' Helper function for print_heatmap. Returns the probabilities
-            of row y.
-        '''
-
-        dist_list = []
-        if not method:
-            for i in range(self.x_dim):
-                dist_list.append(self.grid_list[(i, y)].probability)
-
-        if method == 1:
-            for i in range(self.x_dim):
-                dist_list.append(self.grid_list[(i, y)].loc_probability)
-        return dist_list
-
-    def print_heatmap(self, method=0):
-        '''
-            Prints out the global density heatmap in a file called
-            'labelled-heatmap.html' using Plotly.
-
-            Args:
-                method (Integer):   0: Global Density.
-                                    1: Relative Density.
-        '''
-
-        trace = go.Heatmap(z = [self.y_list(i, method) for i
-                                in range(self.x_dim)])
-        data = [trace]
-        plot(data, filename='labelled-heatmap.html')
-
     def score(self):
         costs = {'Powerstar': 900,
                  'Imerse-II': 1350,
@@ -219,7 +187,6 @@ class Grid:
         for b in self.batteries.values():
             deff += abs(b.max_load - b.load)
         return deff
-
 
     def __str__(self):
         '''
