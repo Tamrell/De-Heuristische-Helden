@@ -10,7 +10,7 @@ def all_combos(grid):
 
     Returns
         List: list containing tuples containing tuples:
-              [(total_capacity, (capacity, battery_type).etc).etc]
+              [(capacity, battery_type).etc)]
     """
     all_batteries = [(450, 'Powerstar'),
                      (900, 'Imerse-II'),

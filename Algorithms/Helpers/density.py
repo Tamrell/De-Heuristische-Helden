@@ -1,4 +1,6 @@
 from Classes.grid import Grid_Point
+import plotly.graph_objs as go
+from plotly.offline import plot
 import time
 
 def set_global_density(grid, house_list, x_range=(0,50), y_range=(0,50)):
@@ -17,6 +19,9 @@ def set_global_density(grid, house_list, x_range=(0,50), y_range=(0,50)):
 
         List: A list of batteries (capacity, battery type) that will be
         placed on the Grid.
+
+        Tuple: Optional arguments x_range and y_range to reduce the range of
+        points to be calculated.
 
     Returns
         None
@@ -93,3 +98,34 @@ def move_to_middle(grid, bat):
                          reverse=True)
     loc = (sorted_list[0].x, sorted_list[0].y)
     grid.move_battery_migration(bat, loc)
+
+
+def y_list(grid, y, method=0):
+    ''' Helper function for print_heatmap. Returns the probabilities
+        of row y.
+    '''
+
+    dist_list = []
+    if not method:
+        for i in range(grid.x_dim):
+            dist_list.append(grid.grid_list[(i, y)].probability)
+
+    if method == 1:
+        for i in range(grid.x_dim):
+            dist_list.append(grid.grid_list[(i, y)].loc_probability)
+    return dist_list
+
+def print_heatmap(grid, method=0):
+    '''
+        Prints out the global density heatmap in a file called
+        'labelled-heatmap.html' using Plotly.
+
+        Args:
+            method (Integer):   0: Global Density.
+                                1: Relative Density.
+    '''
+
+    set_global_density(grid, grid.houses.values())
+    trace = go.Heatmap(z = [y_list(grid, i, method) for i in range(grid.x_dim)])
+    data = [trace]
+    plot(data, filename='labelled-heatmap.html')

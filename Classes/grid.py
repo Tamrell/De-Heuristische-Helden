@@ -1,6 +1,4 @@
 import plotly.plotly as py
-import plotly.graph_objs as go
-from plotly.offline import plot
 from Classes.house import House
 from Classes.battery import Battery, assign_color
 from Algorithms.Helpers.connect import unconnect
@@ -43,11 +41,11 @@ class Grid:
         self.y_dim = dimensions[1]
         self.houses = houses
         self.batteries = {}
+        self.initial_batteries = {}
         self.grid_list = {}
         self.total_probability = 0
         self.total_loc_probability = 0
-        self.initial_houses = copy.deepcopy(self.houses) ##recalc!!
-        self.initial_batteries = copy.deepcopy(self.batteries)
+        self.initial_houses = copy.deepcopy(self.houses)
         for b in batteries:
             self.add_battery(b)
 
@@ -56,36 +54,35 @@ class Grid:
         return True
 
     def copy(self):
-        return copy.deepcopy(self)
+        new_grid = copy.deepcopy(self)
+        self.recalc()
+        return new_grid
 
     def add_battery(self, bat):
         self.batteries[bat.cord] = bat
         self.initial_batteries[bat.cord] = copy.copy(bat)
+        self.recalc()
+
+    def move_battery(self, bat, new_cord, linked_only=True):
+        self.batteries[new_cord] = self.batteries.pop(bat.cord)
+        bat.cord = new_cord
+        if linked_only:
+            for h in bat.links:
+                h.dists[bat] = self.distance(h.cord, bat.cord)
+        else:
+            for h in self.houses.values():
+                h.dists[bat] = self.distance(h.cord, bat.cord)
+
+    def light_reset(self):
+        for b in self.batteries.values():
+            for h in list(b.links):
+                unconnect(h)
+
+    def recalc(self):
         for h in self.houses.values():
             h.dists.clear()
             for b in self.batteries.values():
                 h.dists[b] = self.distance(b.cord, h.cord)
-            #print(h.dists, "\n\n\n\n")
-
-    def move_battery(self, bat, new_cord):
-        self.initial_batteries.pop(bat.cord)
-        self.batteries.pop(bat.cord)
-        bat.cord = new_cord
-        self.add_battery(bat)
-
-    def move_battery_migration(self, bat, new_cord):
-        self.batteries[new_cord] = self.batteries.pop(bat.cord)
-        bat.cord = new_cord
-        for h in bat.links:
-            h.dists[bat] = self.distance(h.cord, bat.cord)
-
-
-    def light_reset(self):
-        for b in self.batteries.values():
-            if not b:
-                print('found the bug!!!')
-            for h in list(b.links):
-                unconnect(h)
 
     def reset(self):
         # print('Reset')
@@ -93,10 +90,7 @@ class Grid:
         self.batteries.clear()
         self.houses = copy.deepcopy(self.initial_houses)
         self.batteries = copy.deepcopy(self.initial_batteries)
-        for h in self.houses.values():
-            h.dists.clear()
-            for b in self.batteries.values():
-                h.dists[b] = self.distance(b.cord, h.cord)
+        self.recalc()
 
     def update(self, other):
         self.initial_houses.clear()
@@ -116,36 +110,6 @@ class Grid:
             if b.load > b.max_load:
                 return False
         return True
-
-    def y_list(self, y, method=0):
-        ''' Helper function for print_heatmap. Returns the probabilities
-            of row y.
-        '''
-
-        dist_list = []
-        if not method:
-            for i in range(self.x_dim):
-                dist_list.append(self.grid_list[(i, y)].probability)
-
-        if method == 1:
-            for i in range(self.x_dim):
-                dist_list.append(self.grid_list[(i, y)].loc_probability)
-        return dist_list
-
-    def print_heatmap(self, method=0):
-        '''
-            Prints out the global density heatmap in a file called
-            'labelled-heatmap.html' using Plotly.
-
-            Args:
-                method (Integer):   0: Global Density.
-                                    1: Relative Density.
-        '''
-
-        trace = go.Heatmap(z = [self.y_list(i, method) for i
-                                in range(self.x_dim)])
-        data = [trace]
-        plot(data, filename='labelled-heatmap.html')
 
     def score(self):
         costs = {'Powerstar': 900,
@@ -219,7 +183,6 @@ class Grid:
         for b in self.batteries.values():
             deff += abs(b.max_load - b.load)
         return deff
-
 
     def __str__(self):
         '''
