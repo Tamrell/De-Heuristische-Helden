@@ -69,7 +69,7 @@ From here you will be able to navigate through a menu to run the algorithm of yo
 
 ## Authors
 
-* Joeri Freesen, Tamar Vis, Angelo Groot
+* Joeri Fresen, Tamar Vis, Angelo Groot
 
 ## Dankwoord (Acknowledgments)
 
