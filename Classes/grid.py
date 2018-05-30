@@ -235,7 +235,6 @@ class Grid_Point:
                 houses (Dictionary): A dictionary of Houses on the grid, key is
                 given by a tuple (x, y).
         '''
-
         self.probability = 0
         self.distance = 0
         self.loc_distance = 0

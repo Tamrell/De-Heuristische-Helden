@@ -7,19 +7,22 @@ from multiprocessing import Pool
 import time
 import statistics
 
-def start_simulation(grid, p_size=20, generations=10):
+def start_simulation(grid, p_size=20, batteries=[], generations=10):
     """
         Generates a random starting population using the random_bat_config,
         then uses the heuristic function to select the first fittest individual
 
         Takes
             Grid: grid containing the houses that have to be connected later on
+            Int(optional): population size
+            List(optional): list containing starting batteries
+            Int(optional): number of generations
 
         Returns
             None
     """
     # individual = list of batteries with their location?
-    population = let_there_be_life_exclamation_mark(grid, p_size)
+    population = let_there_be_life_exclamation_mark(grid, p_size, batteries)
     for i in range(generations):
         print("\n\nGeneration:\t",i)
         fittest, score = population[0][1], population[0][0]
@@ -32,6 +35,7 @@ def new_generation(fittest, score, p_size):
 
         Takes
             Grid: individual containing the batteries and houses
+            Int: score of the fittest individual
             int: population size
 
         Returns
@@ -48,13 +52,14 @@ def new_generation(fittest, score, p_size):
 
 
 
-def let_there_be_life_exclamation_mark(grid, p_size):
+def let_there_be_life_exclamation_mark(grid, p_size, batteries):
     """
         Generates a random starting population of size p_size.
 
         Takes
             Grid: grid containing the batteries and houses
             int: population size
+            List(optional): list containing starting batteries
 
         Returns
             list: list containing the population
@@ -62,7 +67,7 @@ def let_there_be_life_exclamation_mark(grid, p_size):
     population = []
     for i in range(p_size):
         individual = Grid(grid.nbh, grid.houses)
-        random_bat_config(individual)
+        random_bat_config(individual, batteries)
         population.append([fitness(individual), individual])
     return sorted(population)
 
