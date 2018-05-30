@@ -5,12 +5,12 @@ def all_combos(grid):
         This function makes all combinations of batteries which have
         a summed capacity that first exceeds the sum of all the houses' output.
 
-    Takes
-        Grid: grid containing the houses that have to be connected later on
+        Takes
+            Grid: grid containing the houses that have to be connected later on
 
-    Returns
-        List: list containing tuples containing tuples:
-              [(capacity, battery_type).etc)]
+        Returns
+            List: list containing tuples containing tuples:
+                  [(capacity, battery_type).etc)]
     """
     all_batteries = [(450, 'Powerstar'),
                      (900, 'Imerse-II'),

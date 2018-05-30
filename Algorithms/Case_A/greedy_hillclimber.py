@@ -2,7 +2,7 @@ from Algorithms.Helpers.connect import hard_swap, swappable, swap_cost
 
 def greedy_hillclimber(grid):
     '''
-       Calculates which swaps decrease total cost, then picks the swap Which
+       Calculates which swaps decrease total cost, then picks the swap which
        leads to the biggest decrease and makes the swap. Repeats the process
        until there are no benefitting swaps left.
     '''

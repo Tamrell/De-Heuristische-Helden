@@ -1,4 +1,3 @@
-print("Loading modules")
 from Classes.grid import Grid
 from Classes.battery import *
 
@@ -13,39 +12,20 @@ from tqdm import tqdm
 import sys
 import time
 
-def get_neighbourhood():
-    """
-        This function selects the neighbourhood to run algorithms for, depending
-        on user input.
-        Takes:
-            None
-        Returns:
-            The number of the neighbourhood to run the algorithms for.
-    """
-    legal = {'1', '2', '3'}
-    print("\n For which neighbourhood do you want to run an algorithm?")
-    nbh = input(" (int): ")
-
-    # validity checking
-    while not nbh in legal:
-        print(" ", nbh, "is an invalid choice, please choose 1, 2 or 3")
-        nbh = input("\n (int): ")
-    return nbh
 
 def run():
     results = []
     for i in range(100):
         print(i)
         results.append(run_algorithm('b', grid))
+        #greedy_hillclimber(grid)
     return(min(results))
 
 if __name__ == "__main__":
 
     nbh = dt.get_neighbourhood()
-    h_file = 'Data/wijk' + nbh + '_huizen.csv'
-    b_file = 'Data/wijk' + nbh + '_batterijen.txt'
-    houses = dt.get_houses(h_file)
-    batteries = dt.get_batteries(b_file)
+    houses = dt.get_houses('Data/wijk' + nbh + '_huizen.csv')
+    batteries = dt.get_batteries('Data/wijk' + nbh + '_batterijen.txt')
 
     case = input(" Which part of the case do you want to run?\n [a/b]: ")
     while case not in ['a', 'b']:
@@ -59,3 +39,4 @@ if __name__ == "__main__":
     alg = dt.get_algorithm(case)
     dt.run_algorithm(alg, grid)
     pts.plot(grid)
+

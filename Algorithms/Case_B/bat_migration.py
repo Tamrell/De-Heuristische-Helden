@@ -7,6 +7,7 @@ from Algorithms.Helpers.density import set_global_density, set_local_density
 from Algorithms.Helpers.bfcf import all_combos
 from Algorithms.Helpers.connect import *
 
+
 def migration(grid, combo):
     """
     Goes through a combination of batteries. For each battery, it finds the
@@ -39,8 +40,8 @@ def migration(grid, combo):
 
     for bat in combo:
         # Get point with highest local density and add bat
-        sorted_list = sorted(grid.grid_list.values(), key=lambda x: x.loc_probability,
-                             reverse=True)
+        sorted_list = sorted(grid.grid_list.values(),
+                             key=lambda x: x.loc_probability, reverse=True)
         location = (sorted_list[0].x, sorted_list[0].y)
         bats.append(location)
         b = Battery(location, bat[0])

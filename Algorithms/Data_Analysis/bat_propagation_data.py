@@ -7,16 +7,16 @@ import statistics as stat
 from tqdm import tqdm
 
 
-def k_data(grid):
+def bat_propagation_data(grid):
     '''
-       saves data for k_means, given a grid.
+       saves data for bat_propagation, given a grid.
     '''
     for combo in tqdm(all_combos(grid)):
         results = []
         for test in range(10):
             test_grid = grid.copy()
             random_bat_config(test_grid, list(combo))
-            k_means(test_grid)
+            start_simulation(test_grid)
             results.append(battery_cycler(test_grid))
         best = min(results)
         worst = max(results)

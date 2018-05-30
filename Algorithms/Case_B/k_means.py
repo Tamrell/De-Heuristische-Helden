@@ -42,9 +42,8 @@ def cluster_mean(grid, battery):
         y = int(mean([cord[1] for cord in houses]))
 
         # Move battery to the mean, or next to it if it contains a house.
-
         for i in [0, 1, -1]:
             for cord in [(x + i, y), (x, y + i)]:
                 if not cord in grid.houses:
                     grid.move_battery(battery ,cord)
-                    break
+                    return

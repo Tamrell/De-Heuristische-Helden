@@ -4,6 +4,10 @@
 
 In this part of the case, the problem is that the batteries and houses have to be connected while minimizing the total cost and satisfying the constraints specified for the case.
 - Battery type and coordinates are given.
+contains:
+- Bat Migration
+- k-Means
+- Bat Propagation (population_based)
 
 ### Case B: Choosing, placing and moving the Batteries
 
@@ -13,6 +17,7 @@ In this part of the case, the type, location and amount of batteries are added o
 ### Data Analysis
 
 This folder contains programs used to analyze and generate data.
+- not relevant if you are interested in the workings of the code.
 
 ### Helpers
 

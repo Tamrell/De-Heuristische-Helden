@@ -9,6 +9,7 @@ import statistics as st
 import sys
 import termcolor
 
+
 class Grid:
     '''
         atrributes:
@@ -63,7 +64,10 @@ class Grid:
         self.recalc()
 
     def move_battery(self, bat, new_cord, linked_only=True):
-        self.batteries[new_cord] = self.batteries.pop(bat.cord)
+        try:
+            self.batteries[new_cord] = self.batteries.pop(bat.cord)
+        except:
+            print(self.batteries, new_cord, bat.cord)
         bat.cord = new_cord
         if linked_only:
             for h in bat.links:
@@ -84,6 +88,7 @@ class Grid:
                 h.dists[b] = self.distance(b.cord, h.cord)
 
     def reset(self):
+        # print('Reset')
         self.houses.clear()
         self.batteries.clear()
         self.houses = copy.deepcopy(self.initial_houses)
@@ -93,12 +98,13 @@ class Grid:
     def update(self, other):
         self.initial_houses.clear()
         self.initial_batteries.clear()
-        self.initial_houses.update(other.initial_houses)
+        self.initial_houses.update(other.initial_houses)#= copy.copy(other.initial_houses)
         self.initial_batteries.update(other.initial_batteries)
         self.houses.clear()
         self.batteries.clear()
         self.houses = copy.copy(other.houses)
         self.batteries = copy.copy(other.batteries)
+        # self.reset()
 
     def legal(self):
         if [h for h in self.houses.values() if h.free]:
@@ -138,6 +144,8 @@ class Grid:
         print("| total houses  :", len(self.houses), "\t\t\t\t|")
         print("| average output:",
                  round(self.total_output()/len(self.houses)), "\t\t\t\t|")
+        # if pre:
+        #     print("| vanilla-cost\t:", pre, "\t\t\t\t|")
         print("| final-cost\t:", self.score(), "\t\t\t\t|")
         print("\===============================================\ ")
 
@@ -226,7 +234,6 @@ class Grid_Point:
                 houses (Dictionary): A dictionary of Houses on the grid, key is
                 given by a tuple (x, y).
         '''
-
         self.probability = 0
         self.distance = 0
         self.loc_distance = 0

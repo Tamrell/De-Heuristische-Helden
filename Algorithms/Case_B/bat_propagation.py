@@ -2,36 +2,27 @@ from Classes.grid import Grid
 from Algorithms.Case_A.random_battery_cycler import battery_cycler
 from Algorithms.Case_B.random_bat_config import random_bat_config
 from Algorithms.Helpers.bounds import get_bound
-from random import choice, randint
-from tqdm import tqdm
+from random import choice
 from multiprocessing import Pool
 import time
 import statistics
 
-def start_simulation(grid, p_size=20, generations=10):
+def start_simulation(grid, p_size=20, batteries=[], generations=10):
     """
-        Generates a random starting population using the weight lifter,
-        then either?????:
-        - creates offspring with mutations varying in severity based on
-          the 'fitness' of the individual
-        - creates a bigger amount of offspring off of individuals with a
-          higher 'fitness' and vice versa a lower amount for low fitness
-          (in percentages? keeping each generation to 20 individuals??)
-
-        continues untill stopped, then yields information???
-        //
-        or saves data in .csv files???
+        Generates a random starting population using the random_bat_config,
+        then uses the heuristic function to select the first fittest individual
 
         Takes
             Grid: grid containing the houses that have to be connected later on
+            Int(optional): population size
+            List(optional): list containing starting batteries
+            Int(optional): number of generations
 
         Returns
             None
     """
     # individual = list of batteries with their location?
-    start_time = time.time()
-    genetic_history = []
-    population = let_there_be_life_exclamation_mark(grid, p_size)
+    population = let_there_be_life_exclamation_mark(grid, p_size, batteries)
     for i in range(generations):
         print("\n\nGeneration:\t",i)
         fittest, score = population[0][1], population[0][0]
@@ -44,36 +35,39 @@ def new_generation(fittest, score, p_size):
 
         Takes
             Grid: individual containing the batteries and houses
+            Int: score of the fittest individual
             int: population size
 
         Returns
             list: list containing the new population
     """
     population = []
-    for i in tqdm(range(p_size)):
+    for i in range(p_size):
         child = mutated(fittest)
         population.append((fitness(child), child))
-    # add parent
+
+    # add parent as well
     population.append((score, fittest))
     return population
 
 
 
-def let_there_be_life_exclamation_mark(grid, p_size):
+def let_there_be_life_exclamation_mark(grid, p_size, batteries):
     """
         Generates a random starting population of size p_size.
 
         Takes
             Grid: grid containing the batteries and houses
             int: population size
+            List(optional): list containing starting batteries
 
         Returns
             list: list containing the population
     """
     population = []
-    for i in tqdm(range(p_size)):
+    for i in range(p_size):
         individual = Grid(grid.nbh, grid.houses)
-        random_bat_config(individual)
+        random_bat_config(individual, batteries)
         population.append([fitness(individual), individual])
     return sorted(population)
 
