@@ -3,7 +3,6 @@ import Algorithms.Data_Analysis.plots as pts
 import Algorithms.Helpers.load_data as dt
 from Algorithms.Helpers.density import move_to_middle
 
-
 if __name__ == "__main__":
 
     nbh = dt.get_neighbourhood()
@@ -11,7 +10,7 @@ if __name__ == "__main__":
     batteries = dt.get_batteries('Data/wijk' + nbh + '_batterijen.txt')
     print(" Which part of the case do you want to run?\n - a:",
           "connecting houses and batteries\n - b: placing batteries\n")
-    case = input("[a/b]: ")
+    case = input(" [a/b]: ")
     while case not in ['a', 'b']:
         case = input(" Only a or b\n [a/b]: ")
 
