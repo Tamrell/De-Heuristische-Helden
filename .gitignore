@@ -10,3 +10,4 @@ __pycache__/
 *.prof
 archive.py
 analyses.py
+*.vscode
