@@ -12,6 +12,7 @@ from Algorithms.Case_A.random_connect import random_sampler
 from Algorithms.Case_A.random_battery_cycler import battery_cycler, random_battery_cycler
 from Algorithms.Helpers.density import *
 
+
 def get_houses(data):
     '''
         Takes a .csv file and add the houses in the file to a
@@ -51,6 +52,7 @@ def get_batteries(data):
             batteries.append(Battery(location, capacity))
     return batteries
 
+
 def run_algorithm(alg, grid):
     """
         The function run_algorithm(alg, grid) calls one of the primary algorithms,
@@ -74,18 +76,16 @@ def run_algorithm(alg, grid):
     elif len(alg) is 2:
         algorithms[alg[0]][1](grid, alg[1])
 
-    # return algorithms[alg][1](grid)
-    # return algorithms[alg][0]
 
 def get_algorithm(case):
     """
-    This function selects the algorithm to run.
+        This function selects the algorithm to run.
 
-    Takes:
-        None
+        Takes:
+            None
 
-    Returns:
-        string: user input resembling the algorithm to run
+        Returns:
+            string: user input resembling the algorithm to run
     """
     alg = ''
     print("\n Which algorithm do you want to run?")
@@ -98,7 +98,6 @@ def get_algorithm(case):
             alg = input(' [r / b / h]: ')
         if alg is not 'b':
             return alg
-
     else:
         print("\n <key>: <algorithm>")
         print(" m: Bat Migration")
@@ -106,7 +105,6 @@ def get_algorithm(case):
         print(" p: Population Based\n")
         while alg not in ['m', 'k', 'p']:
             alg = input(' [m / k / p]: ')
-
     it = ''
     print("\n How many iterations of battery cycling would you like to run?")
     while not it:
@@ -123,6 +121,7 @@ def get_algorithm(case):
         while random not in ['a', 'r']:
             random = input(" Only r or a\n [r/a]: ")
         return alg, it, random
+
 
 def get_neighbourhood():
     """

@@ -3,6 +3,7 @@ from copy import deepcopy
 from Algorithms.Helpers.connect import connect
 from Algorithms.Case_A.greedy_hillclimber import greedy_hillclimber
 
+
 def random_battery_cycler(grid, solutions):
     '''
         Picks a random battery from the grid, finds the closest unlinked house that
@@ -40,6 +41,7 @@ def random_battery_cycler(grid, solutions):
         grid.light_reset()
     if best[1]:
         grid.update(best[1])
+
 
 def battery_cycler(grid, s=1):
     '''

@@ -1,5 +1,6 @@
 import queue
 
+
 def all_combos(grid):
     """
         This function makes all combinations of batteries which have

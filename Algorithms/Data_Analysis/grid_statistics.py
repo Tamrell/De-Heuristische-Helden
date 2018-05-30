@@ -10,6 +10,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(__file__, '..', '..', '..', 'Dat
 
 from grid import *
 
+
 fileDir = os.path.abspath(os.path.join(__file__, '..', '..', '..', 'Data'))
 grids = {}
 for nbh in range(1, 4):
@@ -17,6 +18,7 @@ for nbh in range(1, 4):
     batteries_file = os.path.join(fileDir, 'wijk' + str(nbh) + '_batterijen.txt')
     Battery.color_generator = assign_color()
     grids[nbh] = Grid(houses_file, batteries_file, nbh)
+
 
 for i in range(1, 4):
     print("#" * 80)
