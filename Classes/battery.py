@@ -6,7 +6,9 @@ def assign_color():
                   'on_green', 'on_blue', 'on_red', 'on_cyan', 'on_yellow',
                   'on_magenta', 'on_white', 'on_grey',
                   'on_green', 'on_blue', 'on_red', 'on_cyan', 'on_yellow',
-                  'on_magenta', 'on_white', 'on_grey']:
+                  'on_magenta', 'on_white', 'on_grey','on_green', 'on_blue',
+                  'on_red', 'on_cyan', 'on_yellow', 'on_magenta', 'on_white',
+                  'on_grey',]:
         yield color
 
 class Battery:

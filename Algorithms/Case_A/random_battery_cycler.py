@@ -38,7 +38,7 @@ def random_battery_cycler(grid, solutions):
             if grid.score() < best[0]:
                 best = (grid.score(), deepcopy(grid))
             solutions -= 1
-        grid.reset()
+        grid.light_reset()
     if best[1]:
         grid.update(best[1])
 

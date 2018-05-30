@@ -1,6 +1,7 @@
 from Classes.grid import Grid_Point
+import time
 
-def set_global_density(grid, house_list):
+def set_global_density(grid, house_list, x_range=(0,50), y_range=(0,50)):
     """
     For each point on the Grid, calculates the sum of the distances to all
     houses on the Grid. The reciprocate of this sum is added to the
@@ -20,9 +21,9 @@ def set_global_density(grid, house_list):
     Returns
         None
     """
-
-    for y in range(grid.y_dim):
-            for x in range(grid.x_dim):
+    grid.grid_list.clear()
+    for y in range(y_range[0], y_range[1]):
+            for x in range(x_range[0], x_range[1]):
                 grid.grid_list[x, y] = Grid_Point(x, y, house_list)
 
     for point in grid.grid_list.values():
@@ -85,8 +86,10 @@ def move_to_middle(grid, bat):
     """
 
     houses = [h for h in bat.links]
-    set_global_density(grid, houses)
+    x_range = (min(h.cord[0] for h in houses), max(h.cord[0] for h in houses))
+    y_range = (min(h.cord[1] for h in houses), max(h.cord[1] for h in houses))
+    set_global_density(grid, houses, x_range, y_range)
     sorted_list = sorted(grid.grid_list.values(), key=lambda x: x.probability,
                          reverse=True)
     loc = (sorted_list[0].x, sorted_list[0].y)
-    grid.move_battery(bat, loc)
+    grid.move_battery_migration(bat, loc)

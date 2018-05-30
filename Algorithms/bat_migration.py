@@ -59,6 +59,7 @@ def migration(grid, combo):
     sorted_list = sorted(bats, key=lambda x: grid.grid_list[x].probability)
 
     Battery.color_generator = assign_color()
+
     grid.update(new_grid)
     for bat, location in zip(combo, sorted_list):
         grid.add_battery(Battery(location, bat[0], bat[1]))
