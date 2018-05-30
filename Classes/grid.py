@@ -10,6 +10,7 @@ import statistics as st
 import sys
 import termcolor
 
+
 class Grid:
     '''
         atrributes:

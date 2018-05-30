@@ -4,26 +4,26 @@ def connect(house, battery, overload=False):
         local representation. Also checks if battery does not get
         overconnected by connecting house
 
-    Takes
-        house: a House instance
-        battery: the Battery instance house must be connected to
+        Takes:
+            house: a House instance
+            battery: the Battery instance house must be connected to
 
-    Returns
-        True if battery could be connected; else False
+        Returns:
+            True if battery could be connected; else False
     """
     # check for overloadedness
     if (not battery.fits(house.output) and not overload) or not house.free:
         return False
-
     battery.load += house.output
+
     # connect in grid
     house.bat = battery
     house.color = battery.color
     house.free = False
-    battery.links.add(house) ##doesnot happen
+    battery.links.add(house)
     return True
 
-def unconnect(house):
+def unconnect(house):###doesnot happen#doesnot happen
     """Disconnects the house from its battery"""
     house.bat.load -= house.output
     house.bat.links.remove(house)
@@ -31,12 +31,15 @@ def unconnect(house):
     house.bat = None
     house.free = True
 
+
 def hard_swap(h1, h2, overload=False):
     """
-        This function swaps two houses from two seperate batteries
-        Takes
+        This function swaps two houses from two seperate batteries.
+
+        Takes:
             house1, house2: House instances from two seperate batteries
-        Returns
+
+        Returns:
             Bool: True if swap was succesfull else false.
     """
     if h1 == h2:
@@ -53,12 +56,15 @@ def hard_swap(h1, h2, overload=False):
     else:
         return False
 
+
 def swap_cost(h1, h2):
     """
-        This function calculates cost increase for a potential swap
+        This function calculates cost increase for a potential swap.
+
         Takes:
             House: house object 1
             House: house object 2
+
         Returns:
             Int: cost increase instigated by swap
     """
@@ -68,10 +74,12 @@ def swap_cost(h1, h2):
 
 def swappable(h1, h2):
     """
-        This function checks if 2 houses can be swapped
+        This function checks if 2 houses can be swapped.
+
         Takes:
             House: house object 1
             House: house object 2
+
         Returns:
             Bool: True if swappable, else false
     """
