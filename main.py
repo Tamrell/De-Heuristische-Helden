@@ -13,17 +13,7 @@ import Algorithms.Helpers.load_data as dt
 from Algorithms.Helpers.density import move_to_middle
 
 from tqdm import tqdm
-import sys
-import time
 
-
-def run():
-    results = []
-    for i in range(100):
-        print(i)
-        results.append(run_algorithm('b', grid))
-        #greedy_hillclimber(grid)
-    return(min(results))
 
 if __name__ == "__main__":
 
