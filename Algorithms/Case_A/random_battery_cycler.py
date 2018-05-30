@@ -5,23 +5,21 @@ from Algorithms.Case_A.greedy_hillclimber import greedy_hillclimber
 
 def random_battery_cycler(grid, solutions):
     '''
-    Picks a random battery from the grid, finds the closest unlinked house that
-    would not overcharge the battery, and connects to the house. If no houses
-    are available, battery is removed from the options. Continues until no
-    batteries (illegal grid) or houses (solution) are left. If a solution is
-    found, a greedy hillclimber is applied to the grid. Saves best config
-    and updates grid to this config.
+        Picks a random battery from the grid, finds the closest unlinked house that
+        would not overcharge the battery, and connects to the house. If no houses
+        are available, battery is removed from the options. Continues until no
+        batteries (illegal grid) or houses (solution) are left. If a solution is
+        found, a greedy hillclimber is applied to the grid. Saves best config
+        and updates grid to this config.
 
-    Takes
-        Grid: grid containing the houses and batteries to be connected
+        Takes
+            Grid: grid containing the houses and batteries to be connected
 
-        solutions: Number of legal solutions to find before exiting.
+            solutions: Number of legal solutions to find before exiting.
 
-    Returns
-        None
+        Returns
+            None
     '''
-
-    # Infinity
     best = (float("inf"), None)
     while solutions:
         houses = [h for h in grid.houses.values()]
@@ -44,5 +42,16 @@ def random_battery_cycler(grid, solutions):
         grid.update(best[1])
 
 def battery_cycler(grid, s=1):
+    '''
+        Starts the Random Battery Cycler for s solutions.
+
+        Takes
+            Grid: grid containing the houses and batteries to be connected
+
+            solutions: Number of legal solutions to find before exiting.
+
+        Returns
+            None
+    '''
     random_battery_cycler(grid, s)
     return grid.score()

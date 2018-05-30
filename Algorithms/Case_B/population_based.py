@@ -2,15 +2,11 @@ from Classes.grid import Grid
 from Algorithms.Case_A.random_battery_cycler import battery_cycler
 from Algorithms.Case_B.random_bat_config import random_bat_config
 from Algorithms.Helpers.bounds import get_bound
-from random import choice, randint
-from tqdm import tqdm
+from random import choice
 from multiprocessing import Pool
 import time
 import statistics
-<<<<<<< HEAD
-=======
 
->>>>>>> a00bc56935511e898099dc2aed8ca7245a41b91f
 def start_simulation(grid, p_size=20, generations=10):
     """
         Generates a random starting population using the random_bat_config,
@@ -64,7 +60,7 @@ def let_there_be_life_exclamation_mark(grid, p_size):
             list: list containing the population
     """
     population = []
-    for i in tqdm(range(p_size)):
+    for i in range(p_size):
         individual = Grid(grid.nbh, grid.houses)
         random_bat_config(individual)
         population.append([fitness(individual), individual])

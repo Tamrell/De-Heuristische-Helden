@@ -9,11 +9,10 @@ from tqdm import tqdm
 
 def k_data(grid):
     '''
-       Multithreading to calculate ~20 random samples and ~20 solutions of The
-       battery cycler??
-       TO DO:
-       - multithreading??
-       - change data structure in order to be faster!!!
+      More data is more better.
+
+      args:
+        Grid
     '''
     for combo in tqdm(all_combos(grid)):
         results = []
@@ -26,6 +25,7 @@ def k_data(grid):
         worst = max(results)
         avg = stat.mean(results)
         stdev = stat.stdev(results)
-        with open('Results/Solspaces/K_means' + str(grid.nbh) + '.csv', 'a', newline='') as csvfile:
+        with open('Results/Solspaces/K_means' +
+                   str(grid.nbh) + '.csv', 'a', newline='') as csvfile:
             writer = csv.writer(csvfile, delimiter=',')
             writer.writerow([combo[0:], best, worst, avg, stdev])

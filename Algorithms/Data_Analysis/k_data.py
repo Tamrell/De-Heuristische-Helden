@@ -9,11 +9,7 @@ from tqdm import tqdm
 
 def k_data(grid):
     '''
-       Multithreading to calculate ~20 random samples and ~20 solutions of The
-       battery cycler??
-       TO DO:
-       - multithreading??
-       - change data structure in order to be faster!!!
+       saves data for k_means, given a grid.
     '''
     for combo in tqdm(all_combos(grid)):
         results = []
