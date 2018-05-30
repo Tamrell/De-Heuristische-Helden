@@ -97,8 +97,7 @@ def move_to_middle(grid, bat):
     sorted_list = sorted(grid.grid_list.values(), key=lambda x: x.probability,
                          reverse=True)
     loc = (sorted_list[0].x, sorted_list[0].y)
-    grid.move_battery_migration(bat, loc)
-
+    grid.move_battery(bat, loc)
 
 def y_list(grid, y, method=0):
     ''' Helper function for print_heatmap. Returns the probabilities
@@ -125,7 +124,11 @@ def print_heatmap(grid, method=0):
                                 1: Relative Density.
     '''
 
-    set_global_density(grid, grid.houses.values())
+    if not method:
+        set_global_density(grid, grid.houses.values())
+    else:
+        set_local_density(grid, grid.houses.values())
+
     trace = go.Heatmap(z = [y_list(grid, i, method) for i in range(grid.x_dim)])
     data = [trace]
     plot(data, filename='labelled-heatmap.html')
