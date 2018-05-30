@@ -2,6 +2,7 @@ from Algorithms.Helpers.connect import connect
 from Classes.battery import Battery, assign_color
 from statistics import mean
 
+
 def k_means(grid):
     """
         Tries to find ideal k-means configuration for the grid.

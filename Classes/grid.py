@@ -16,6 +16,8 @@ class Grid:
         - grid_list: dict containing: coordinates:Grid_Point
         - houses: dict containing: coordinate:House
         - batteries: dict containing: coordinate:Battery
+        - x/y_dim: integer containing respective dimension
+        - initial_batteries/houses: dict containing original config
     '''
 
     def __init__(self, nbh, houses, batteries=[], dimensions=(50, 50)):
@@ -54,20 +56,20 @@ class Grid:
         return True
 
     def copy(self):
+        '''Returns a copy of the grid.'''
         new_grid = copy.deepcopy(self)
         new_grid.recalc()
         return new_grid
 
     def add_battery(self, bat):
+        '''Adds a battery to the grid.'''
         self.batteries[bat.cord] = bat
         self.initial_batteries[bat.cord] = copy.copy(bat)
         self.recalc()
 
     def move_battery(self, bat, new_cord, linked_only=True):
-        try:
-            self.batteries[new_cord] = self.batteries.pop(bat.cord)
-        except:
-            print(self.batteries, new_cord, bat.cord)
+        '''Adds a battery to the grid.'''
+        self.batteries[new_cord] = self.batteries.pop(bat.cord)
         bat.cord = new_cord
         if linked_only:
             for h in bat.links:
@@ -77,6 +79,7 @@ class Grid:
                 h.dists[bat] = self.distance(h.cord, bat.cord)
 
     def light_reset(self):
+        '''Unconnects all houses in the grid'''
         for b in self.batteries.values():
             for h in list(b.links):
                 unconnect(h)

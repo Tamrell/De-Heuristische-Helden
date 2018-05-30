@@ -28,6 +28,17 @@ def random_connect(grid):
 
 
 def random_sampler(grid, solutions=1):
+    """
+        This function runs random connect until there have been solutions
+        solutions found.
+
+        Takes
+            Grid: grid object containing the houses and batteries
+            (optional)int: number of solutions needed
+
+        Returns
+            None
+    """
     while solutions > 0:
         grid.reset()
         if random_connect(grid):

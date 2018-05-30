@@ -3,6 +3,7 @@ import plotly.graph_objs as go
 from plotly.offline import plot
 import time
 
+
 def set_global_density(grid, house_list, x_range=(0,50), y_range=(0,50)):
     """
     For each point on the Grid, calculates the sum of the distances to all
@@ -40,6 +41,7 @@ def set_global_density(grid, house_list, x_range=(0,50), y_range=(0,50)):
             continue
         point.probability = (1 / point.distance) / grid.total_probability
 
+
 def set_local_density(grid, house_list):
     """
     For each point on the grid, calculates the sum of the reciprocate distances
@@ -60,7 +62,6 @@ def set_local_density(grid, house_list):
     Returns
         None
     """
-
     for y in range(grid.y_dim):
             for x in range(grid.x_dim):
                 grid.grid_list[x, y] = Grid_Point(x, y, house_list)
@@ -76,6 +77,7 @@ def set_local_density(grid, house_list):
         point.loc_probability = (
             point.loc_distance / grid.total_loc_probability)
 
+
 def move_to_middle(grid, bat):
     """
     Moves the given battery to the most optimal position based on it's current
@@ -89,7 +91,6 @@ def move_to_middle(grid, bat):
     Returns
         None
     """
-
     houses = [h for h in bat.links]
     x_range = (min(h.cord[0] for h in houses), max(h.cord[0] for h in houses))
     y_range = (min(h.cord[1] for h in houses), max(h.cord[1] for h in houses))
@@ -99,11 +100,11 @@ def move_to_middle(grid, bat):
     loc = (sorted_list[0].x, sorted_list[0].y)
     grid.move_battery(bat, loc)
 
+
 def y_list(grid, y, method=0):
     ''' Helper function for print_heatmap. Returns the probabilities
         of row y.
     '''
-
     dist_list = []
     if not method:
         for i in range(grid.x_dim):
@@ -114,6 +115,7 @@ def y_list(grid, y, method=0):
             dist_list.append(grid.grid_list[(i, y)].loc_probability)
     return dist_list
 
+
 def print_heatmap(grid, method=0):
     '''
         Prints out the global density heatmap in a file called
@@ -123,7 +125,6 @@ def print_heatmap(grid, method=0):
             method (Integer):   0: Global Density.
                                 1: Relative Density.
     '''
-
     if not method:
         set_global_density(grid, grid.houses.values())
     else:

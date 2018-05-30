@@ -17,6 +17,7 @@ from Algorithms.Case_A.random_battery_cycler import battery_cycler, random_batte
 from Algorithms.Helpers.density import *
 from Algorithms.Helpers.bfcf import all_combos
 
+
 def get_houses(data):
     '''
         Takes a .csv file and add the houses in the file to a
@@ -55,6 +56,7 @@ def get_batteries(data):
             location, capacity = (int(line[0]), int(line[1])), float(line[2])
             batteries.append(Battery(location, capacity))
     return batteries
+
 
 def run_algorithm(alg, grid):
     """
@@ -128,13 +130,13 @@ def run_algorithm(alg, grid):
 
 def get_algorithm(case):
     """
-    This function selects the algorithm to run.
+        This function selects the algorithm to run.
 
-    Takes:
-        None
+        Takes:
+            None
 
-    Returns:
-        string: user input resembling the algorithm to run
+        Returns:
+            string: user input resembling the algorithm to run
     """
     alg = ''
     print("\n Which algorithm do you want to run?")
@@ -173,6 +175,7 @@ def get_algorithm(case):
             it = getInt()
             return alg, it, random
         return alg, random
+
 
 def get_neighbourhood():
     """

@@ -7,6 +7,7 @@ from multiprocessing import Pool
 import time
 import statistics
 
+
 def start_simulation(grid, p_size=20, batteries=[], generations=5):
     """
         Generates a random starting population using the random_bat_config,
@@ -27,6 +28,7 @@ def start_simulation(grid, p_size=20, batteries=[], generations=5):
         fittest, score = population[0][1], population[0][0]
         population = sorted(new_generation(fittest, score, p_size))
     return population[0][1]
+
 
 def new_generation(fittest, score, p_size):
     """
@@ -71,6 +73,7 @@ def let_there_be_life_exclamation_mark(grid, p_size, batteries):
         population.append([fitness(individual), individual])
     return sorted(population)
 
+
 def fitness(grid, fit_measure=battery_cycler):
     '''
         Calculates the fitness of a given grid as a function of its total cost.
@@ -105,7 +108,9 @@ def mutated(parent):
     mutate_battery_location(child)
     return child
 
+
 def mutate_battery_location(individual):
+    '''randomly mutates the location of a random battery'''
     battery = choice([b for b in individual.batteries.values()])
     new_location = choice([(x, y) for x in range(individual.x_dim)
                                   for y in range(individual.y_dim)

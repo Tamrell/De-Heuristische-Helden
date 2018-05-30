@@ -1,5 +1,6 @@
 from numpy import subtract
 
+
 def assign_color():
     ''' For debugging reasons, we give batteries a color.
 
@@ -17,6 +18,7 @@ def assign_color():
                   'on_red', 'on_cyan', 'on_yellow', 'on_magenta', 'on_white',
                   'on_grey',]:
         yield color
+
 
 class Battery:
     ''' Battery class, initializes with tuple: coordinate and int: max_load

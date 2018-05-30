@@ -23,6 +23,7 @@ def connect(house, battery, overload=False):
     battery.links.add(house)
     return True
 
+
 def unconnect(house):###doesnot happen#doesnot happen
     """Disconnects the house from its battery"""
     house.bat.load -= house.output

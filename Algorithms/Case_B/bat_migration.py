@@ -26,19 +26,15 @@ def migration(grid, combo):
     Returns
         None
     """
-
     it = len(combo)
     bats = []
-
     grid.batteries.clear()
     new_grid = grid.copy()
-
     houses = [h for h in grid.houses.values()]
     set_local_density(grid, houses)
-
     output_per_bat = grid.total_output() / it
-
     for bat in combo:
+
         # Get point with highest local density and add bat
         sorted_list = sorted(grid.grid_list.values(),
                              key=lambda x: x.loc_probability, reverse=True)
