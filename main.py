@@ -100,16 +100,29 @@ def run():
     return(min(results))
 
 if __name__ == "__main__":
-    
+
     nbh = get_neighbourhood()
     h_file = 'Data/wijk' + nbh + '_huizen.csv'
     b_file = 'Data/wijk' + nbh + '_batterijen.txt'
     houses = dt.get_houses(h_file)
     batteries = dt.get_batteries(b_file)
+<<<<<<< HEAD
     grid = Grid(nbh, houses)#, batteries)
 
     start_simulation(grid, 2, 50)
     """
+=======
+
+    case = input("Which part of the case do you want to run?\n[a/b]: ")
+    while case not in ['a', 'b']:
+        case = input("only A or B\n[a/b]: ")
+
+    if case == 'a':
+        grid = Grid(nbh, houses, batteries)
+    else:
+        grid = Grid(nbh, houses)
+
+>>>>>>> a00bc56935511e898099dc2aed8ca7245a41b91f
     print("Battery cycling...")
     print(battery_cycler(grid))
     """

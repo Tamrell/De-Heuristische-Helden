@@ -1,12 +1,16 @@
 from Classes.grid import Grid
 from Algorithms.Case_A.random_battery_cycler import battery_cycler
 from Algorithms.Case_B.random_bat_config import random_bat_config
-#from Algorithms.Helpers.bounds import get_bound
+from Algorithms.Helpers.bounds import get_bound
 from random import choice, randint
 from tqdm import tqdm
 from multiprocessing import Pool
 import time
 import statistics
+<<<<<<< HEAD
+=======
+
+>>>>>>> a00bc56935511e898099dc2aed8ca7245a41b91f
 def start_simulation(grid, p_size=20, generations=10):
     """
         Generates a random starting population using the weight lifter,
@@ -28,30 +32,35 @@ def start_simulation(grid, p_size=20, generations=10):
             None
     """
     # individual = list of batteries with their location?
+    start_time = time.time()
     genetic_history = []
     population = let_there_be_life_exclamation_mark(grid, p_size)
     genetic_history.append(population)
     for i in range(generations):
-
+        print("#" * 80)
+        print("Generation:\t",i)
         # New population will consist of the fittest individual and mutations
         # of it.
-        #fittest, score = population[0][1], population[0][0]
-        (score, fittest) = population.pop(0)
+        fittest, score = population[0][1], population[0][0]
         #print(fittest, fittest.print_stats("ayyy"), score)
         population = sorted(new_generation(fittest, score, p_size))
-        print("generation", i)
-        scores = [individual[0] for individual in population]
-        print("avg", statistics.mean(scores))
-        print("dev", statistics.stdev(scores))
-        print("best", min(scores))
-
+        scores = [p[0] for p in population]
+        print("Mean:", statistics.mean(scores))
+        print("Dev:", statistics.stdev(scores))
+        print("Best", min(scores))
         #genetic_history.append(population)
 
+    print(time.time() - start_time)
     # for i, p in enumerate(genetic_history):
     #     print("generation:", i)
     #     print("fittest:", p[0][0])
     #     print("average:", sum([g[0] for g in p])/len(p), "\n\n")
-    #     print(battery_cycler(p[0][1]))
+    #     #print(p, i)
+    #     #print(battery_cycler(p[0][1]))
+    #     print([upper_bound(p[i][1]) for i in range(len(p))])
+    #     print([lower_bound(p[i][1]) for i in range(len(p))])
+    #     #p[0][1].print_stats("Arr!")
+    print(p_size, generations)
 
 def new_generation(fittest, score, p_size):
     """
@@ -93,7 +102,7 @@ def let_there_be_life_exclamation_mark(grid, p_size):
         population.append([fitness(individual), individual])
     return sorted(population)
 
-def fitness(grid, fit_measure=battery_cycler):
+def fitness(grid, fit_measure=get_bound):
     '''
         Calculates the fitness of a given grid as a function of its total cost.
         The fitness is decided by taking the average of i_size
@@ -108,7 +117,7 @@ def fitness(grid, fit_measure=battery_cycler):
     i_size = 10
     # tim = time.time()
     score_list = []
-    with Pool(processes=10) as p:
+    with Pool(processes=1) as p:
         score_list = p.map(fit_measure, [grid for i in range(i_size)])
         # tamar's schuld
         #grid.reset()
