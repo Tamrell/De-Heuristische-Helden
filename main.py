@@ -33,7 +33,7 @@ if __name__ == "__main__":
     alg = dt.get_algorithm(case)
     dt.run_algorithm(alg, grid)
     if case is 'b':
-        print(" Move batteries to optimal position for their links?")
+        print("\n Move batteries to optimal position for their links?")
         move = input(' [y/n]: ')
         if move is 'y':
             for bat in grid.batteries.values():

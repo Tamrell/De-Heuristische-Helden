@@ -88,9 +88,9 @@ def run_algorithm(alg, grid):
                 algorithms[alg[0]][1](grid)
                 random_battery_cycler(grid, alg[1])
             else:
-                print(" How many generations?")
+                print("\n How many generations?")
                 gen = getInt()
-                print(" Population size per generation?")
+                print("\n Population size per generation?")
                 pop = getInt()
                 grid.update(algorithms[alg[0]][1](grid, p_size=pop, generations=gen))
                 random_battery_cycler(grid, alg[1])
