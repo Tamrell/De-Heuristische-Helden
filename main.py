@@ -20,7 +20,7 @@ from Algorithms.Data_Analysis.plotter import custom_plotter, plotter
 from Algorithms.Helpers.bounds import lower_bound, upper_bound
 from Algorithms.Helpers.bfcf import all_combos
 import Algorithms.Helpers.load_data as dt
-from Algorithms.Helpers.density_reset import *
+from Algorithms.Helpers.density import *
 
 from tqdm import tqdm
 import sys

@@ -3,7 +3,7 @@ import time
 from copy import deepcopy
 from Classes.grid import *
 from Classes.battery import *
-from Algorithms.Helpers.density_reset import *
+from Algorithms.Helpers.density import set_global_density, set_local_density
 from Algorithms.Helpers.bfcf import all_combos
 from Algorithms.Helpers.connect import *
 
